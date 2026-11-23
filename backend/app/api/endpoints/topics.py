@@ -30,7 +30,7 @@ async def discover_topics_endpoint(request: Request) -> JSONResponse:
         job_id = JobRunner.run_in_background(
             project_id=project_id,
             job_type="TOPIC_DISCOVERY",
-            task_func=_bg_discover
+            target_func=_bg_discover
         )
         return JSONResponse({"status": "queued", "job_id": job_id})
 

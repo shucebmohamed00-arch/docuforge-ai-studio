@@ -37,7 +37,7 @@ async def build_dossier_endpoint(request: Request) -> JSONResponse:
         job_id = JobRunner.run_in_background(
             project_id=project_id,
             job_type="DEEP_RESEARCH",
-            task_func=_bg_research
+            target_func=_bg_research
         )
         return JSONResponse({"status": "queued", "job_id": job_id})
 

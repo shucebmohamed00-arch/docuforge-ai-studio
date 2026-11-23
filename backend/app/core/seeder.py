@@ -45,12 +45,16 @@ def seed_default_production_if_needed():
                 score_audience_interest, score_storytelling, score_originality,
                 score_visual_availability, score_research_depth, score_competition,
                 score_feasibility, total_score, status, hooks_json, title_variants_json
-            ) VALUES (?, ?, ?, 'BUSINESS', 
-                'How an aggressive expansion strategy and complex hidden debt collapsed Switzerland\'s most prestigious corporate symbol overnight.',
-                'Swiss Air executives vs. Credit Suisse and UBS over emergency credit lines on the day the planes were grounded.',
-                'US, UK, European and global business/finance enthusiasts',
-                18, 19, 14, 14, 14, 9, 5, 93, 'SELECTED', '[]', '[]')
-            """, (topic_id, SWISS_AIR_PROJECT_ID, SWISS_AIR_TITLE))
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, 18, 19, 14, 14, 14, 9, 5, 93, 'SELECTED', '[]', '[]')
+            """, (
+                topic_id,
+                SWISS_AIR_PROJECT_ID,
+                SWISS_AIR_TITLE,
+                "BUSINESS",
+                "How an aggressive expansion strategy and complex hidden debt collapsed Switzerland's most prestigious corporate symbol overnight.",
+                "Swiss Air executives vs. Credit Suisse and UBS over emergency credit lines on the day the planes were grounded.",
+                "US, UK, European and global business/finance enthusiasts"
+            ))
 
             conn.execute("UPDATE projects SET selected_topic_id = ? WHERE id = ?", (topic_id, SWISS_AIR_PROJECT_ID))
 

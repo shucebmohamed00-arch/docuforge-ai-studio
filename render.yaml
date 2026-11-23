@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: docuforge-ai-studio
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/budget/status
+    envVars:
+      - key: PORT
+        value: 7860
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: PEXELS_API_KEY
+        sync: false
+      - key: PIXABAY_API_KEY
+        sync: false

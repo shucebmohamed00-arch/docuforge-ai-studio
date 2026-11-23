@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuForge AI — Professional Documentary Studio</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand-header">
+        <div class="brand-logo">D</div>
+        <div class="brand-text">
+          <h1>DocuForge AI</h1>
+          <p>Documentary Studio</p>
+        </div>
+      </div>
+
+      <div class="nav-scroll">
+        <div class="nav-section-title">Overview</div>
+        <a class="nav-item active" onclick="switchTab('dashboard')">
+          <span>📊</span> Dashboard
+        </a>
+        <a class="nav-item" onclick="switchTab('projects')">
+          <span>📁</span> Projects <span class="nav-badge" id="sidebar-proj-count">0</span>
+        </a>
+
+        <div class="nav-section-title">Pre-Production</div>
+        <a class="nav-item" onclick="switchTab('topics')">
+          <span>💡</span> 1. Discover Topics
+        </a>
+        <a class="nav-item" onclick="switchTab('research')">
+          <span>🔍</span> 2. Evidence Dossier
+        </a>
+        <a class="nav-item" onclick="switchTab('script')">
+          <span>📝</span> 3. Script Studio
+        </a>
+
+        <div class="nav-section-title">Visuals & Footage</div>
+        <a class="nav-item" onclick="switchTab('visual-director')">
+          <span>🎬</span> 4. Visual Director
+        </a>
+        <a class="nav-item" onclick="switchTab('footage')">
+          <span>🎞️</span> 5. Footage Library
+        </a>
+        <a class="nav-item" onclick="switchTab('approval')">
+          <span>🛡️</span> 6. Asset Approval
+        </a>
+        <a class="nav-item" onclick="switchTab('storyboard')">
+          <span>📋</span> 7. Storyboard
+        </a>
+
+        <div class="nav-section-title">Production & Audio</div>
+        <a class="nav-item" onclick="switchTab('animation')">
+          <span>🗺️</span> 8. Animation Studio
+        </a>
+        <a class="nav-item" onclick="switchTab('audio')">
+          <span>🎙️</span> 9. Narration & Sound
+        </a>
+        <a class="nav-item" onclick="switchTab('rendering')">
+          <span>⚙️</span> 10. Video Rendering
+        </a>
+
+        <div class="nav-section-title">Post & Delivery</div>
+        <a class="nav-item" onclick="switchTab('qc')">
+          <span>✅</span> 11. Quality Control
+        </a>
+        <a class="nav-item" onclick="switchTab('thumbnails')">
+          <span>🖼️</span> 12. Thumbnails
+        </a>
+        <a class="nav-item" onclick="switchTab('completed')">
+          <span>📦</span> 13. Completed Docs
+        </a>
+
+        <div class="nav-section-title">System & Finance</div>
+        <a class="nav-item" onclick="switchTab('budget')">
+          <span>💰</span> Budget & API Usage
+        </a>
+        <a class="nav-item" onclick="switchTab('settings')">
+          <span>⚙️</span> Studio Settings
+        </a>
+      </div>
+
+      <!-- Budget Widget Footer -->
+      <div class="sidebar-footer">
+        <div class="budget-widget">
+          <div class="budget-header">
+            <span>MONTHLY CEILING</span>
+            <span id="budget-ceiling-text">$50.00</span>
+          </div>
+          <div class="budget-amount" id="budget-spent-text">$0.00</div>
+          <div class="budget-progress-bg">
+            <div class="budget-progress-bar" id="budget-bar" style="width: 0%"></div>
+          </div>
+          <div class="budget-status-text">
+            <span id="budget-remaining-text">$50.00 remaining</span>
+            <span id="budget-status-badge">Normal</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-wrapper">
+      <header class="top-bar">
+        <div class="page-title">
+          <h2 id="view-title">Studio Dashboard</h2>
+          <p id="view-subtitle">High-level view of documentary production pipeline</p>
+        </div>
+        <div class="top-actions">
+          <button class="btn btn-secondary" onclick="refreshStudioData()">↻ Refresh</button>
+          <button class="btn btn-primary" onclick="openNewProjectModal()">+ New Documentary</button>
+        </div>
+      </header>
+
+      <section class="content-body" id="main-content">
+        <!-- Rendered dynamically via app.js -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Create Project Modal -->
+  <div class="modal-overlay" id="new-project-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Create New Documentary Project</h3>
+        <button class="btn btn-secondary" style="padding: 4px 8px;" onclick="closeNewProjectModal()">✕</button>
+      </div>
+      <form id="new-project-form" onsubmit="handleCreateProject(event)">
+        <div class="form-group">
+          <label class="form-label">Documentary Title or Initial Working Idea</label>
+          <input type="text" id="proj-title" class="form-input" placeholder="e.g. The Silicon Heist: How One Chip Changed Global Power" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Content Pillar</label>
+          <select id="proj-pillar" class="form-select">
+            <option value="BUSINESS">Business, Money & Corporate Power (30%)</option>
+            <option value="GEOPOLITICS">Geopolitics & Global Power (25%)</option>
+            <option value="TECHNOLOGY">Technology & Innovation (25%)</option>
+            <option value="HISTORY">History & Extraordinary Investigations (20%)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Duration</label>
+          <select id="proj-duration" class="form-select">
+            <option value="20" selected>20 Minutes (Standard ~2,800 words)</option>
+            <option value="15">15 Minutes (~2,100 words)</option>
+            <option value="25">25 Minutes (~3,500 words)</option>
+            <option value="30">30 Minutes (~4,200 words)</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px;">
+          <button type="button" class="btn btn-secondary" onclick="closeNewProjectModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Initialize Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

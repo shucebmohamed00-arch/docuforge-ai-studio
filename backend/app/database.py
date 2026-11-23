@@ -12,16 +12,22 @@ from .config import DATABASE_PATH
 logger = logging.getLogger("docuforge.database")
 
 def get_connection() -> sqlite3.Connection:
-    conn = sqlite3.connect(DATABASE_PATH)
+    conn = sqlite3.connect(DATABASE_PATH, timeout=30.0)
     conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA busy_timeout = 30000;")
     conn.execute("PRAGMA foreign_keys = ON;")
     return conn
 
 def init_db():
     """Initializes the database schema if tables do not exist."""
     conn = get_connection()
-    with conn:
-        cursor = conn.cursor()
+    try:
+        try:
+            conn.execute("PRAGMA journal_mode = WAL;")
+        except Exception:
+            pass
+        with conn:
+            cursor = conn.cursor()
         
         # 1. Projects Table
         cursor.execute("""
@@ -328,6 +334,6 @@ def init_db():
         INSERT OR IGNORE INTO monthly_budgets (month_key, budget_ceiling_usd, warning_threshold_usd, total_spent_usd, is_locked)
         VALUES (?, 50.00, 40.00, 0.0, 0);
         """, (curr_month,))
-
-    conn.close()
+    finally:
+        conn.close()
     logger.info("Database initialized successfully at %s", DATABASE_PATH)

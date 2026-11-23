@@ -241,13 +241,18 @@ middleware = [
     )
 ]
 
-async def on_app_startup():
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app):
     init_db()
     try:
         from .core.seeder import seed_default_production_if_needed
-        seed_default_production_if_needed()
+        import asyncio
+        await asyncio.to_thread(seed_default_production_if_needed)
     except Exception as e:
         import logging
         logging.getLogger("docuforge").warning("Startup seeder notice: %s", e)
+    yield
 
-app = Starlette(debug=DEBUG, routes=routes, middleware=middleware, on_startup=[on_app_startup])
+app = Starlette(debug=DEBUG, routes=routes, middleware=middleware, lifespan=lifespan)

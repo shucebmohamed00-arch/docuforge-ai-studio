@@ -781,6 +781,35 @@ function handleSelectProjectChange(projId) {
   renderTopicDiscovery(document.getElementById("main-content"));
 }
 
+async function safeParseResponse(res) {
+  const txt = await res.text();
+  if (!txt || !txt.trim()) {
+    throw new Error(`Server returned empty response (HTTP ${res.status})`);
+  }
+  try {
+    return JSON.parse(txt);
+  } catch (e) {
+    throw new Error(`Invalid server response (HTTP ${res.status})`);
+  }
+}
+
+async function waitForBackgroundJob(jobId) {
+  for (let i = 0; i < 120; i++) {
+    await new Promise(r => setTimeout(r, 1500));
+    const res = await fetch(`/api/jobs/${jobId}`);
+    const json = await safeParseResponse(res);
+    if (json.status === "success" && json.job) {
+      if (json.job.status === "COMPLETED") {
+        return json.job;
+      }
+      if (json.job.status === "FAILED") {
+        throw new Error(json.job.error_message || "Background job failed");
+      }
+    }
+  }
+  throw new Error("Background job timed out");
+}
+
 async function triggerTopicDiscovery(projId) {
   isDiscovering = true;
   renderTopicDiscovery(document.getElementById("main-content"));
@@ -788,15 +817,22 @@ async function triggerTopicDiscovery(projId) {
     const res = await fetch("/api/topics/discover", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ project_id: projId })
+      body: JSON.stringify({ project_id: projId, async: true })
     });
-    const json = await res.json();
-    if (json.status === "success") {
+    const json = await safeParseResponse(res);
+    if (json.status === "queued" && json.job_id) {
+      await waitForBackgroundJob(json.job_id);
+      const listRes = await fetch(`/api/topics/project/${projId}`);
+      const listJson = await safeParseResponse(listRes);
+      projectTopics = listJson.topics || [];
+      rejectedTopics = [];
+      await refreshStudioData();
+    } else if (json.status === "success") {
       projectTopics = json.result.candidates;
       rejectedTopics = json.result.rejected_log || [];
       await refreshStudioData();
     } else {
-      alert("Topic discovery error: " + json.message);
+      alert("Topic discovery error: " + (json.message || "Unknown error"));
     }
   } catch (err) {
     alert("Network error: " + err.message);
@@ -1048,14 +1084,20 @@ async function triggerBuildDossier(projId) {
     const res = await fetch("/api/research/build-dossier", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ project_id: projId })
+      body: JSON.stringify({ project_id: projId, async: true })
     });
-    const json = await res.json();
-    if (json.status === "success") {
+    const json = await safeParseResponse(res);
+    if (json.status === "queued" && json.job_id) {
+      await waitForBackgroundJob(json.job_id);
+      const dRes = await fetch(`/api/research/dossier/${projId}`);
+      const dJson = await safeParseResponse(dRes);
+      currentDossier = dJson.dossier;
+      await refreshStudioData();
+    } else if (json.status === "success") {
       currentDossier = json.dossier;
       await refreshStudioData();
     } else {
-      alert("Error assembling dossier: " + json.message);
+      alert("Error assembling dossier: " + (json.message || "Unknown error"));
     }
   } catch (err) {
     alert("Network error: " + err.message);
@@ -1308,14 +1350,20 @@ async function triggerGenerateScript(projId) {
     const res = await fetch("/api/script/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ project_id: projId })
+      body: JSON.stringify({ project_id: projId, async: true })
     });
-    const json = await res.json();
-    if (json.status === "success") {
+    const json = await safeParseResponse(res);
+    if (json.status === "queued" && json.job_id) {
+      await waitForBackgroundJob(json.job_id);
+      const sRes = await fetch(`/api/script/${projId}`);
+      const sJson = await safeParseResponse(sRes);
+      currentScript = sJson.script;
+      await refreshStudioData();
+    } else if (json.status === "success") {
       currentScript = json.script;
       await refreshStudioData();
     } else {
-      alert("Script generation error: " + json.message);
+      alert("Script generation error: " + (json.message || "Unknown error"));
     }
   } catch (err) {
     alert("Network error: " + err.message);

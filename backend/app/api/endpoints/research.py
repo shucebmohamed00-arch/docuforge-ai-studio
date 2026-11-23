@@ -5,6 +5,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.deep_research import DeepResearchAgent
 from ...agents.fact_checker import FactCheckingAgent
+from ...core.job_runner import JobRunner
 from ...models.project import ProjectManager
 from ...database import get_connection
 
@@ -23,6 +24,23 @@ async def build_dossier_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": f"Project '{project_id}' not found"}, status_code=404)
 
     topic_title = project.get("title", "")
+
+    if data.get("async"):
+        def _bg_research(progress_callback=None):
+            if progress_callback:
+                progress_callback(15, f"Deep Research Agent investigating '{topic_title}'...")
+            DeepResearchAgent.assemble_evidence_dossier(project_id, topic_title)
+            if progress_callback:
+                progress_callback(100, "Evidence Dossier assembled.")
+            return f"/api/research/dossier/{project_id}"
+
+        job_id = JobRunner.run_in_background(
+            project_id=project_id,
+            job_type="DEEP_RESEARCH",
+            task_func=_bg_research
+        )
+        return JSONResponse({"status": "queued", "job_id": job_id})
+
     try:
         dossier = DeepResearchAgent.assemble_evidence_dossier(project_id, topic_title)
         return JSONResponse({"status": "success", "dossier": dossier})

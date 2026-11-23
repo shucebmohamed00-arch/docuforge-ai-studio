@@ -5,6 +5,7 @@ import json
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.topic_discovery import TopicDiscoveryAgent
+from ...core.job_runner import JobRunner
 from ...database import get_connection
 
 async def discover_topics_endpoint(request: Request) -> JSONResponse:
@@ -16,6 +17,22 @@ async def discover_topics_endpoint(request: Request) -> JSONResponse:
     project_id = data.get("project_id")
     if not project_id:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
+
+    if data.get("async"):
+        def _bg_discover(progress_callback=None):
+            if progress_callback:
+                progress_callback(15, "Claude Sonnet scanning documentary trends & 100-point scoring...")
+            res = TopicDiscoveryAgent.discover_five_candidates(project_id)
+            if progress_callback:
+                progress_callback(100, "Discovered 5 vetted documentary topics.")
+            return f"/api/topics/project/{project_id}"
+
+        job_id = JobRunner.run_in_background(
+            project_id=project_id,
+            job_type="TOPIC_DISCOVERY",
+            task_func=_bg_discover
+        )
+        return JSONResponse({"status": "queued", "job_id": job_id})
 
     try:
         result = TopicDiscoveryAgent.discover_five_candidates(project_id)

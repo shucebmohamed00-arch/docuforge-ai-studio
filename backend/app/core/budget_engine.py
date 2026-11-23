@@ -5,7 +5,7 @@ Enforces the $50 monthly hard ceiling, logs all API costs, and tracks spending p
 import uuid
 import logging
 from datetime import datetime
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional, Tuple, List
 from ..database import get_connection
 from ..config import MONTHLY_HARD_CEILING_USD, MONTHLY_WARNING_THRESHOLD_USD
 

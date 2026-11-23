@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 import subprocess
 import logging
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from ..database import get_connection
 from ..config import MEDIA_DIR
 from ..core.budget_engine import BudgetEngine

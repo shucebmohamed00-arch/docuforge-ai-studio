@@ -80,6 +80,9 @@ def validate_transition(current_status: str, new_status: str) -> Tuple[bool, Opt
     except ValueError as e:
         return False, f"Invalid status value: {e}"
 
+    if curr == target:
+        return True, None
+
     allowed = ALLOWED_TRANSITIONS.get(curr, [])
     if target not in allowed:
         return False, f"Illegal transition from '{curr.value}' to '{target.value}'. Allowed: {[s.value for s in allowed]}"

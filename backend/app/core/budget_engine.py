@@ -107,6 +107,12 @@ class BudgetEngine:
         try:
             with conn:
                 cursor = conn.cursor()
+                safe_project_id = project_id
+                if project_id:
+                    cursor.execute("SELECT id FROM projects WHERE id = ?", (project_id,))
+                    if not cursor.fetchone():
+                        safe_project_id = None
+
                 # 1. Log transaction
                 cursor.execute("""
                 INSERT INTO budget_logs (
@@ -114,7 +120,7 @@ class BudgetEngine:
                     tokens_in, tokens_out, cost_usd, notes, created_at
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 """, (
-                    log_id, project_id, agent_name, operation, model_or_service,
+                    log_id, safe_project_id, agent_name, operation, model_or_service,
                     tokens_in, tokens_out, cost_usd, notes
                 ))
 
@@ -128,13 +134,13 @@ class BudgetEngine:
                 """, (cost_usd, cost_usd, month))
 
                 # 3. Update project spent if applicable
-                if project_id:
+                if safe_project_id:
                     cursor.execute("""
                     UPDATE projects
                     SET budget_spent_usd = budget_spent_usd + ?,
                         updated_at = CURRENT_TIMESTAMP
                     WHERE id = ?
-                    """, (cost_usd, project_id))
+                    """, (cost_usd, safe_project_id))
 
             logger.info("Logged cost: $%0.4f by %s for %s", cost_usd, agent_name, operation)
             return {

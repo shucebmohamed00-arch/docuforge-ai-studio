@@ -1,6 +1,7 @@
 """
 DocuForge AI - Multi-Pass Professional Creative Editing API Endpoints (Directive 27)
 """
+import asyncio
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.editing_passes import ProfessionalEditingReviewEngine
@@ -17,7 +18,7 @@ async def run_editing_passes_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
     try:
-        result = ProfessionalEditingReviewEngine.run_all_passes(project_id)
+        result = await asyncio.to_thread(ProfessionalEditingReviewEngine.run_all_passes, project_id)
         return JSONResponse({"status": "success", "result": result})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

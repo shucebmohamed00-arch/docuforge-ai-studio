@@ -1,6 +1,7 @@
 """
 DocuForge AI - Quality Control API Endpoints
 """
+import asyncio
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.quality_control import QualityControlAgent
@@ -17,7 +18,7 @@ async def run_qc_inspection_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
     try:
-        report = QualityControlAgent.inspect_project(project_id)
+        report = await asyncio.to_thread(QualityControlAgent.inspect_project, project_id)
         return JSONResponse({"status": "success", "report": report})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

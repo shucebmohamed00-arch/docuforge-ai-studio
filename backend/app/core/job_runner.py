@@ -14,6 +14,8 @@ logger = logging.getLogger("docuforge.jobs")
 class JobRunner:
     @staticmethod
     def create_job(project_id: str, job_type: str, stage_message: str = "Queued") -> str:
+        from ..models.project import ProjectManager
+        ProjectManager.ensure_project(project_id)
         job_id = str(uuid.uuid4())
         conn = get_connection()
         try:

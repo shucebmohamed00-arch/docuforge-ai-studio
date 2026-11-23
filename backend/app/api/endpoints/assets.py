@@ -1,9 +1,11 @@
 """
 DocuForge AI - Footage Discovery & Visual Approval API Endpoints
 """
+import asyncio
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.footage_discovery import RealFootageDiscoveryAgent
+from ...core.job_runner import JobRunner
 
 async def discover_assets_endpoint(request: Request) -> JSONResponse:
     try:
@@ -15,8 +17,24 @@ async def discover_assets_endpoint(request: Request) -> JSONResponse:
     if not project_id:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
+    if data.get("async"):
+        def _bg_assets(progress_callback=None):
+            if progress_callback:
+                progress_callback(15, "Scanning Wikimedia Commons, NASA, and Pixabay archives...")
+            RealFootageDiscoveryAgent.discover_assets_for_project(project_id)
+            if progress_callback:
+                progress_callback(100, "Archival footage discovered.")
+            return f"/api/assets/project/{project_id}"
+
+        job_id = JobRunner.run_in_background(
+            project_id=project_id,
+            job_type="ASSET_DISCOVERY",
+            target_func=_bg_assets
+        )
+        return JSONResponse({"status": "queued", "job_id": job_id})
+
     try:
-        result = RealFootageDiscoveryAgent.discover_assets_for_project(project_id)
+        result = await asyncio.to_thread(RealFootageDiscoveryAgent.discover_assets_for_project, project_id)
         return JSONResponse({"status": "success", "result": result})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

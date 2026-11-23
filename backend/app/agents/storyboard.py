@@ -36,6 +36,9 @@ class StoryboardEngine:
 
         manifest_beats = DocumentaryCreativeDirector.get_manifest(project_id)
         if not manifest_beats:
+            DocumentaryCreativeDirector.generate_visual_manifest(project_id)
+            manifest_beats = DocumentaryCreativeDirector.get_manifest(project_id)
+        if not manifest_beats:
             raise ValueError(f"No visual manifest found for project '{project_id}'.")
 
         assets = RealFootageDiscoveryAgent.get_project_assets(project_id)
@@ -55,6 +58,7 @@ class StoryboardEngine:
                     item_id = str(uuid.uuid4())
                     matched_asset_id = beat.get("matched_asset_id")
                     asset_obj = asset_map.get(matched_asset_id) if matched_asset_id else None
+                    matched_asset_id = matched_asset_id if asset_obj else None
 
                     visual_summary = asset_obj["title"] if asset_obj else beat["visual_concept"]
                     asset_type = asset_obj["asset_type"] if asset_obj else beat["target_asset_type"]

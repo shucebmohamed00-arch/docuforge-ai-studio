@@ -1,6 +1,7 @@
 """
 DocuForge AI - Visual Planning API Endpoints
 """
+import asyncio
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.creative_director import DocumentaryCreativeDirector
@@ -17,7 +18,7 @@ async def generate_manifest_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
     try:
-        result = DocumentaryCreativeDirector.generate_visual_manifest(project_id)
+        result = await asyncio.to_thread(DocumentaryCreativeDirector.generate_visual_manifest, project_id)
         return JSONResponse({"status": "success", "result": result})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)
@@ -54,6 +55,13 @@ async def update_beat_endpoint(request: Request) -> JSONResponse:
 async def advance_to_footage_discovery_endpoint(request: Request) -> JSONResponse:
     project_id = request.path_params.get("project_id")
     try:
+        project = ProjectManager.get_project(project_id)
+        if project and project.get("status") in ("FOOTAGE_DISCOVERY", "ASSETS_PENDING_APPROVAL", "STORYBOARD_REVIEW"):
+            return JSONResponse({
+                "status": "success",
+                "message": "Visual Manifest locked. Advanced to Stage 6: Real Footage Discovery.",
+                "project": project
+            })
         updated = ProjectManager.update_status(project_id, "FOOTAGE_DISCOVERY")
         return JSONResponse({
             "status": "success",

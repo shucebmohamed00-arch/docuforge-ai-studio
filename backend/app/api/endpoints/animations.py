@@ -1,9 +1,11 @@
 """
 DocuForge AI - Animation Studio API Endpoints
 """
+import asyncio
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.animation_director import CinematicAnimationDirector
+from ...core.job_runner import JobRunner
 from ...models.project import ProjectManager
 from ...config import MEDIA_DIR
 
@@ -17,8 +19,24 @@ async def render_all_animations_endpoint(request: Request) -> JSONResponse:
     if not project_id:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
+    if data.get("async"):
+        def _bg_anim(progress_callback=None):
+            if progress_callback:
+                progress_callback(15, "Rendering 1080p motion graphics, maps, and Ken Burns clips...")
+            CinematicAnimationDirector.render_all_animations(project_id)
+            if progress_callback:
+                progress_callback(100, "All 1080p animation clips rendered.")
+            return f"/api/animation/project/{project_id}"
+
+        job_id = JobRunner.run_in_background(
+            project_id=project_id,
+            job_type="ANIMATION_GEN",
+            target_func=_bg_anim
+        )
+        return JSONResponse({"status": "queued", "job_id": job_id})
+
     try:
-        result = CinematicAnimationDirector.render_all_animations(project_id)
+        result = await asyncio.to_thread(CinematicAnimationDirector.render_all_animations, project_id)
         return JSONResponse({"status": "success", "result": result})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

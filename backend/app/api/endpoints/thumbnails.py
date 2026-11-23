@@ -1,6 +1,7 @@
 """
 DocuForge AI - Thumbnails API Endpoints
 """
+import asyncio
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from ...agents.thumbnail_director import ThumbnailDirector
@@ -17,7 +18,7 @@ async def generate_thumbnails_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
     try:
-        result = ThumbnailDirector.generate_both_thumbnails(project_id)
+        result = await asyncio.to_thread(ThumbnailDirector.generate_both_thumbnails, project_id)
         return JSONResponse({"status": "success", "result": result})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

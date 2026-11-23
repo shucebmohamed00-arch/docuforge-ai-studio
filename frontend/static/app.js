@@ -1847,10 +1847,16 @@ async function triggerDiscoverAssets(projId) {
     const res = await fetch("/api/assets/discover", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ project_id: projId })
+      body: JSON.stringify({ project_id: projId, async: true })
     });
-    const json = await res.json();
-    if (json.status === "success") {
+    const json = await safeParseResponse(res);
+    if (json.status === "queued" && json.job_id) {
+      await waitForBackgroundJob(json.job_id);
+      const listRes = await fetch(`/api/assets/project/${projId}`);
+      const listJson = await safeParseResponse(listRes);
+      alert(`Harvested ${(listJson.assets || []).length} free permitted assets! Mandatory approval required.`);
+      await refreshStudioData();
+    } else if (json.status === "success") {
       alert(`Harvested ${json.result.total_assets} free permitted assets! Mandatory approval required.`);
       await refreshStudioData();
     } else {
@@ -2402,10 +2408,14 @@ async function triggerSynthesizeAllAudio(projId) {
     const res = await fetch("/api/audio/synthesize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ project_id: projId, voice: voice })
+      body: JSON.stringify({ project_id: projId, voice: voice, async: true })
     });
-    const json = await res.json();
-    if (json.status === "success") {
+    const json = await safeParseResponse(res);
+    if (json.status === "queued" && json.job_id) {
+      await waitForBackgroundJob(json.job_id);
+      alert("Synthesized all narration and background audio tracks!");
+      await refreshStudioData();
+    } else if (json.status === "success") {
       alert(`Synthesized ${json.result.total_beats} narration tracks (${json.result.total_audio_duration_sec}s total audio)!`);
       await refreshStudioData();
     } else {
@@ -2625,10 +2635,14 @@ async function triggerRenderAllAnimations(projId) {
     const res = await fetch("/api/animation/render-all", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ project_id: projId })
+      body: JSON.stringify({ project_id: projId, async: true })
     });
-    const json = await res.json();
-    if (json.status === "success") {
+    const json = await safeParseResponse(res);
+    if (json.status === "queued" && json.job_id) {
+      await waitForBackgroundJob(json.job_id);
+      alert("Rendered all 1080p motion graphics and animated video clips!");
+      await refreshStudioData();
+    } else if (json.status === "success") {
       alert(`Rendered ${json.result.total_rendered} motion graphics and animated video clips!`);
       await refreshStudioData();
     } else {

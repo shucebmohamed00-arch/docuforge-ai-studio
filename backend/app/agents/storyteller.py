@@ -47,7 +47,13 @@ class MasterDocumentaryStoryteller:
             notes="10-beat narrative script generation with sentence-level visual directions"
         )
 
+        from ..models.project import ProjectManager
+        ProjectManager.ensure_project(project_id)
+
         dossier = DeepResearchAgent.get_dossier(project_id)
+        if not dossier:
+            DeepResearchAgent.compile_evidence_dossier(project_id)
+            dossier = DeepResearchAgent.get_dossier(project_id)
         if not dossier:
             raise ValueError(f"Cannot generate script: No evidence dossier found for project '{project_id}'.")
 

@@ -242,6 +242,9 @@ class SoundDesignDirector:
 
         items = StoryboardEngine.get_storyboard(project_id)
         if not items:
+            StoryboardEngine.compile_storyboard(project_id)
+            items = StoryboardEngine.get_storyboard(project_id)
+        if not items:
             raise ValueError(f"No storyboard items found for project '{project_id}'. Complete Phase 7 first.")
 
         results = []

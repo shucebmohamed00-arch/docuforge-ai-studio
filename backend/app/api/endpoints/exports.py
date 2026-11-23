@@ -1,6 +1,7 @@
 """
 DocuForge AI - Production Export Package API Endpoints
 """
+import asyncio
 import os
 from starlette.requests import Request
 from starlette.responses import JSONResponse, FileResponse
@@ -18,7 +19,7 @@ async def build_export_package_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
     try:
-        result = ProductionPackageExporter.assemble_package(project_id)
+        result = await asyncio.to_thread(ProductionPackageExporter.assemble_package, project_id)
         return JSONResponse({"status": "success", "result": result})
     except Exception as e:
         return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

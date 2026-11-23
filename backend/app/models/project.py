@@ -58,6 +58,34 @@ class ProjectManager:
             conn.close()
 
     @classmethod
+    def ensure_project(
+        cls,
+        project_id: str,
+        default_title: str = "The Swiss Air Grounding: How Arrogance Destroyed the Bank of the Skies",
+        default_pillar: str = "BUSINESS",
+        default_status: str = "STORYBOARD_REVIEW"
+    ) -> Dict[str, Any]:
+        """Ensures a project row exists for project_id (e.g. if an ephemeral cloud container restarted)."""
+        existing = cls.get_project(project_id)
+        if existing:
+            return existing
+        base_slug = cls._slugify(default_title)
+        slug = f"{base_slug}-{project_id[:8]}"
+        conn = get_connection()
+        try:
+            with conn:
+                conn.execute("""
+                INSERT OR IGNORE INTO projects (
+                    id, title, slug, pillar, target_duration_mins,
+                    status, budget_allocated_usd, budget_spent_usd, metadata_json,
+                    created_at, updated_at
+                ) VALUES (?, ?, ?, ?, 15, ?, 5.00, 0.0, '{}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+                """, (project_id, default_title, slug, default_pillar, default_status))
+            return cls.get_project(project_id)
+        finally:
+            conn.close()
+
+    @classmethod
     def list_projects(cls) -> List[Dict[str, Any]]:
         conn = get_connection()
         try:

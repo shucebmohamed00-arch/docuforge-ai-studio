@@ -164,7 +164,13 @@ class DocumentaryCreativeDirector:
             notes="Sentence-level segmentation into visual beats with shot directions"
         )
 
+        from ..models.project import ProjectManager
+        ProjectManager.ensure_project(project_id)
+
         script = MasterDocumentaryStoryteller.get_project_script(project_id)
+        if not script:
+            MasterDocumentaryStoryteller.generate_full_script(project_id)
+            script = MasterDocumentaryStoryteller.get_project_script(project_id)
         if not script:
             raise ValueError(f"No script found for project '{project_id}'.")
 

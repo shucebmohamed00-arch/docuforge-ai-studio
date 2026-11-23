@@ -625,11 +625,10 @@ function closeNewProjectModal() {
 
 async function handleCreateProject(e) {
   e.preventDefault();
-  const title = document.getElementById("proj-title").value.trim();
+  const rawTitle = document.getElementById("proj-title").value.trim();
+  const title = rawTitle || "Autonomous Topic Discovery Session";
   const pillar = document.getElementById("proj-pillar").value;
   const duration = parseInt(document.getElementById("proj-duration").value);
-
-  if (!title) return;
 
   try {
     const res = await fetch("/api/projects", {
@@ -641,13 +640,39 @@ async function handleCreateProject(e) {
     if (json.status === "success") {
       closeNewProjectModal();
       document.getElementById("new-project-form").reset();
+      selectedProjectId = json.project.id;
       await refreshStudioData();
-      switchTab("projects");
+      switchTab("topics");
+      if (!rawTitle) {
+        triggerDiscoverTopics(json.project.id);
+      }
     } else {
       alert("Error creating project: " + json.message);
     }
   } catch (err) {
     alert("Network error: " + err.message);
+  }
+}
+
+async function handleAutoStartTopicDiscovery() {
+  try {
+    const res = await fetch("/api/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: "Autonomous Topic Discovery Session",
+        pillar: "BUSINESS",
+        target_duration_mins: 20
+      })
+    });
+    const json = await res.json();
+    if (json.status === "success") {
+      selectedProjectId = json.project.id;
+      await refreshStudioData();
+      await triggerDiscoverTopics(json.project.id);
+    }
+  } catch (err) {
+    alert("Error starting discovery: " + err.message);
   }
 }
 
@@ -686,11 +711,11 @@ async function renderTopicDiscovery(container) {
   if (projects.length === 0) {
     container.innerHTML = `
       <div class="section-panel" style="text-align: center; padding: 40px;">
-        <h3>No Project Selected</h3>
+        <h3>Autonomous Topic Discovery Agent</h3>
         <p style="color: var(--text-muted); font-size: 13px; margin: 12px 0 20px;">
-          Create a documentary project first to discover tailored topic candidates.
+          Let the AI Topic Discovery Agent scan trends, score candidates on a 100-point matrix, and present 5 vetted documentary topics for you to choose from.
         </p>
-        <button class="btn btn-primary" onclick="openNewProjectModal()">+ Create Project</button>
+        <button class="btn btn-primary" onclick="handleAutoStartTopicDiscovery()">🔍 Find 5 Documentary Topics Automatically</button>
       </div>
     `;
     return;

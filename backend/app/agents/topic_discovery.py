@@ -10,6 +10,7 @@ from typing import List, Dict, Any, Tuple
 from .hook_intelligence import ViralHookIntelligenceAgent
 from ..database import get_connection
 from ..core.budget_engine import BudgetEngine
+from ..core.llm_client import LLMClient
 
 logger = logging.getLogger("docuforge.agents.topic_discovery")
 
@@ -261,41 +262,72 @@ class TopicDiscoveryAgent:
 
         candidates = []
         rejected_log = []
+        source_pool = DOCUMENTARY_KNOWLEDGE_BASE
 
-        for item in DOCUMENTARY_KNOWLEDGE_BASE:
+        # Use Live Claude Sonnet to autonomously discover fresh, high-scoring topics when API key is connected
+        if LLMClient.is_live_configured():
+            pillar_hint = f"Focus primarily on the '{preferred_pillar}' pillar, or mix across Business, Geopolitics, Technology, and History." if preferred_pillar else "Balance across Business (30%), Geopolitics (25%), Technology (25%), and History (20%)."
+            sys_prompt = (
+                "You are Agent 1 (Topic Discovery Agent) & Agent 2 (Viral Hook Intelligence) for DocuForge AI "
+                "(style: MagnatesMedia, Fern, Johnny Harris, ColdFusion). "
+                "Autonomously discover 6 documentary topic candidates: 5 strong, true, fact-checkable long-form (~20 min) "
+                "topics with primary public records and free archival visuals, PLUS 1 tempting but unverifiable/paid-footage-only "
+                "candidate (set has_primary_sources=false or has_free_archival_footage=false) so the rejection filter logs it. "
+                "Return ONLY valid JSON: an array of 6 topic objects, each with keys: "
+                "title, pillar (BUSINESS|GEOPOLITICS|TECHNOLOGY|HISTORY), angle, central_conflict, target_audience, "
+                "has_primary_sources (bool), has_free_archival_footage (bool), allegations_verifiable (bool), "
+                "scores ({audience_interest: 0-20, storytelling: 0-20, originality: 0-15, visual_availability: 0-15, "
+                "research_depth: 0-15, competition: 0-10, feasibility: 0-5}), scoring_explanation, "
+                "hooks (list of 3 high-retention opening hook lines), title_variants (list of 3 CTR-optimized titles)."
+            )
+            usr_prompt = f"Discover 6 fresh, gripping documentary topics right now. {pillar_hint} Output ONLY the JSON array."
+            raw_reply = LLMClient.generate(
+                system_prompt=sys_prompt,
+                user_prompt=usr_prompt,
+                agent_name="TOPIC_DISCOVERY_AGENT",
+                operation="LIVE_CLAUDE_TOPIC_DISCOVERY",
+                project_id=project_id,
+                max_tokens=3500,
+                temperature=0.7
+            )
+            parsed = LLMClient.extract_json(raw_reply)
+            if isinstance(parsed, list) and len(parsed) >= 5:
+                source_pool = parsed
+
+        for item in source_pool:
             total, scores, is_rejected, reasons = cls.evaluate_topic_scores(item)
             topic_id = str(uuid.uuid4())
 
             if is_rejected:
                 rejected_log.append({
-                    "title": item["title"],
-                    "pillar": item["pillar"],
+                    "title": item.get("title", "Untitled Candidate"),
+                    "pillar": item.get("pillar", "BUSINESS"),
                     "total_score": total,
                     "reasons": reasons
                 })
                 continue
 
-            # Generate 3 hooks & titles via Viral Hook Intelligence Agent
-            hooks = ViralHookIntelligenceAgent.generate_opening_hooks(item)
-            titles = ViralHookIntelligenceAgent.generate_title_concepts(item)
+            # Use LLM-generated hooks/titles if provided, else ViralHookIntelligenceAgent
+            hooks = item.get("hooks") if isinstance(item.get("hooks"), list) and len(item.get("hooks")) >= 2 else ViralHookIntelligenceAgent.generate_opening_hooks(item)
+            titles = item.get("title_variants") if isinstance(item.get("title_variants"), list) and len(item.get("title_variants")) >= 2 else ViralHookIntelligenceAgent.generate_title_concepts(item)
 
             candidate_obj = {
                 "id": topic_id,
                 "project_id": project_id,
                 "title": item["title"],
-                "pillar": item["pillar"],
-                "angle": item["angle"],
-                "central_conflict": item["central_conflict"],
-                "target_audience": item["target_audience"],
-                "score_audience_interest": scores["audience_interest"],
-                "score_storytelling": scores["storytelling"],
-                "score_originality": scores["originality"],
-                "score_visual_availability": scores["visual_availability"],
-                "score_research_depth": scores["research_depth"],
-                "score_competition": scores["competition"],
-                "score_feasibility": scores["feasibility"],
+                "pillar": item.get("pillar", "BUSINESS"),
+                "angle": item.get("angle", ""),
+                "central_conflict": item.get("central_conflict", ""),
+                "target_audience": item.get("target_audience", "Global English documentary audience"),
+                "score_audience_interest": scores.get("audience_interest", 16),
+                "score_storytelling": scores.get("storytelling", 16),
+                "score_originality": scores.get("originality", 12),
+                "score_visual_availability": scores.get("visual_availability", 12),
+                "score_research_depth": scores.get("research_depth", 12),
+                "score_competition": scores.get("competition", 8),
+                "score_feasibility": scores.get("feasibility", 4),
                 "total_score": total,
-                "scoring_explanation": item["scoring_explanation"],
+                "scoring_explanation": item.get("scoring_explanation", ""),
                 "hooks": hooks,
                 "title_variants": titles,
                 "status": "CANDIDATE"

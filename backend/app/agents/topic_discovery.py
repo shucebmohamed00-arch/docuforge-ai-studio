@@ -287,7 +287,7 @@ class TopicDiscoveryAgent:
                 agent_name="TOPIC_DISCOVERY_AGENT",
                 operation="LIVE_CLAUDE_TOPIC_DISCOVERY",
                 project_id=project_id,
-                max_tokens=3500,
+                max_tokens=2000,
                 temperature=0.7
             )
             parsed = LLMClient.extract_json(raw_reply)

@@ -27,6 +27,31 @@ class CinematicAnimationDirector:
     FPS = 30
 
     @classmethod
+    def _encode_or_fallback(cls, temp_raw: Path, output_path: Path, duration_sec: float) -> str:
+        if temp_raw.exists() and temp_raw.stat().st_size > 1000:
+            cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
+            try:
+                subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                temp_raw.unlink(missing_ok=True)
+                return str(output_path)
+            except Exception as e:
+                logger.warning("Temp re-encode failed: %s, falling back to lavfi", e)
+
+        cmd_fallback = [
+            "ffmpeg", "-y",
+            "-f", "lavfi",
+            "-i", f"color=c=0x141824:s=1920x1080:d={duration_sec}",
+            "-c:v", "libx264",
+            "-preset", "ultrafast",
+            "-crf", "23",
+            "-pix_fmt", "yuv420p",
+            str(output_path)
+        ]
+        subprocess.run(cmd_fallback, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        temp_raw.unlink(missing_ok=True)
+        return str(output_path)
+
+    @classmethod
     def render_animated_map(
         cls,
         output_path: Path,
@@ -98,12 +123,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-
-        # Re-encode to H.264 MP4 with FFmpeg
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
-        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        temp_raw.unlink(missing_ok=True)
-        return str(output_path)
+        return cls._encode_or_fallback(temp_raw, output_path, duration_sec)
 
     @classmethod
     def render_financial_chart(
@@ -171,10 +191,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
-        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        temp_raw.unlink(missing_ok=True)
-        return str(output_path)
+        return cls._encode_or_fallback(temp_raw, output_path, duration_sec)
 
     @classmethod
     def render_document_reveal(
@@ -239,10 +256,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
-        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        temp_raw.unlink(missing_ok=True)
-        return str(output_path)
+        return cls._encode_or_fallback(temp_raw, output_path, duration_sec)
 
     @classmethod
     def render_photo_ken_burns(
@@ -296,10 +310,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
-        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        temp_raw.unlink(missing_ok=True)
-        return str(output_path)
+        return cls._encode_or_fallback(temp_raw, output_path, duration_sec)
 
     @classmethod
     def render_all_animations(cls, project_id: str) -> Dict[str, Any]:

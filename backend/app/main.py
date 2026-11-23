@@ -241,4 +241,13 @@ middleware = [
     )
 ]
 
-app = Starlette(debug=DEBUG, routes=routes, middleware=middleware)
+async def on_app_startup():
+    init_db()
+    try:
+        from .core.seeder import seed_default_production_if_needed
+        seed_default_production_if_needed()
+    except Exception as e:
+        import logging
+        logging.getLogger("docuforge").warning("Startup seeder notice: %s", e)
+
+app = Starlette(debug=DEBUG, routes=routes, middleware=middleware, on_startup=[on_app_startup])

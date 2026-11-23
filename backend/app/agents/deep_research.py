@@ -6,7 +6,7 @@ quotations, sources, and classified claims (VERIFIED_FACT, ESTIMATE, ALLEGATION,
 import uuid
 import json
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from ..database import get_connection
 from ..core.budget_engine import BudgetEngine
 from ..core.llm_client import LLMClient
@@ -251,6 +251,15 @@ DOSSIER_KNOWLEDGE_BASE = {
 }
 
 class DeepResearchAgent:
+    @classmethod
+    def compile_evidence_dossier(cls, project_id: str, topic_title: Optional[str] = None) -> Dict[str, Any]:
+        """Alias for assemble_evidence_dossier."""
+        if not topic_title:
+            from ..models.project import ProjectManager
+            proj = ProjectManager.get_project(project_id)
+            topic_title = proj.get("title", "The Swiss Air Grounding") if proj else "The Swiss Air Grounding"
+        return cls.assemble_evidence_dossier(project_id, topic_title)
+
     @classmethod
     def assemble_evidence_dossier(cls, project_id: str, topic_title: str) -> Dict[str, Any]:
         """

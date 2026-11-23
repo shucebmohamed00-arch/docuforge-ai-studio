@@ -103,6 +103,9 @@ class CinematicEditingDirector:
 
         items = StoryboardEngine.get_storyboard(project_id)
         if not items:
+            StoryboardEngine.compile_storyboard(project_id)
+            items = StoryboardEngine.get_storyboard(project_id)
+        if not items:
             raise ValueError(f"No storyboard items found for project '{project_id}'.")
 
         proj_anim_dir = MEDIA_DIR / "animations" / project_id
@@ -172,8 +175,8 @@ class CinematicEditingDirector:
             "-i", str(raw_video_mp4),
             "-i", str(raw_audio_wav),
             "-c:v", "libx264",
-            "-preset", "veryfast",
-            "-crf", "20",
+            "-preset", "ultrafast",
+            "-crf", "22",
             "-pix_fmt", "yuv420p",
             "-c:a", "aac",
             "-b:a", "192k",

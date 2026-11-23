@@ -9,6 +9,13 @@ from ...core.state_machine import ProjectStatus
 
 async def list_projects_endpoint(request: Request) -> JSONResponse:
     projects = ProjectManager.list_projects()
+    if not projects:
+        try:
+            from ...core.seeder import seed_default_production_if_needed
+            seed_default_production_if_needed()
+            projects = ProjectManager.list_projects()
+        except Exception:
+            pass
     return JSONResponse({"status": "success", "count": len(projects), "projects": projects})
 
 async def create_project_endpoint(request: Request) -> JSONResponse:

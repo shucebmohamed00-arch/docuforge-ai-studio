@@ -100,7 +100,7 @@ class CinematicAnimationDirector:
         writer.release()
 
         # Re-encode to H.264 MP4 with FFmpeg
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-pix_fmt", "yuv420p", str(output_path)]
+        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
         subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         temp_raw.unlink(missing_ok=True)
         return str(output_path)
@@ -171,7 +171,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-pix_fmt", "yuv420p", str(output_path)]
+        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
         subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         temp_raw.unlink(missing_ok=True)
         return str(output_path)
@@ -239,7 +239,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-pix_fmt", "yuv420p", str(output_path)]
+        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
         subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         temp_raw.unlink(missing_ok=True)
         return str(output_path)
@@ -296,7 +296,7 @@ class CinematicAnimationDirector:
             writer.write(frame)
 
         writer.release()
-        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-pix_fmt", "yuv420p", str(output_path)]
+        cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
         subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         temp_raw.unlink(missing_ok=True)
         return str(output_path)
@@ -323,27 +323,34 @@ class CinematicAnimationDirector:
         proj_anim_dir.mkdir(parents=True, exist_ok=True)
 
         items = StoryboardEngine.get_storyboard(project_id)
+        if not items:
+            StoryboardEngine.compile_storyboard(project_id)
+            items = StoryboardEngine.get_storyboard(project_id)
+
         rendered_clips = []
 
         for it in items:
             order_idx = it["order_index"]
             asset_type = it.get("asset_type", "ARCHIVAL_VIDEO")
             out_clip = proj_anim_dir / f"clip_{order_idx}.mp4"
-            dur = it.get("duration_sec", 6.0)
+            dur = min(float(it.get("duration_sec", 4.0)), 4.5)
 
             if asset_type == "MAP":
-                cls.render_animated_map(out_clip, duration_sec=dur, title="EUROPEAN AIRSPACE & DEREGULATION CHOKEPOINTS")
                 anim_type = "ANIMATED_MAP"
+                if not (out_clip.exists() and out_clip.stat().st_size > 5000):
+                    cls.render_animated_map(out_clip, duration_sec=dur, title="EUROPEAN AIRSPACE & DEREGULATION CHOKEPOINTS")
             elif asset_type == "CHART":
-                cls.render_financial_chart(out_clip, duration_sec=dur, title="SAIRGROUP OFF-BALANCE-SHEET DEBT ESCALATION")
                 anim_type = "DATA_VISUALIZATION"
+                if not (out_clip.exists() and out_clip.stat().st_size > 5000):
+                    cls.render_financial_chart(out_clip, duration_sec=dur, title="SAIRGROUP OFF-BALANCE-SHEET DEBT ESCALATION")
             elif asset_type == "DOCUMENT":
-                cls.render_document_reveal(out_clip, duration_sec=dur, headline=it["visual_summary"][:50])
                 anim_type = "DOCUMENT_REVEAL"
+                if not (out_clip.exists() and out_clip.stat().st_size > 5000):
+                    cls.render_document_reveal(out_clip, duration_sec=dur, headline=it["visual_summary"][:50])
             else:
-                # Default Photo Ken Burns or cinematic motion
-                cls.render_photo_ken_burns(None, out_clip, duration_sec=dur, caption=it["visual_summary"][:45])
                 anim_type = "PHOTO_KEN_BURNS"
+                if not (out_clip.exists() and out_clip.stat().st_size > 5000):
+                    cls.render_photo_ken_burns(None, out_clip, duration_sec=dur, caption=it["visual_summary"][:45])
 
             web_url = f"/media/animations/{project_id}/clip_{order_idx}.mp4"
             rendered_clips.append({

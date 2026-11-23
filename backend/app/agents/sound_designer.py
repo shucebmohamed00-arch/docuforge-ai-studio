@@ -7,6 +7,8 @@ import os
 import re
 import wave
 import uuid
+import asyncio
+import concurrent.futures
 import subprocess
 import logging
 from pathlib import Path
@@ -111,7 +113,42 @@ class SoundDesignDirector:
                 logger.warning("OpenAI TTS synthesis skipped for beat %d: %s", beat_order, e)
 
         if not synthesized_live:
-            # Forward slashes for FFmpeg compatibility on Windows
+            # 3. Free Neural Documentary Voiceover via Microsoft Edge-TTS ($0/month, no API key needed)
+            edge_voice_map = {
+                VoiceProfile.INVESTIGATIVE_MALE: "en-US-AndrewMultilingualNeural",
+                VoiceProfile.ANALYTICAL_MALE: "en-US-GuyNeural",
+                VoiceProfile.NARRATIVE_FEMALE: "en-US-AriaNeural",
+                VoiceProfile.EXPOSITORY_MALE: "en-GB-RyanNeural",
+            }
+            edge_voice = edge_voice_map.get(voice, "en-US-AndrewMultilingualNeural")
+            try:
+                import edge_tts
+                raw_mp3 = proj_audio_dir / f"beat_{beat_order}_edge.mp3"
+
+                async def _run_edge():
+                    comm = edge_tts.Communicate(clean_text, edge_voice, rate="-4%")
+                    await comm.save(str(raw_mp3))
+
+                try:
+                    asyncio.get_running_loop()
+                    # Already inside an async event loop (e.g. Starlette endpoint)
+                    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
+                        ex.submit(lambda: asyncio.run(_run_edge())).result(timeout=30)
+                except RuntimeError:
+                    asyncio.run(_run_edge())
+
+                if raw_mp3.exists() and raw_mp3.stat().st_size > 500:
+                    subprocess.run([
+                        "ffmpeg", "-y", "-i", str(raw_mp3),
+                        "-af", "aresample=44100,loudnorm=I=-14:LRA=11:TP=-1",
+                        str(out_wav)
+                    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                    synthesized_live = True
+            except Exception as e:
+                logger.warning("Edge Neural TTS skipped for beat %d (falling back to local flite): %s", beat_order, e)
+
+        if not synthesized_live:
+            # 4. Offline Zero-Network Fallback: Local FFmpeg libflite
             clean_txt_path = str(txt_path).replace("\\", "/")
 
             cmd = [

@@ -92,8 +92,8 @@ async def test_live_connections_endpoint(request: Request) -> JSONResponse:
     else:
         results["tts"] = {
             "connected": True,
-            "provider": "FFmpeg Libflite + EBU R128 (-14 LUFS) Broadcast Master",
-            "message": "Local zero-cost TTS active. Paste an ElevenLabs API key anytime for neural documentary voiceovers."
+            "provider": "Edge Neural TTS ($0) + EBU R128 (-14 LUFS) Broadcast Master",
+            "message": "Free Microsoft Edge Neural documentary voice active ($0/mo). Paste an ElevenLabs API key anytime to override."
         }
 
     return JSONResponse({"status": "success", "diagnostics": results})

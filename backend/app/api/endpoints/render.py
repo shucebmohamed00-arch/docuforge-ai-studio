@@ -19,12 +19,14 @@ async def start_render_endpoint(request: Request) -> JSONResponse:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
 
     try:
+        def _render_worker(progress_callback=None):
+            return CinematicEditingDirector.assemble_documentary(project_id, progress_callback=progress_callback)
+
         # Launch documentary assembly in a background worker thread
         job_id = JobRunner.run_in_background(
-            project_id,
-            "VIDEO_COMPOSITING",
-            CinematicEditingDirector.assemble_documentary,
-            project_id=project_id
+            project_id=project_id,
+            job_type="VIDEO_COMPOSITING",
+            target_func=_render_worker
         )
         return JSONResponse({
             "status": "success",

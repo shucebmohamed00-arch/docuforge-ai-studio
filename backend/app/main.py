@@ -17,7 +17,8 @@ from .api.endpoints.projects import (
     get_project_endpoint,
     get_project_summary_endpoint,
     transition_project_endpoint,
-    delete_project_endpoint
+    delete_project_endpoint,
+    restore_swissair_endpoint
 )
 from .api.endpoints.budget import (
     get_budget_status_endpoint,
@@ -131,6 +132,7 @@ routes = [
     # Projects API
     Route("/api/projects", list_projects_endpoint, methods=["GET"]),
     Route("/api/projects", create_project_endpoint, methods=["POST"]),
+    Route("/api/projects/restore-swissair", restore_swissair_endpoint, methods=["GET", "POST"]),
     Route("/api/projects/{project_id}", get_project_endpoint, methods=["GET"]),
     Route("/api/projects/{project_id}/summary", get_project_summary_endpoint, methods=["GET"]),
     Route("/api/projects/{project_id}/transition", transition_project_endpoint, methods=["POST"]),

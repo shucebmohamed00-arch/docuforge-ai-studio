@@ -81,3 +81,12 @@ async def delete_project_endpoint(request: Request) -> JSONResponse:
     if not success:
         return JSONResponse({"status": "error", "message": f"Project '{project_id}' not found"}, status_code=404)
     return JSONResponse({"status": "success", "message": f"Project '{project_id}' deleted"})
+
+async def restore_swissair_endpoint(request: Request) -> JSONResponse:
+    try:
+        from ...core.seeder import seed_default_production_if_needed
+        pid = seed_default_production_if_needed()
+        project = ProjectManager.get_project(pid)
+        return JSONResponse({"status": "success", "message": "Swiss Air Grounding documentary restored successfully!", "project": project})
+    except Exception as e:
+        return JSONResponse({"status": "error", "message": str(e)}, status_code=500)

@@ -64,7 +64,7 @@ def seed_default_production_if_needed():
         DocumentaryCreativeDirector.generate_visual_manifest(SWISS_AIR_PROJECT_ID)
 
         # 6. Harvest & Approve Assets
-        RealFootageDiscoveryAgent.discover_all_permitted_assets(SWISS_AIR_PROJECT_ID)
+        RealFootageDiscoveryAgent.discover_assets_for_project(SWISS_AIR_PROJECT_ID)
         with conn:
             conn.execute("UPDATE visual_assets SET approval_status = 'APPROVED' WHERE project_id = ?", (SWISS_AIR_PROJECT_ID,))
 

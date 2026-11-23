@@ -28,6 +28,7 @@ class CinematicAnimationDirector:
 
     @classmethod
     def _encode_or_fallback(cls, temp_raw: Path, output_path: Path, duration_sec: float) -> str:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         if temp_raw.exists() and temp_raw.stat().st_size > 1000:
             cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
             try:
@@ -47,8 +48,14 @@ class CinematicAnimationDirector:
             "-pix_fmt", "yuv420p",
             str(output_path)
         ]
-        subprocess.run(cmd_fallback, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-        temp_raw.unlink(missing_ok=True)
+        try:
+            subprocess.run(cmd_fallback, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        except subprocess.CalledProcessError as err:
+            err_text = err.stderr.decode(errors="replace") if err.stderr else str(err)
+            logger.error("FFmpeg fallback failed: %s", err_text)
+            raise RuntimeError(f"FFmpeg render error: {err_text}")
+        finally:
+            temp_raw.unlink(missing_ok=True)
         return str(output_path)
 
     @classmethod

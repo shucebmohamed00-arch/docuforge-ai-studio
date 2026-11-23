@@ -110,6 +110,8 @@ class CinematicEditingDirector:
 
         proj_anim_dir = MEDIA_DIR / "animations" / project_id
         proj_audio_dir = MEDIA_DIR / "audio" / project_id
+        proj_anim_dir.mkdir(parents=True, exist_ok=True)
+        proj_audio_dir.mkdir(parents=True, exist_ok=True)
 
         # 2. Prepare Video Concat List
         report(30, "Checking and compiling video stream assets...")

@@ -250,33 +250,31 @@ class SoundDesignDirector:
         results = []
         total_audio_sec = 0.0
 
+        for it in items:
+            order_idx = it["order_index"]
+            narration = it["narration_text"]
+            audio_info = cls.synthesize_beat_audio(project_id, order_idx, narration, voice=voice)
+
+            # Generate ambient background bed for the scene
+            cls.generate_ambient_bgm(project_id, it["scene_number"], audio_info["duration_sec"])
+
+            total_audio_sec += audio_info["duration_sec"]
+            results.append({
+                "id": it["id"],
+                "order_index": order_idx,
+                "scene_number": it["scene_number"],
+                "beat_number": it["beat_number"],
+                "web_url": audio_info["web_url"],
+                "duration_sec": audio_info["duration_sec"],
+                "narration": narration
+            })
+
+        # Instantaneous batch update (< 1ms lock)
         conn = get_connection()
         try:
             with conn:
-                for it in items:
-                    order_idx = it["order_index"]
-                    narration = it["narration_text"]
-                    audio_info = cls.synthesize_beat_audio(project_id, order_idx, narration, voice=voice)
-
-                    # Generate ambient background bed for the scene
-                    cls.generate_ambient_bgm(project_id, it["scene_number"], audio_info["duration_sec"])
-
-                    # Update storyboard item with actual synthesized audio duration
-                    conn.execute("""
-                    UPDATE storyboard_items 
-                    SET duration_sec = ?
-                    WHERE id = ?
-                    """, (audio_info["duration_sec"], it["id"]))
-
-                    total_audio_sec += audio_info["duration_sec"]
-                    results.append({
-                        "order_index": order_idx,
-                        "scene_number": it["scene_number"],
-                        "beat_number": it["beat_number"],
-                        "web_url": audio_info["web_url"],
-                        "duration_sec": audio_info["duration_sec"],
-                        "narration": narration
-                    })
+                for r in results:
+                    conn.execute("UPDATE storyboard_items SET duration_sec = ? WHERE id = ?", (r["duration_sec"], r["id"]))
             
             logger.info("Synthesized %d audio beats for project %s (Total audio: %0.1fs)",
                         len(results), project_id, total_audio_sec)

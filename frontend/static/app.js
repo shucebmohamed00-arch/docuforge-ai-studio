@@ -644,7 +644,7 @@ async function handleCreateProject(e) {
       await refreshStudioData();
       switchTab("topics");
       if (!rawTitle) {
-        triggerDiscoverTopics(json.project.id);
+        triggerTopicDiscovery(json.project.id);
       }
     } else {
       alert("Error creating project: " + json.message);
@@ -669,7 +669,7 @@ async function handleAutoStartTopicDiscovery() {
     if (json.status === "success") {
       selectedProjectId = json.project.id;
       await refreshStudioData();
-      await triggerDiscoverTopics(json.project.id);
+      await triggerTopicDiscovery(json.project.id);
     }
   } catch (err) {
     alert("Error starting discovery: " + err.message);

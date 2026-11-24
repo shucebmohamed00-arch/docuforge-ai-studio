@@ -6,6 +6,8 @@ __pycache__/
 data/*.db
 data/*.db-journal
 data/exports/*
+!data/exports/swiss-air-grounding-prod/
+!data/exports/swiss-air-grounding-prod/**
 data/media/*
 data/previews/*
 backend/data/

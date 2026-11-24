@@ -4,5 +4,7 @@ __pycache__/
 .pytest_cache/
 .git/
 data/exports/*
+!data/exports/swiss-air-grounding-prod/
+!data/exports/swiss-air-grounding-prod/**
 data/media/*
 data/*.db

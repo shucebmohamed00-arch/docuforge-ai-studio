@@ -121,6 +121,7 @@ class CinematicEditingDirector:
         video_lines = []
         audio_lines = []
 
+        import gc
         for it in items:
             idx = it["order_index"]
             clip_path = proj_anim_dir / f"clip_{idx}.mp4"
@@ -135,17 +136,20 @@ class CinematicEditingDirector:
                 from .sound_designer import SoundDesignDirector
                 SoundDesignDirector.synthesize_beat_audio(project_id, idx, it["narration_text"])
 
-            # Use forward slashes for FFmpeg concat files on Windows
+            # Use forward slashes for FFmpeg concat files on Windows / Linux
             video_lines.append(f"file '{str(clip_path).replace(os.sep, '/')}'")
             audio_lines.append(f"file '{str(audio_path).replace(os.sep, '/')}'")
+
+            if idx % 10 == 0:
+                gc.collect()
 
         with open(video_concat_txt, "w", encoding="utf-8") as vf:
             vf.write("\n".join(video_lines))
         with open(audio_concat_txt, "w", encoding="utf-8") as af:
             af.write("\n".join(audio_lines))
 
-        # 3. Concatenate video stream
-        report(50, "Concatenating 1080p video stream...")
+        # 3. Concatenate video stream (zero-copy, memory-efficient)
+        report(50, "Concatenating 1080p video stream (zero-copy)...")
         raw_video_mp4 = proj_export_dir / "raw_video.mp4"
         cmd_v = [
             "ffmpeg", "-y",
@@ -153,6 +157,7 @@ class CinematicEditingDirector:
             "-safe", "0",
             "-i", str(video_concat_txt),
             "-c:v", "copy",
+            "-threads", "1",
             str(raw_video_mp4)
         ]
         subprocess.run(cmd_v, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
@@ -166,22 +171,21 @@ class CinematicEditingDirector:
             "-safe", "0",
             "-i", str(audio_concat_txt),
             "-c:a", "copy",
+            "-threads", "1",
             str(raw_audio_wav)
         ]
         subprocess.run(cmd_a, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
-        # 5. Composite Final 1080p Documentary (Video + Narration + Ambient Bed + AAC)
-        report(80, "Executing final multi-track compositing (1080p H.264 / AAC)...")
+        # 5. Multiplex Final 1080p Documentary (Zero video re-encoding, low memory footprint)
+        report(80, "Multiplexing final 1080p documentary (copy video + aac audio)...")
         cmd_final = [
             "ffmpeg", "-y",
             "-i", str(raw_video_mp4),
             "-i", str(raw_audio_wav),
-            "-c:v", "libx264",
-            "-preset", "ultrafast",
-            "-crf", "22",
-            "-pix_fmt", "yuv420p",
+            "-c:v", "copy",
             "-c:a", "aac",
             "-b:a", "192k",
+            "-threads", "1",
             "-shortest",
             str(final_mp4)
         ]
@@ -192,6 +196,9 @@ class CinematicEditingDirector:
         raw_audio_wav.unlink(missing_ok=True)
         video_concat_txt.unlink(missing_ok=True)
         audio_concat_txt.unlink(missing_ok=True)
+        
+        import gc
+        gc.collect()
 
         report(100, "Documentary rendered successfully!")
         return str(final_mp4)

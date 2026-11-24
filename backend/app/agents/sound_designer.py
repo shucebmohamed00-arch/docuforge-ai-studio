@@ -86,8 +86,10 @@ class SoundDesignDirector:
                         subprocess.run([
                             "ffmpeg", "-y", "-i", str(raw_mp3),
                             "-af", "aresample=44100,loudnorm=I=-14:LRA=11:TP=-1",
+                            "-threads", "1",
                             str(out_wav)
                         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                        raw_mp3.unlink(missing_ok=True)
                         synthesized_live = True
             except Exception as e:
                 logger.warning("ElevenLabs live synthesis skipped for beat %d: %s", beat_order, e)
@@ -106,8 +108,10 @@ class SoundDesignDirector:
                         subprocess.run([
                             "ffmpeg", "-y", "-i", str(raw_mp3),
                             "-af", "aresample=44100,loudnorm=I=-14:LRA=11:TP=-1",
+                            "-threads", "1",
                             str(out_wav)
                         ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                        raw_mp3.unlink(missing_ok=True)
                         synthesized_live = True
             except Exception as e:
                 logger.warning("OpenAI TTS synthesis skipped for beat %d: %s", beat_order, e)
@@ -141,8 +145,10 @@ class SoundDesignDirector:
                     subprocess.run([
                         "ffmpeg", "-y", "-i", str(raw_mp3),
                         "-af", "aresample=44100,loudnorm=I=-14:LRA=11:TP=-1",
+                        "-threads", "1",
                         str(out_wav)
                     ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+                    raw_mp3.unlink(missing_ok=True)
                     synthesized_live = True
             except Exception as e:
                 logger.warning("Edge Neural TTS skipped for beat %d (falling back to local flite): %s", beat_order, e)
@@ -156,6 +162,7 @@ class SoundDesignDirector:
                 "-f", "lavfi",
                 "-i", f"flite=textfile='{clean_txt_path}':voice={voice}",
                 "-af", "aresample=44100,loudnorm=I=-14:LRA=11:TP=-1",
+                "-threads", "1",
                 str(out_wav)
             ]
 
@@ -171,6 +178,7 @@ class SoundDesignDirector:
                     "-f", "lavfi",
                     "-i", f"sine=frequency=220:duration={dur}",
                     "-af", f"volume=0.3,afade=t=in:ss=0:d=0.2,afade=t=out:st={fade_out}:d=0.2",
+                    "-threads", "1",
                     str(out_wav)
                 ]
                 subprocess.run(cmd_fallback, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
@@ -203,6 +211,8 @@ class SoundDesignDirector:
         proj_audio_dir = AUDIO_DIR / project_id
         proj_audio_dir.mkdir(parents=True, exist_ok=True)
         bgm_wav = proj_audio_dir / f"bgm_scene_{scene_number}.wav"
+        if bgm_wav.exists() and bgm_wav.stat().st_size > 1000:
+            return str(bgm_wav)
 
         dur = max(4.0, duration_sec)
         fade_out = max(0.5, dur - 1.0)
@@ -213,6 +223,7 @@ class SoundDesignDirector:
             "-f", "lavfi",
             "-i", f"sine=frequency={freq}:duration={dur}",
             "-af", f"volume=0.08,afade=t=in:ss=0:d=1.0,afade=t=out:st={fade_out}:d=1.0",
+            "-threads", "1",
             str(bgm_wav)
         ]
         try:

@@ -30,7 +30,7 @@ class CinematicAnimationDirector:
     def _encode_or_fallback(cls, temp_raw: Path, output_path: Path, duration_sec: float) -> str:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         if temp_raw.exists() and temp_raw.stat().st_size > 1000:
-            cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", str(output_path)]
+            cmd = ["ffmpeg", "-y", "-i", str(temp_raw), "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", "-threads", "1", str(output_path)]
             try:
                 subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
                 temp_raw.unlink(missing_ok=True)
@@ -46,6 +46,7 @@ class CinematicAnimationDirector:
             "-preset", "ultrafast",
             "-crf", "23",
             "-pix_fmt", "yuv420p",
+            "-threads", "1",
             str(output_path)
         ]
         try:
@@ -274,50 +275,39 @@ class CinematicAnimationDirector:
         caption: str = "ARCHIVAL RECORD - EXECUTIVE BRIEFING"
     ) -> str:
         """
-        Renders a 1080p Ken Burns push-in / slow zoom video of an archival photograph
-        with cinematic vignette and lower-third title card.
+        Renders a 1080p archival video clip with minimal memory footprint and fast FFmpeg encoding.
         """
-        total_frames = int(duration_sec * cls.FPS)
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        temp_raw = output_path.with_suffix(".temp.mp4")
-        writer = cv2.VideoWriter(str(temp_raw), fourcc, cls.FPS, (cls.WIDTH, cls.HEIGHT))
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        dur = max(2.0, duration_sec)
 
-        # Create or load base image
-        base_img = None
-        if image_input_path and os.path.exists(image_input_path):
-            base_img = cv2.imread(image_input_path)
-
-        if base_img is None:
-            # Fallback high-contrast dramatic portrait slate
-            base_img = np.zeros((1200, 2100, 3), dtype=np.uint8)
-            base_img[:] = (35, 30, 25)
-            cv2.rectangle(base_img, (200, 150), (1900, 1050), (50, 45, 40), -1)
-            cv2.putText(base_img, "SWISS CORPORATE ARCHIVES", (500, 600), cv2.FONT_HERSHEY_SIMPLEX, 1.8, (200, 200, 200), 3, cv2.LINE_AA)
+        if image_input_path and os.path.exists(image_input_path) and os.path.getsize(image_input_path) > 1000:
+            cmd = [
+                "ffmpeg", "-y",
+                "-loop", "1",
+                "-i", str(image_input_path),
+                "-t", str(dur),
+                "-vf", "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080",
+                "-c:v", "libx264",
+                "-preset", "ultrafast",
+                "-crf", "23",
+                "-pix_fmt", "yuv420p",
+                "-threads", "1",
+                str(output_path)
+            ]
         else:
-            base_img = cv2.resize(base_img, (2100, 1200))
-
-        orig_h, orig_w = base_img.shape[:2]
-
-        for f in range(total_frames):
-            progress = f / float(total_frames)
-            # Push-in zoom from 1.0x to 1.12x
-            zoom = 1.0 + (0.12 * progress)
-            crop_w = int(cls.WIDTH / zoom)
-            crop_h = int(cls.HEIGHT / zoom)
-
-            x1 = int((orig_w - crop_w) / 2)
-            y1 = int((orig_h - crop_h) / 2)
-            cropped = base_img[y1:y1+crop_h, x1:x1+crop_w]
-            frame = cv2.resize(cropped, (cls.WIDTH, cls.HEIGHT))
-
-            # Lower-third banner
-            cv2.rectangle(frame, (100, 920), (800, 980), (15, 12, 10), -1)
-            cv2.putText(frame, caption, (120, 958), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (220, 220, 220), 1, cv2.LINE_AA)
-
-            writer.write(frame)
-
-        writer.release()
-        return cls._encode_or_fallback(temp_raw, output_path, duration_sec)
+            cmd = [
+                "ffmpeg", "-y",
+                "-f", "lavfi",
+                "-i", f"color=c=0x151210:s=1920x1080:r=24:d={dur}",
+                "-c:v", "libx264",
+                "-preset", "ultrafast",
+                "-crf", "23",
+                "-pix_fmt", "yuv420p",
+                "-threads", "1",
+                str(output_path)
+            ]
+        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        return str(output_path)
 
     @classmethod
     def render_all_animations(cls, project_id: str) -> Dict[str, Any]:

@@ -20,6 +20,24 @@ logger = logging.getLogger("docuforge.agents.animation_director")
 
 ANIMATIONS_DIR = MEDIA_DIR / "animations"
 ANIMATIONS_DIR.mkdir(parents=True, exist_ok=True)
+BROLL_CACHE_DIR = MEDIA_DIR / "broll_cache"
+BROLL_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+BROLL_LIBRARY = {
+    "AIRPORT_TARMAC": "https://cdn.pixabay.com/video/2016/11/15/6414-191719619_medium.mp4",
+    "COCKPIT_FLIGHT": "https://cdn.pixabay.com/video/2015/08/10/242-135867058_medium.mp4",
+    "JET_TAKEOFF": "https://cdn.pixabay.com/video/2020/02/27/32975-394513987_medium.mp4",
+    "BOARDROOM_MEETING": "https://cdn.pixabay.com/video/2015/10/27/1191-143842658_medium.mp4",
+    "EXECUTIVE_BUSINESS": "https://cdn.pixabay.com/video/2016/02/29/2340-157269921_medium.mp4",
+    "STOCK_MARKET_CRASH": "https://cdn.pixabay.com/video/2020/03/19/33974-399148659_medium.mp4",
+    "COUNTING_MONEY": "https://cdn.pixabay.com/video/2020/09/23/50622-460909288_medium.mp4",
+    "BANK_FINANCE": "https://cdn.pixabay.com/video/2023/07/23/172892-848187888_medium.mp4",
+    "CAMERA_REPORTER": "https://cdn.pixabay.com/video/2025/11/28/318654_medium.mp4",
+    "NEWS_BROADCAST": "https://cdn.pixabay.com/video/2019/12/08/29982-378308905_medium.mp4",
+    "PASSENGER_TERMINAL": "https://cdn.pixabay.com/video/2020/04/18/36510-411342239_medium.mp4",
+    "RAIN_RUNWAY": "https://cdn.pixabay.com/video/2015/08/10/283-135881214_medium.mp4",
+    "CLOUDS_FLIGHT": "https://cdn.pixabay.com/video/2015/10/23/1154-143492926_medium.mp4"
+}
 
 class CinematicAnimationDirector:
     WIDTH = 1920
@@ -267,6 +285,214 @@ class CinematicAnimationDirector:
         return cls._encode_or_fallback(temp_raw, output_path, duration_sec)
 
     @classmethod
+    def get_or_download_broll(cls, category: str) -> Optional[Path]:
+        """
+        Retrieves cached B-roll video clip or downloads it from Pixabay archive bank.
+        """
+        clean_cat = category.upper()
+        if clean_cat not in BROLL_LIBRARY:
+            clean_cat = "AIRPORT_TARMAC"
+        
+        target_path = BROLL_CACHE_DIR / f"{clean_cat}.mp4"
+        if target_path.exists() and target_path.stat().st_size > 10000:
+            return target_path
+            
+        url = BROLL_LIBRARY[clean_cat]
+        try:
+            import httpx
+            with httpx.Client(timeout=25.0) as client:
+                r = client.get(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+                if r.status_code == 200 and len(r.content) > 10000:
+                    target_path.write_bytes(r.content)
+                    return target_path
+        except Exception as e:
+            logger.warning("Could not download B-roll video %s: %s", clean_cat, e)
+            
+        # If specific category fails, try fallback to AIRPORT_TARMAC
+        if clean_cat != "AIRPORT_TARMAC":
+            return cls.get_or_download_broll("AIRPORT_TARMAC")
+        return None
+
+    @classmethod
+    def determine_broll_category(cls, text: str) -> str:
+        """
+        Analyzes narrative or visual prompt text to match the best cinematic B-roll category.
+        """
+        low = text.lower()
+        if any(w in low for w in ["cockpit", "pilot", "instrument", "altimeter", "radio", "ground control", "refuse"]):
+            return "COCKPIT_FLIGHT"
+        if any(w in low for w in ["board", "meeting", "bruggisser", "corti", "ceo", "executive", "hunter", "strategy", "director", "table"]):
+            return "BOARDROOM_MEETING"
+        if any(w in low for w in ["stock", "market", "crash", "loss", "plunge", "collapse", "debt", "shareholder", "fall", "freefall"]):
+            return "STOCK_MARKET_CRASH"
+        if any(w in low for w in ["money", "cash", "franc", "million", "billion", "payment", "bank", "vault", "credit", "ubs", "paradeplatz"]):
+            return "COUNTING_MONEY"
+        if any(w in low for w in ["press", "media", "camera", "reporter", "news", "broadcast", "journalist", "headline"]):
+            return "CAMERA_REPORTER"
+        if any(w in low for w in ["terminal", "passenger", "crowd", "ticket", "gate", "stranded", "baggage", "protest", "line", "fury"]):
+            return "PASSENGER_TERMINAL"
+        if any(w in low for w in ["rain", "runway", "grounded", "night", "storm", "wet", "standstill", "freeze", "october"]):
+            return "RAIN_RUNWAY"
+        if any(w in low for w in ["takeoff", "landing", "fly", "air", "fleet", "aircraft", "jet", "swiss", "sky", "alps", "altitude"]):
+            return "JET_TAKEOFF"
+        return "AIRPORT_TARMAC"
+
+    @classmethod
+    def render_broll_clip(
+        cls,
+        category: str,
+        output_path: Path,
+        duration_sec: float = 4.0,
+        offset_sec: float = 0.0,
+        chyron_title: str = "SWISSAIR INVESTIGATION",
+        chyron_sub: str = "Grounding Protocol Active"
+    ) -> str:
+        """
+        Renders a 1080p documentary B-roll video clip with cinematic grading (vignette + contrast)
+        and modern YouTube broadcast lower-third chyron badge.
+        """
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        dur = max(2.5, duration_sec)
+        src_video = cls.get_or_download_broll(category)
+        
+        if not src_video or not src_video.exists():
+            return cls.render_photo_ken_burns(None, output_path, duration_sec=dur, caption=chyron_sub)
+            
+        # 1. Synthesize PNG chyron overlay via Pillow (zero fontconfig dependency)
+        chyron_png = output_path.with_suffix(".chyron.png")
+        try:
+            img = Image.new("RGBA", (1920, 1080), (0, 0, 0, 0))
+            draw = ImageDraw.Draw(img)
+            # Frosted dark banner
+            draw.rectangle([(80, 890), (1180, 975)], fill=(12, 14, 18, 215))
+            # Golden left accent bar
+            draw.rectangle([(80, 890), (88, 975)], fill=(220, 180, 60, 255))
+            # Text
+            c_title = (chyron_title or "INVESTIGATIVE DOSSIER")[:45]
+            c_sub = (chyron_sub or "Documentary Evidence Beat")[:65]
+            draw.text((105, 902), c_title, fill=(220, 180, 60, 255))
+            draw.text((105, 934), c_sub, fill=(240, 245, 250, 255))
+            img.save(str(chyron_png))
+        except Exception as e:
+            logger.warning("Pillow chyron generation skipped: %s", e)
+            chyron_png = None
+
+        # 2. FFmpeg trim, scale, grade, and overlay
+        if chyron_png and chyron_png.exists():
+            cmd = [
+                "ffmpeg", "-y",
+                "-ss", str(round(offset_sec, 2)),
+                "-t", str(round(dur, 2)),
+                "-i", str(src_video),
+                "-i", str(chyron_png),
+                "-filter_complex", (
+                    "[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,fps=24,"
+                    "curves=preset=medium_contrast,vignette=PI/4[bg];"
+                    "[bg][1:v]overlay=0:0[outv]"
+                ),
+                "-map", "[outv]",
+                "-c:v", "libx264",
+                "-preset", "ultrafast",
+                "-crf", "23",
+                "-pix_fmt", "yuv420p",
+                "-threads", "1",
+                str(output_path)
+            ]
+        else:
+            cmd = [
+                "ffmpeg", "-y",
+                "-ss", str(round(offset_sec, 2)),
+                "-t", str(round(dur, 2)),
+                "-i", str(src_video),
+                "-vf", "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,fps=24,curves=preset=medium_contrast,vignette=PI/4",
+                "-c:v", "libx264",
+                "-preset", "ultrafast",
+                "-crf", "23",
+                "-pix_fmt", "yuv420p",
+                "-threads", "1",
+                str(output_path)
+            ]
+
+        try:
+            subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        finally:
+            if chyron_png and chyron_png.exists():
+                chyron_png.unlink(missing_ok=True)
+                
+        return str(output_path)
+
+    @classmethod
+    def render_cold_open(cls, output_path: Path) -> str:
+        """
+        Renders an explosive 13.5-second Cold Open hook clip featuring rapid cuts,
+        emergency location chyrons, and a dramatic title card slam.
+        """
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        cold_temp_dir = output_path.parent / "cold_open_temp"
+        cold_temp_dir.mkdir(parents=True, exist_ok=True)
+
+        shots = [
+            ("RAIN_RUNWAY", 2.5, 0.0, "ZURICH AIRPORT — OCTOBER 2, 2001", "12:30 PM — Fuel Trucks Refuse Service to Swissair"),
+            ("COCKPIT_FLIGHT", 2.5, 2.0, "FLIGHT SR 356 TO NEW YORK", "Captain Receives Ground Order from Kloten Tower"),
+            ("STOCK_MARKET_CRASH", 2.5, 1.0, "SWISS STOCK EXCHANGE (SWX)", "SAirGroup Shares Collapse 85% Into Freefall"),
+            ("PASSENGER_TERMINAL", 2.0, 3.0, "GLOBAL AIRLINE CHAOS", "19,000 Passengers Stranded in 40 Countries")
+        ]
+
+        sub_clips = []
+        for s_idx, (cat, s_dur, s_off, title, sub) in enumerate(shots):
+            sub_p = cold_temp_dir / f"shot_{s_idx}.mp4"
+            cls.render_broll_clip(cat, sub_p, duration_sec=s_dur, offset_sec=s_off, chyron_title=title, chyron_sub=sub)
+            sub_clips.append(sub_p)
+
+        # Title Card Slam (4.0s)
+        title_card_img = cold_temp_dir / "title_card.jpg"
+        img = Image.new("RGB", (1920, 1080), color=(10, 12, 16))
+        draw = ImageDraw.Draw(img)
+        draw.rectangle([(80, 80), (1840, 1000)], outline=(40, 48, 60), width=2)
+        draw.rectangle([(100, 100), (1820, 980)], outline=(25, 30, 38), width=1)
+        draw.text((960, 320), "DOCUFORGE INVESTIGATIVE SPECIAL", fill=(220, 180, 60), anchor="mm")
+        draw.text((960, 420), "THE SWISS AIR GROUNDING", fill=(255, 255, 255), anchor="mm")
+        draw.rectangle([(480, 480), (1440, 484)], fill=(220, 180, 60))
+        draw.text((960, 540), "HOW ARROGANCE DESTROYED THE BANK OF THE SKIES", fill=(180, 190, 205), anchor="mm")
+        draw.text((960, 660), "OCTOBER 2, 2001 — THE COLLAPSE OF AN EMPIRE", fill=(120, 130, 145), anchor="mm")
+        img.save(str(title_card_img), "JPEG", quality=95)
+
+        title_clip = cold_temp_dir / "title_clip.mp4"
+        cmd_title = [
+            "ffmpeg", "-y", "-loop", "1", "-i", str(title_card_img),
+            "-t", "4.0",
+            "-vf", "scale=1920:1080,zoompan=z='min(zoom+0.0008,1.06)':d=96:s=1920x1080:fps=24",
+            "-c:v", "libx264", "-preset", "ultrafast", "-crf", "23", "-pix_fmt", "yuv420p", "-threads", "1",
+            str(title_clip)
+        ]
+        subprocess.run(cmd_title, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        sub_clips.append(title_clip)
+
+        # Concatenate into Cold Open MP4
+        concat_txt = cold_temp_dir / "cold_concat.txt"
+        with open(concat_txt, "w", encoding="utf-8") as cf:
+            for sc in sub_clips:
+                cf.write(f"file '{sc.name}'\n")
+
+        cmd_concat = [
+            "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_txt),
+            "-c:v", "copy", "-threads", "1", str(output_path)
+        ]
+        subprocess.run(cmd_concat, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+
+        # Clean up temp files
+        for sc in sub_clips:
+            sc.unlink(missing_ok=True)
+        title_card_img.unlink(missing_ok=True)
+        concat_txt.unlink(missing_ok=True)
+        try:
+            cold_temp_dir.rmdir()
+        except Exception:
+            pass
+
+        return str(output_path)
+
+    @classmethod
     def render_photo_ken_burns(
         cls,
         image_input_path: Optional[str],
@@ -388,9 +614,20 @@ class CinematicAnimationDirector:
                 if not (out_clip.exists() and out_clip.stat().st_size > 5000):
                     cls.render_document_reveal(out_clip, duration_sec=dur, headline=it["visual_summary"][:50])
             else:
-                anim_type = "PHOTO_KEN_BURNS"
-                if not (out_clip.exists() and out_clip.stat().st_size > 5000):
-                    cls.render_photo_ken_burns(None, out_clip, duration_sec=dur, caption=it["visual_summary"][:45])
+                cat = cls.determine_broll_category(it.get("visual_summary", "") + " " + it.get("narration_text", ""))
+                anim_type = f"BROLL_{cat}"
+                if not (out_clip.exists() and out_clip.stat().st_size > 50000):
+                    offset_sec = (order_idx * 3.2) % 15.0
+                    chyron_title = f"SCENE {it['scene_number']} · INVESTIGATION"
+                    chyron_sub = it.get("visual_summary", "Documentary Archival Beat")[:60]
+                    cls.render_broll_clip(
+                        category=cat,
+                        output_path=out_clip,
+                        duration_sec=dur,
+                        offset_sec=offset_sec,
+                        chyron_title=chyron_title,
+                        chyron_sub=chyron_sub
+                    )
 
             web_url = f"/media/animations/{project_id}/clip_{order_idx}.mp4"
             rendered_clips.append({

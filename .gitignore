@@ -8,4 +8,5 @@ data/*.db-journal
 data/exports/*
 data/media/*
 data/previews/*
+backend/data/
 !data/.gitkeep

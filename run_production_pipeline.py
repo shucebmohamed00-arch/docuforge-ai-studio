@@ -26,21 +26,24 @@ def main():
             return
 
         print(f"Waiting for render job {job_id}...")
-        for i in range(120):
-            time.sleep(3)
-            job_res = client.get(f"{BASE_URL}/api/jobs/{job_id}").json()
-            job = job_res.get("job", {})
-            status = job.get("status")
-            pct = job.get("progress_pct")
-            msg = job.get("stage_message")
-            print(f"[{i*3}s] Progress: {pct}% | Stage: {msg} | Status: {status}")
+        for i in range(300):
+            time.sleep(5)
+            try:
+                job_res = client.get(f"{BASE_URL}/api/jobs/{job_id}").json()
+                job = job_res.get("job", {})
+                status = job.get("status")
+                pct = job.get("progress_pct")
+                msg = job.get("stage_message")
+                print(f"[{i*5}s] Progress: {pct}% | Stage: {msg} | Status: {status}")
 
-            if status == "COMPLETED":
-                print("\n>>> 1080p Documentary Render Complete! <<<")
-                break
-            elif status == "FAILED":
-                print("\nRendering failed:", job.get("error_message"))
-                return
+                if status == "COMPLETED":
+                    print("\n>>> 1080p Documentary Render Complete! <<<")
+                    break
+                elif status == "FAILED":
+                    print("\nRendering failed:", job.get("error_message"))
+                    return
+            except Exception as e:
+                print(f"[{i*5}s] Polling retry: {e}")
 
         print("\n=== STEP 4: ADVANCE TO QC & INSPECT ===")
         client.post(f"{BASE_URL}/api/render/{PROJECT_ID}/advance")

@@ -113,10 +113,41 @@ class CinematicEditingDirector:
         proj_anim_dir.mkdir(parents=True, exist_ok=True)
         proj_audio_dir.mkdir(parents=True, exist_ok=True)
 
-        # 2. Prepare Video Concat List
+        # 2. Prepare Video Concat List & Visual Assets
         report(30, "Checking and compiling video stream assets...")
         video_concat_txt = proj_export_dir / "video_concat.txt"
         audio_concat_txt = proj_export_dir / "audio_concat.txt"
+
+        # Pre-cache visual assets for image-backed beats
+        from .footage_discovery import RealFootageDiscoveryAgent
+        import httpx
+        assets = RealFootageDiscoveryAgent.get_project_assets(project_id)
+        asset_map = {a["id"]: a for a in assets}
+        asset_cache_dir = MEDIA_DIR / "assets" / project_id
+        asset_cache_dir.mkdir(parents=True, exist_ok=True)
+
+        def _get_asset_image_file(asset_id: Optional[str]) -> Optional[str]:
+            if not asset_id or asset_id not in asset_map:
+                return None
+            a = asset_map[asset_id]
+            local_fp = a.get("local_file_path")
+            if local_fp and os.path.exists(local_fp) and os.path.getsize(local_fp) > 1000:
+                return local_fp
+            p_url = a.get("preview_url")
+            if not p_url:
+                return None
+            dest = asset_cache_dir / f"{asset_id}.jpg"
+            if dest.exists() and dest.stat().st_size > 1000:
+                return str(dest)
+            try:
+                with httpx.Client(timeout=8.0) as client:
+                    resp = client.get(p_url, headers={"User-Agent": "Mozilla/5.0"})
+                    if resp.status_code == 200 and len(resp.content) > 1000:
+                        dest.write_bytes(resp.content)
+                        return str(dest)
+            except Exception as e:
+                logger.warning("Could not download asset preview image %s: %s", p_url, e)
+            return None
 
         video_lines = []
         audio_lines = []
@@ -127,10 +158,22 @@ class CinematicEditingDirector:
             clip_path = proj_anim_dir / f"clip_{idx}.mp4"
             audio_path = proj_audio_dir / f"beat_{idx}.wav"
 
-            # Fallback if clip wasn't rendered yet
-            if not clip_path.exists():
+            # Render clip if missing or invalid (< 5KB)
+            if not (clip_path.exists() and clip_path.stat().st_size > 5000):
+                asset_type = it.get("asset_type", "ARCHIVAL_VIDEO")
+                dur = min(float(it.get("duration_sec", 4.0)), 6.0)
+                img_path = _get_asset_image_file(it.get("asset_id"))
+
                 from .animation_director import CinematicAnimationDirector
-                CinematicAnimationDirector.render_photo_ken_burns(None, clip_path, duration_sec=it["duration_sec"])
+                if asset_type == "MAP":
+                    CinematicAnimationDirector.render_animated_map(clip_path, duration_sec=dur, title="EUROPEAN AIRSPACE & DEREGULATION CHOKEPOINTS")
+                elif asset_type == "CHART":
+                    CinematicAnimationDirector.render_financial_chart(clip_path, duration_sec=dur, title="SAIRGROUP ACCUMULATED LIABILITIES (1998-2001)")
+                elif asset_type in ["DOCUMENT", "DOC_REVEAL"]:
+                    CinematicAnimationDirector.render_document_reveal(clip_path, duration_sec=dur, headline=it.get("visual_summary", "OFFICIAL AUDIT REPORT")[:50])
+                else:
+                    caption_text = it.get("visual_summary") or "SWISSAIR GROUNDING INVESTIGATION"
+                    CinematicAnimationDirector.render_photo_ken_burns(img_path, clip_path, duration_sec=dur, caption=caption_text[:45])
 
             if not audio_path.exists():
                 from .sound_designer import SoundDesignDirector

@@ -275,18 +275,44 @@ class CinematicAnimationDirector:
         caption: str = "ARCHIVAL RECORD - EXECUTIVE BRIEFING"
     ) -> str:
         """
-        Renders a 1080p archival video clip with minimal memory footprint and fast FFmpeg encoding.
+        Renders a 1080p archival video clip with Ken Burns push-in / slow zoom.
+        If image_input_path is missing, synthesizes a high-contrast broadcast graphic slate.
         """
         output_path.parent.mkdir(parents=True, exist_ok=True)
         dur = max(2.0, duration_sec)
+        clean_cap = (caption or "SWISSAIR ARCHIVE INVESTIGATION").replace("'", "").replace('"', '').replace(':', ' -')[:50]
 
-        if image_input_path and os.path.exists(image_input_path) and os.path.getsize(image_input_path) > 1000:
+        temp_slate_path = None
+        target_img = image_input_path
+
+        if not (target_img and os.path.exists(target_img) and os.path.getsize(target_img) > 1000):
+            # Synthesize high-contrast broadcast slate image via Pillow
+            temp_slate_path = output_path.with_suffix(".slate.jpg")
+            try:
+                from PIL import Image, ImageDraw
+                img = Image.new("RGB", (1920, 1080), color=(22, 18, 16))
+                draw = ImageDraw.Draw(img)
+                # Outer and inner framing
+                draw.rectangle([(60, 60), (1860, 1020)], outline=(60, 50, 45), width=3)
+                draw.rectangle([(80, 80), (1840, 1000)], outline=(35, 30, 26), width=1)
+                # Lower third banner
+                draw.rectangle([(100, 870), (1200, 960)], fill=(12, 10, 8))
+                draw.rectangle([(100, 870), (112, 960)], fill=(220, 180, 60))  # Gold accent
+                draw.text((130, 885), "SWISSAIR GROUNDING INVESTIGATION", fill=(220, 180, 60))
+                draw.text((130, 918), clean_cap, fill=(240, 240, 240))
+                img.save(str(temp_slate_path), "JPEG", quality=90)
+                target_img = str(temp_slate_path)
+            except Exception as e:
+                logger.warning("Pillow slate synthesis fallback: %s", e)
+                target_img = None
+
+        if target_img and os.path.exists(target_img):
             cmd = [
                 "ffmpeg", "-y",
                 "-loop", "1",
-                "-i", str(image_input_path),
+                "-i", target_img,
                 "-t", str(dur),
-                "-vf", "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080",
+                "-vf", f"scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,zoompan=z='min(zoom+0.001,1.10)':d={int(dur*24)}:s=1920x1080:fps=24",
                 "-c:v", "libx264",
                 "-preset", "ultrafast",
                 "-crf", "23",
@@ -298,7 +324,7 @@ class CinematicAnimationDirector:
             cmd = [
                 "ffmpeg", "-y",
                 "-f", "lavfi",
-                "-i", f"color=c=0x151210:s=1920x1080:r=24:d={dur}",
+                "-i", f"color=c=0x181512:s=1920x1080:r=24:d={dur}",
                 "-c:v", "libx264",
                 "-preset", "ultrafast",
                 "-crf", "23",
@@ -306,7 +332,13 @@ class CinematicAnimationDirector:
                 "-threads", "1",
                 str(output_path)
             ]
-        subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+
+        try:
+            subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        finally:
+            if temp_slate_path:
+                temp_slate_path.unlink(missing_ok=True)
+
         return str(output_path)
 
     @classmethod

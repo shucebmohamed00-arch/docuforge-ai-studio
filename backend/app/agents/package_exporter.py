@@ -350,10 +350,11 @@ class ProductionPackageExporter:
             "qc_report.json"
         ]
 
-        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        with zipfile.ZipFile(zip_path, "w") as zf:
             for fname in target_files:
                 fpath = proj_dir / fname
                 if fpath.exists():
-                    zf.write(fpath, arcname=fname)
+                    c_type = zipfile.ZIP_STORED if fname.endswith(".mp4") else zipfile.ZIP_DEFLATED
+                    zf.write(fpath, arcname=fname, compress_type=c_type)
 
         return zip_path

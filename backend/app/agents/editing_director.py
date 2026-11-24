@@ -219,8 +219,8 @@ class CinematicEditingDirector:
         ]
         subprocess.run(cmd_a, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 
-        # 5. Multiplex Final 1080p Documentary (Zero video re-encoding, low memory footprint)
-        report(80, "Multiplexing final 1080p documentary (copy video + aac audio)...")
+        # 5. Multiplex Final 1080p Documentary (Zero video re-encoding, low memory footprint, web-optimized faststart)
+        report(80, "Multiplexing final 1080p documentary (copy video + aac audio + faststart)...")
         cmd_final = [
             "ffmpeg", "-y",
             "-i", str(raw_video_mp4),
@@ -228,6 +228,7 @@ class CinematicEditingDirector:
             "-c:v", "copy",
             "-c:a", "aac",
             "-b:a", "192k",
+            "-movflags", "+faststart",
             "-threads", "1",
             "-shortest",
             str(final_mp4)

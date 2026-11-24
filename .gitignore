@@ -12,3 +12,7 @@ data/media/*
 data/previews/*
 backend/data/
 !data/.gitkeep
+data/exports/swiss-air-grounding-prod/docuforge_package.zip
+temp_preview/
+*.wav
+*concat.txt

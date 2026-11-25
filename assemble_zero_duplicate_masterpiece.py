@@ -64,6 +64,18 @@ PUNCH_TEXTS = {
     64: ("NO BRAND IS TOO SACRED ", "TO FALL", (235, 35, 35))
 }
 
+# Primary Source Historical Interview Soundbites (Voiceover pauses for authentic broadcast witness evidence)
+ARCHIVAL_SOUNDBITES = {
+    36: (
+        BASE_DIR / "data" / "media" / "archival_soundbites" / "soundbite_01_corti_press.mp4",
+        BASE_DIR / "data" / "media" / "archival_soundbites" / "soundbite_01_corti_press.wav"
+    ),
+    49: (
+        BASE_DIR / "data" / "media" / "archival_soundbites" / "soundbite_02_grounding_breaking.mp4",
+        BASE_DIR / "data" / "media" / "archival_soundbites" / "soundbite_02_grounding_breaking.wav"
+    )
+}
+
 # 100% Curated Visual Mix (Advanced 2.5D Parallax + Rubber Stamp Document Slams + Mega-Airlines)
 CONTEXTUAL_ASSETS = {
     # Beat 7: "The credit lines were dead" -> Advanced 2.5D UBS Dossier Parallax
@@ -497,6 +509,16 @@ def main():
                 sfx_events.append((cumulative_time, sfx_type))
 
         cumulative_time += dur
+
+        # Primary source archival witness soundbite pause
+        if idx in ARCHIVAL_SOUNDBITES:
+            sb_video, sb_audio = ARCHIVAL_SOUNDBITES[idx]
+            if sb_video.exists() and sb_audio.exists():
+                sb_dur = get_audio_duration(sb_audio)
+                master_video_clips.append(str(sb_video))
+                master_audio_clips.append(str(sb_audio))
+                cumulative_time += sb_dur
+                log(f"Inserted Authentic Archival Witness Soundbite after Beat {idx} ({sb_dur:.2f}s pause)...")
 
         if idx % 10 == 0 or idx == 64:
             log(f"Rendered Beat {idx}/64 ({total_subshots} total subshots, 0 black frames)...")

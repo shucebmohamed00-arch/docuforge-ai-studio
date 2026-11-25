@@ -11,7 +11,11 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 from ...database import get_connection
-from docuforge_engine.agents.intelligent_director import IntelligentEditingDirector
+
+try:
+    from docuforge_engine.agents.intelligent_director import IntelligentEditingDirector
+except ImportError:
+    IntelligentEditingDirector = None
 
 async def get_multitrack_timeline_endpoint(request: Request) -> JSONResponse:
     """
@@ -224,6 +228,9 @@ async def trigger_project_directing_endpoint(request: Request) -> JSONResponse:
 
     if not project_id:
         return JSONResponse({"status": "error", "message": "project_id is required"}, status_code=400)
+
+    if IntelligentEditingDirector is None:
+        return JSONResponse({"status": "error", "message": "IntelligentEditingDirector module not available in container"}, status_code=503)
 
     try:
         director = IntelligentEditingDirector(Path("."))

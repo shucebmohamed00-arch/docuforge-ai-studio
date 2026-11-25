@@ -2,6 +2,14 @@
 DocuForge AI - Main Application Server
 """
 import os
+import sys
+from pathlib import Path
+
+# Ensure application root is in sys.path
+_ROOT = str(Path(__file__).resolve().parent.parent.parent)
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
+
 from starlette.applications import Starlette
 from starlette.routing import Route, Mount
 from starlette.responses import JSONResponse, HTMLResponse, FileResponse

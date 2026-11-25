@@ -160,7 +160,7 @@ class AutoDirectorAgent(BaseAgent):
             self.log(f"Executing selective re-render and re-timing for beats: {sorted(list(rebuild_beats))}...")
             try:
                 cmd = ["python", str(script_path)]
-                res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=300)
+                res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=600)
                 self.log("Self-healing compilation completed successfully.")
                 return True
             except Exception as e:

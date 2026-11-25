@@ -16,6 +16,7 @@ CLIPS_DIR = BASE_DIR / "data" / "media" / "authentic_clips"
 PAPER_DIR = BASE_DIR / "data" / "media" / "paper_assets"
 PHOTO_DIR = BASE_DIR / "data" / "media" / "documentary_photos"
 ADV_DIR = BASE_DIR / "data" / "media" / "advanced_25d"
+STAGE_DIR = BASE_DIR / "data" / "media" / "magnates_stage"
 FIN_DIR = BASE_DIR / "data" / "media" / "financial_graphics"
 OVERLAY_DIR = BASE_DIR / "data" / "media" / "magnates_overlays"
 BROLL_DIR = BASE_DIR / "data" / "media" / "broll_cache"
@@ -78,8 +79,8 @@ ARCHIVAL_SOUNDBITES = {
 
 # 100% Curated Visual Mix (Advanced 2.5D Parallax + Rubber Stamp Document Slams + Mega-Airlines)
 CONTEXTUAL_ASSETS = {
-    # Beat 7: "The credit lines were dead" -> Advanced 2.5D UBS Dossier Parallax
-    7:  [ADV_DIR / "parallax_04_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
+    # Beat 7: "The credit lines were dead" -> 3D Mahogany Desk Stage UBS Inquiry Dossier
+    7:  [STAGE_DIR / "stage_03_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
     # Beat 8: "An aggressive debt spree"
     8:  [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
     # Beat 10: "Catastrophic strategy of debt..."
@@ -115,8 +116,8 @@ CONTEXTUAL_ASSETS = {
     30: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
     # Beat 34: Hemorrhaging 3M daily
     34: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
-    # Beat 36: Mario Corti 2.5D Parallax Card
-    36: [ADV_DIR / "parallax_01_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
+    # Beat 36: 3D Mahogany Desk Stage Mario Corti Confidential Case File
+    36: [STAGE_DIR / "stage_01_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
     # Beat 37: Post-9/11 aviation collapse (Deserted Terminal & Grounded Fleets, ZERO explosions)
     37: [BROLL_DIR / "PASSENGER_TERMINAL.mp4", FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4"],
     # Beat 40: Financial plunge
@@ -379,7 +380,7 @@ def main():
 
     # 1. Manage shots cache
     log("Checking subshots cache for incremental xfade generation...")
-    force_rebuild = {16}
+    force_rebuild = {7, 16, 36}
     for reb_idx in force_rebuild:
         old_f = TEMP_SHOTS_DIR / f"beat_{reb_idx:02d}_master.mp4"
         if old_f.exists():

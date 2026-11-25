@@ -13,6 +13,7 @@ from .agents.footage_stylist import FootageStylistAgent
 from .agents.visual_critic import VisualCriticAgent
 from .agents.timeline_reviewer import TimelineReviewerAgent
 from .agents.auto_director import AutoDirectorAgent
+from .agents.stage_compositor import StageCompositorAgent
 
 __all__ = [
     "DocuForgeOrchestrator",
@@ -26,5 +27,6 @@ __all__ = [
     "FootageStylistAgent",
     "VisualCriticAgent",
     "TimelineReviewerAgent",
-    "AutoDirectorAgent"
+    "AutoDirectorAgent",
+    "StageCompositorAgent"
 ]

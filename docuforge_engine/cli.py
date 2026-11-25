@@ -66,6 +66,13 @@ def main():
     p_ad.add_argument("--video", "-v", default="data/exports/swiss-air-grounding-prod/documentary.mp4", help="Video path")
     p_ad.add_argument("--storyboard", "-s", default="storyboard_items.json", help="Storyboard path")
 
+    # Command: stage
+    p_stg = subparsers.add_parser("stage", help="Render 3D physical stage desk shot with Stage Compositor Agent")
+    p_stg.add_argument("--src", "-s", required=True, help="Path to document or portrait image")
+    p_stg.add_argument("--title", "-t", default="CONFIDENTIAL CASE FILE", help="Title")
+    p_stg.add_argument("--stamp", default=None, help="Distressed stamp text")
+    p_stg.add_argument("--out", "-o", default="test_stage.mp4", help="Output filename")
+
     # Command: pipeline
     p_pipe = subparsers.add_parser("pipeline", help="Run end-to-end multi-agent cooperative graphics pipeline")
     p_pipe.add_argument("--query", "-q", default="Swissair MD-11 Zurich", help="Search query for scout")
@@ -142,6 +149,15 @@ def main():
         res = orchestrator.auto_director.execute({
             "video_path": args.video,
             "storyboard_path": args.storyboard
+        })
+        print(json.dumps(res, indent=2))
+
+    elif args.command == "stage":
+        res = orchestrator.stage.execute({
+            "src_image": args.src,
+            "title": args.title,
+            "stamp_text": args.stamp,
+            "out_name": args.out
         })
         print(json.dumps(res, indent=2))
 

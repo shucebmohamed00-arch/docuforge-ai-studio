@@ -16,6 +16,7 @@ from .agents.footage_stylist import FootageStylistAgent
 from .agents.visual_critic import VisualCriticAgent
 from .agents.timeline_reviewer import TimelineReviewerAgent
 from .agents.auto_director import AutoDirectorAgent
+from .agents.stage_compositor import StageCompositorAgent
 
 class DocuForgeOrchestrator:
     def __init__(self):
@@ -29,11 +30,13 @@ class DocuForgeOrchestrator:
         self.critic = VisualCriticAgent()
         self.reviewer = TimelineReviewerAgent()
         self.auto_director = AutoDirectorAgent()
+        self.stage = StageCompositorAgent()
 
         self.agents = {
             "scout": self.scout,
             "visual_critic": self.critic,
             "footage_stylist": self.stylist,
+            "stage_compositor": self.stage,
             "parallax": self.parallax,
             "doc_inspector": self.doc_inspector,
             "dataviz": self.dataviz,

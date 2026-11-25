@@ -13,6 +13,8 @@ from .agents.data_visualizer import DataVisualizerAgent
 from .agents.director_qc import DirectorQCAgent
 from .agents.master_assembly import MasterAssemblyAgent
 from .agents.footage_stylist import FootageStylistAgent
+from .agents.visual_critic import VisualCriticAgent
+from .agents.timeline_reviewer import TimelineReviewerAgent
 
 class DocuForgeOrchestrator:
     def __init__(self):
@@ -23,15 +25,19 @@ class DocuForgeOrchestrator:
         self.qc = DirectorQCAgent()
         self.assembler = MasterAssemblyAgent()
         self.stylist = FootageStylistAgent()
+        self.critic = VisualCriticAgent()
+        self.reviewer = TimelineReviewerAgent()
 
         self.agents = {
             "scout": self.scout,
+            "visual_critic": self.critic,
             "footage_stylist": self.stylist,
             "parallax": self.parallax,
             "doc_inspector": self.doc_inspector,
             "dataviz": self.dataviz,
             "director_qc": self.qc,
-            "assembler": self.assembler
+            "assembler": self.assembler,
+            "timeline_reviewer": self.reviewer
         }
 
     def print_roster(self):

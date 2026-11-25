@@ -52,6 +52,15 @@ def main():
     p_qc = subparsers.add_parser("qc", help="Delegate Quality Control audit to Director QC Agent")
     p_qc.add_argument("--video", "-v", required=True, help="Path to video file to audit")
 
+    # Command: critique
+    p_crit = subparsers.add_parser("critique", help="Visually inspect and score candidate footage with Visual Critic Agent")
+    p_crit.add_argument("--clip", "-c", required=True, help="Path to video clip to evaluate")
+
+    # Command: review
+    p_rev = subparsers.add_parser("review", help="Visually audit entire documentary timeline with Timeline Reviewer Agent")
+    p_rev.add_argument("--video", "-v", required=True, help="Path to documentary video")
+    p_rev.add_argument("--interval", "-i", type=float, default=25.0, help="Sampling interval in seconds")
+
     # Command: pipeline
     p_pipe = subparsers.add_parser("pipeline", help="Run end-to-end multi-agent cooperative graphics pipeline")
     p_pipe.add_argument("--query", "-q", default="Swissair MD-11 Zurich", help="Search query for scout")
@@ -111,6 +120,17 @@ def main():
 
     elif args.command == "qc":
         res = orchestrator.qc.execute({"video_path": args.video})
+        print(json.dumps(res, indent=2))
+
+    elif args.command == "critique":
+        res = orchestrator.critic.execute({"video_path": args.clip})
+        print(json.dumps(res, indent=2))
+
+    elif args.command == "review":
+        res = orchestrator.reviewer.execute({
+            "video_path": args.video,
+            "interval_sec": args.interval
+        })
         print(json.dumps(res, indent=2))
 
     elif args.command == "pipeline":

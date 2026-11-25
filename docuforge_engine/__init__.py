@@ -8,6 +8,7 @@ from .agents.document_inspector import DocumentInspectorAgent
 from .agents.data_visualizer import DataVisualizerAgent
 from .agents.director_qc import DirectorQCAgent
 from .agents.master_assembly import MasterAssemblyAgent
+from .agents.footage_stylist import FootageStylistAgent
 
 __all__ = [
     "DocuForgeOrchestrator",
@@ -16,5 +17,6 @@ __all__ = [
     "DocumentInspectorAgent",
     "DataVisualizerAgent",
     "DirectorQCAgent",
-    "MasterAssemblyAgent"
+    "MasterAssemblyAgent",
+    "FootageStylistAgent"
 ]

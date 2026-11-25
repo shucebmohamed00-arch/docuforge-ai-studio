@@ -12,6 +12,7 @@ from .agents.document_inspector import DocumentInspectorAgent
 from .agents.data_visualizer import DataVisualizerAgent
 from .agents.director_qc import DirectorQCAgent
 from .agents.master_assembly import MasterAssemblyAgent
+from .agents.footage_stylist import FootageStylistAgent
 
 class DocuForgeOrchestrator:
     def __init__(self):
@@ -21,9 +22,11 @@ class DocuForgeOrchestrator:
         self.dataviz = DataVisualizerAgent()
         self.qc = DirectorQCAgent()
         self.assembler = MasterAssemblyAgent()
+        self.stylist = FootageStylistAgent()
 
         self.agents = {
             "scout": self.scout,
+            "footage_stylist": self.stylist,
             "parallax": self.parallax,
             "doc_inspector": self.doc_inspector,
             "dataviz": self.dataviz,

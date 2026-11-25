@@ -41,6 +41,13 @@ def main():
     p_ch.add_argument("--ticker", "-t", default="SWISSAIR (SR.SW)", help="Ticker name")
     p_ch.add_argument("--out", "-o", default="test_stock_crash.mp4", help="Output mp4 filename")
 
+    # Command: style
+    p_style = subparsers.add_parser("style", help="Pre-process and animate raw footage with Footage Stylist Agent")
+    p_style.add_argument("--clip", "-c", required=True, help="Path to raw video clip")
+    p_style.add_argument("--motion", "-m", default="slow_push", choices=["slow_push", "drift_right", "archival_moody"], help="Motion animation style")
+    p_style.add_argument("--dur", "-d", type=float, default=4.0, help="Target duration in seconds")
+    p_style.add_argument("--out", "-o", default="styled_clip.mp4", help="Output filename")
+
     # Command: qc
     p_qc = subparsers.add_parser("qc", help="Delegate Quality Control audit to Director QC Agent")
     p_qc.add_argument("--video", "-v", required=True, help="Path to video file to audit")
@@ -89,6 +96,15 @@ def main():
         res = orchestrator.dataviz.execute({
             "type": "stock_crash",
             "ticker": args.ticker,
+            "out_name": args.out
+        })
+        print(json.dumps(res, indent=2))
+
+    elif args.command == "style":
+        res = orchestrator.stylist.execute({
+            "src_path": args.clip,
+            "motion_style": args.motion,
+            "duration": args.dur,
             "out_name": args.out
         })
         print(json.dumps(res, indent=2))

@@ -102,6 +102,11 @@ from .api.endpoints.editing_passes import (
     run_editing_passes_endpoint,
     get_editing_passes_endpoint
 )
+from .api.endpoints.timeline import (
+    get_multitrack_timeline_endpoint,
+    update_shot_specification_endpoint,
+    trigger_project_directing_endpoint
+)
 from .api.endpoints.settings import (
     get_settings_endpoint,
     update_settings_endpoint,
@@ -198,6 +203,9 @@ routes = [
     # Video Rendering Pipeline & 6-Pass Creative Editing API (Phase 10 & Directive 27)
     Route("/api/editing/run-passes", run_editing_passes_endpoint, methods=["POST"]),
     Route("/api/editing/passes/{project_id}", get_editing_passes_endpoint, methods=["GET"]),
+    Route("/api/timeline/{project_id}", get_multitrack_timeline_endpoint, methods=["GET"]),
+    Route("/api/timeline/{project_id}/shots/{shot_id}", update_shot_specification_endpoint, methods=["PUT"]),
+    Route("/api/timeline/{project_id}/direct", trigger_project_directing_endpoint, methods=["POST"]),
     Route("/api/render/start", start_render_endpoint, methods=["POST"]),
     Route("/api/render/job/{job_id}", get_render_job_endpoint, methods=["GET"]),
     Route("/api/render/project/{project_id}", get_project_export_endpoint, methods=["GET"]),

@@ -248,6 +248,40 @@ def init_db():
         );
         """)
 
+        # 7c. Shot-by-Shot Editing Specification Table (MagnatesMedia Director Engine)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS editing_shots (
+            id TEXT PRIMARY KEY,
+            project_id TEXT NOT NULL,
+            scene_number INTEGER NOT NULL,
+            shot_index INTEGER NOT NULL,
+            start_time_sec REAL NOT NULL,
+            end_time_sec REAL NOT NULL,
+            duration_sec REAL NOT NULL,
+            narration_segment TEXT,
+            narrative_purpose TEXT NOT NULL,
+            emotional_intention TEXT NOT NULL,
+            visual_concept TEXT NOT NULL,
+            approved_asset_ref TEXT,
+            asset_authenticity_class TEXT NOT NULL,
+            shot_type TEXT DEFAULT 'MEDIUM',
+            composition TEXT DEFAULT 'RULE_OF_THIRDS',
+            subject_positioning TEXT DEFAULT 'CENTER_RIGHT',
+            camera_movement TEXT DEFAULT 'SLOW_PUSH_IN',
+            animation_instructions TEXT,
+            transition_in TEXT DEFAULT 'DISSOLVE',
+            transition_out TEXT DEFAULT 'SMOOTH_LEFT',
+            music_instructions TEXT DEFAULT 'TENSION_UNDERSCORE',
+            sound_effects_json TEXT DEFAULT '[]',
+            color_treatment TEXT DEFAULT 'CINEMATIC_WARM_SHADOWS',
+            continuity_requirements TEXT,
+            is_approved INTEGER DEFAULT 1,
+            rendered_clip_path TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+        );
+        """)
+
         # 8. Render Jobs Table (Async job tracking)
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS render_jobs (

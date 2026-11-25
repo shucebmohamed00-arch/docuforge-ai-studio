@@ -6,7 +6,6 @@ import zipfile
 import subprocess
 import numpy as np
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
 
 PROJ_ID = "swiss-air-grounding-prod"
 BASE_DIR = Path("c:/Users/Shueb/Desktop/youtu")
@@ -64,7 +63,7 @@ PUNCH_TEXTS = {
     64: ("NO BRAND IS TOO SACRED ", "TO FALL", (235, 35, 35))
 }
 
-# 100% Balanced visual mix: Financial Trading Charts + Realistic Archival Broadcasts + Photo Cards + Stock Videos
+# 100% Balanced visual mix: Financial Trading Charts + Authentic Archival Broadcasts + Photo Cards + Stock B-Roll
 CONTEXTUAL_ASSETS = {
     # Beat 7: "The credit lines were dead" -> Real UBS Headquarters Archival News + Crash Stock
     7:  [BROLL_DIR / "STOCK_MARKET_CRASH.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
@@ -127,129 +126,151 @@ CONTEXTUAL_ASSETS = {
     63: [FIN_DIR / "graphic_05_bailout_rescue.mp4", CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4"]
 }
 
-# Contextually matched transitions per beat (70%+ clean cuts, transitions only when narrative demands)
-BEAT_TRANSITIONS = {
-    1:  ["whip_pan_left", "cut", "cut"],
-    3:  ["cut", "zoom_punch"],
-    5:  ["film_dissolve", "cut"],
-    7:  ["dip_black", "cut"],              # The credit lines were dead
-    8:  ["zoom_punch", "cut"],             # Debt spiral chart
-    11: ["zoom_punch", "cut"],             # Stock crash graph
-    12: ["focus_blur", "cut", "cut"],      # NZZ 17B Debt Newspaper Reveal
-    16: ["whip_pan_right", "film_dissolve"],# Bern Parliament & 1992 Referendum
-    17: ["film_dissolve", "cut"],          # Parliament Voting
-    19: ["zoom_punch", "cut"],             # Radar map & Cockpit
-    20: ["zoom_punch", "cut"],             # Hunter Strategy wheel
-    22: ["shutter_snap", "cut"],           # Philippe Bruggisser Portrait Card
-    24: ["film_dissolve", "cut"],          # McKinsey & Hunter Strategy
-    25: ["focus_blur", "cut"],             # Hunter Network Map
-    28: ["whip_pan_left", "cut"],          # Acquisition Spree
-    29: ["focus_blur", "cut"],             # Sabena Belgian Flag Carrier Newspaper
-    30: ["zoom_punch", "cut"],             # 49% cap graphic
-    32: ["dip_black", "cut"],              # Financial Risk
-    34: ["light_leak", "cut"],             # 3M daily hemorrhage
-    36: ["shutter_snap", "cut"],           # Mario Corti Portrait Card
-    38: ["film_dissolve", "cut"],          # Secret Project Phoenix
-    40: ["dip_black", "light_leak"],       # September 11th collapse
-    41: ["whip_pan_right", "shutter_snap"],# UBS HQ & Marcel Ospel Card
-    44: ["whip_pan_left", "cut"],          # Grounding Day October 2nd
-    46: ["dip_black", "cut"],              # "He was wrong"
-    48: ["whip_pan_left", "cut"],          # Intraday Countdown graphic
-    49: ["focus_blur", "cut"],             # UBS Refusal Newspaper
-    50: ["dip_black", "cut"],              # "Payment did not arrive"
-    52: ["zoom_punch", "cut"],             # Blick "DAS ENDE" Newspaper
-    54: ["focus_blur", "cut"],             # Job loss document with animated orange highlighter
-    55: ["dip_black", "cut"],              # Fleet Shutdown Order
-    56: ["dip_black", "film_dissolve"],    # Swiss Cross Grounded
-    58: ["shutter_snap", "cut"],           # Zurich Protests outside UBS Photo Card
-    59: ["focus_blur", "cut"],             # Stranded Passengers Crisis
-    60: ["whip_pan_right", "cut"],         # Federal Bailout Flowchart
-    62: ["focus_blur", "cut"],             # Court trial media scrum
-    64: ["dip_black", "film_dissolve"]     # Final lesson
-}
-
 # Strict SFX Events: ONLY at true narrative highlights (No spam on regular cuts!)
 SELECTIVE_SFX_BEATS = {
-    1:  "impact_boom",     # Title reveal / Cold Open climax
-    7:  "impact_boom",     # "The credit lines were dead"
-    8:  "whoosh",          # Debt spiral chart reveal
-    11: "impact_boom",     # Stock crash graph reveal
-    12: "paper_rip",       # NZZ 17B Debt Newspaper Reveal
-    16: "whoosh",          # Geographic whip pan to Bern Parliament
-    17: "camera_shutter",  # Parliament voting lights archive
-    22: "camera_shutter",  # Philippe Bruggisser Portrait Card
-    25: "whoosh",          # Hunter network map reveal
-    29: "paper_rip",       # Sabena Belgian Airline Newspaper
-    36: "camera_shutter",  # Mario Corti Portrait Card
-    40: "impact_boom",     # September 11th collapse
-    41: "camera_shutter",  # Marcel Ospel / UBS HQ Card
-    48: "whoosh",          # "The morning of October 2nd: the trap snapped shut"
-    49: "paper_rip",       # UBS 250M Payment Refusal Newspaper
-    52: "paper_rip",       # Blick "DAS ENDE DER SWISSAIR" Newspaper
-    54: "paper_rip",       # Job loss crisis document with orange highlighter
-    56: "impact_boom",     # "The Swiss cross was grounded"
-    58: "camera_shutter",  # Zurich Protests outside UBS Photo Card
-    59: "paper_rip",       # Stranded Passengers report
-    60: "whoosh"           # Federal Council 450M Bailout Flowchart
+    1:  ("impact_boom", 0),     # Title reveal / Cold Open climax
+    7:  ("impact_boom", 1),     # "The credit lines were dead" -> Transition to UBS HQ
+    8:  ("whoosh", 0),          # Debt spiral chart reveal
+    11: ("impact_boom", 0),     # Stock crash graph reveal
+    12: ("paper_rip", 0),       # NZZ 17B Debt Newspaper Reveal
+    16: ("whoosh", 0),          # Geographic whip pan to Bern Parliament
+    17: ("camera_shutter", 1),  # Parliament voting lights archive
+    20: ("whoosh", 0),          # Hunter network map reveal
+    22: ("camera_shutter", 0),  # Philippe Bruggisser Portrait Card
+    25: ("whoosh", 0),          # Hunter network map reveal
+    29: ("paper_rip", 0),       # Sabena Belgian Airline Newspaper
+    36: ("camera_shutter", 0),  # Mario Corti Portrait Card
+    40: ("impact_boom", 1),     # September 11th collapse
+    41: ("camera_shutter", 1),  # Marcel Ospel / UBS HQ Card
+    48: ("whoosh", 0),          # "The morning of October 2nd: the trap snapped shut"
+    49: ("paper_rip", 0),       # UBS 250M Payment Refusal Newspaper
+    52: ("paper_rip", 0),       # Blick "DAS ENDE DER SWISSAIR" Newspaper
+    54: ("paper_rip", 0),       # Job loss crisis document with orange highlighter
+    56: ("impact_boom", 0),     # "The Swiss cross was grounded"
+    58: ("camera_shutter", 0),  # Zurich Protests outside UBS Photo Card
+    59: ("paper_rip", 1),       # Stranded Passengers report
+    60: ("whoosh", 0)           # Federal Council 450M Bailout Flowchart
 }
 
-def render_subshot_fullbleed(src_video: Path, out_path: Path, dur: float, start_sec: float = 0.5,
-                             overlay_png: Path = None, transition: str = "cut"):
-    base_scale = (
+def determine_transition_for_asset(target_asset: Path, default_trans: str = "smoothleft") -> str:
+    name = str(target_asset).lower()
+    if "paper_" in name:
+        return "wiperight"
+    elif "photo_" in name:
+        return "fadewhite"
+    elif "graphic_" in name:
+        return "smoothleft"
+    elif "crash" in name or "grounded" in name or "shutdown" in name:
+        return "fadeblack"
+    return default_trans
+
+def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list,
+                           target_dur: float, out_path: Path):
+    """
+    Renders subshots of a beat using native FFmpeg xfade filters to create
+    genuine cinematic cross-clip transitions (smoothleft, smoothright, wiperight,
+    fadewhite, dissolve, hblur, fadeblack, zoomin).
+    Duration matches target_dur down to frame accuracy.
+    Returns: list of transition onset timestamps relative to beat start.
+    """
+    N = len(assets)
+    T = 0.35  # Transition duration in seconds (professional documentary standard)
+    
+    if N == 1:
+        # Single subshot, no internal xfade
+        cmd = [
+            "ffmpeg", "-y",
+            "-ss", "0.5", "-t", str(round(target_dur, 2)),
+            "-i", str(assets[0])
+        ]
+        base_vf = (
+            "scale=1920:1080:force_original_aspect_ratio=increase,"
+            "crop=1920:1080:(in_w-1920)/2:(in_h-1080)/2,"
+            "settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p"
+        )
+        if overlays[0] and overlays[0].exists():
+            cmd.extend(["-i", str(overlays[0])])
+            cmd.extend([
+                "-filter_complex", f"[0:v]{base_vf}[bg];[bg][1:v]overlay=0:0[outv]",
+                "-map", "[outv]"
+            ])
+        else:
+            cmd.extend(["-vf", base_vf])
+        cmd.extend([
+            "-c:v", "libx264", "-preset", "ultrafast", "-crf", "21",
+            "-pix_fmt", "yuv420p", "-an", str(out_path)
+        ])
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        return []
+
+    # Multi-subshot xfade composition
+    total_raw = target_dur + (N - 1) * T
+    durations = [total_raw / N] * N
+    
+    offsets = []
+    cum = 0.0
+    for i in range(N - 1):
+        cum += durations[i]
+        offsets.append(round(cum - (i + 1) * T, 3))
+
+    cmd = ["ffmpeg", "-y"]
+    for i, a in enumerate(assets):
+        start_sec = 0.5 + (i * 0.4)
+        cmd.extend(["-ss", str(round(start_sec, 2)), "-t", str(round(durations[i] + 0.15, 2)), "-i", str(a)])
+
+    ov_indices = {}
+    next_input = N
+    for i, ov in enumerate(overlays):
+        if ov and ov.exists():
+            cmd.extend(["-i", str(ov)])
+            ov_indices[i] = next_input
+            next_input += 1
+
+    filter_parts = []
+    base_vf = (
         "scale=1920:1080:force_original_aspect_ratio=increase,"
         "crop=1920:1080:(in_w-1920)/2:(in_h-1080)/2,"
-        "format=yuv420p"
+        "settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p"
     )
 
-    if transition == "whip_pan_left":
-        vf_str = (
-            "scale=2320:1080:force_original_aspect_ratio=increase,"
-            "crop=1920:1080:x='if(lte(t,0.22), (1-t/0.22)*380, (in_w-1920)/2)':y='(in_h-1080)/2',"
-            "format=yuv420p"
-        )
-    elif transition == "whip_pan_right":
-        vf_str = (
-            "scale=2320:1080:force_original_aspect_ratio=increase,"
-            "crop=1920:1080:x='if(lte(t,0.22), (in_w-1920) - (1-t/0.22)*380, (in_w-1920)/2)':y='(in_h-1080)/2',"
-            "format=yuv420p"
-        )
-    elif transition == "zoom_punch":
-        vf_str = (
-            base_scale + ","
-            "zoompan=z='min(zoom+0.0022,1.06)':d=125:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1920x1080"
-        )
-    elif transition == "focus_blur":
-        vf_str = base_scale + ",gblur=sigma=16:enable='lte(t,0.25)'"
-    elif transition == "light_leak":
-        vf_str = base_scale + ",fade=t=in:st=0:d=0.15:color=white"
-    elif transition == "dip_black":
-        vf_str = base_scale + ",fade=t=in:st=0:d=0.25:color=black"
-    elif transition == "film_dissolve":
-        vf_str = base_scale + ",fade=t=in:st=0:d=0.25"
-    elif transition == "shutter_snap":
-        vf_str = base_scale + ",fade=t=in:st=0:d=0.07:color=white"
-    else:  # 'cut'
-        vf_str = base_scale
+    for i in range(N):
+        if i in ov_indices:
+            filter_parts.append(f"[{i}:v]{base_vf}[v{i}_raw]")
+            filter_parts.append(f"[v{i}_raw][{ov_indices[i]}:v]overlay=0:0[v{i}]")
+        else:
+            filter_parts.append(f"[{i}:v]{base_vf}[v{i}]")
 
-    cmd = ["ffmpeg", "-y", "-i", str(src_video), "-ss", str(round(start_sec, 2))]
-    if overlay_png and overlay_png.exists():
-        cmd.extend(["-i", str(overlay_png)])
-        filter_complex = f"[0:v]{vf_str}[bg];[bg][1:v]overlay=0:0[outv]"
-        cmd.extend(["-filter_complex", filter_complex, "-map", "[outv]"])
-    else:
-        cmd.extend(["-vf", vf_str])
+    # Determine diverse transitions for each cut point
+    trans_rot = ["smoothleft", "wiperight", "smoothright", "dissolve", "hblur"]
+    trans_list = []
+    for k in range(N - 1):
+        next_asset = assets[k + 1]
+        default_t = trans_rot[(beat_idx + k) % len(trans_rot)]
+        t_name = determine_transition_for_asset(next_asset, default_t)
+        trans_list.append(t_name)
+
+    if N == 2:
+        filter_parts.append(f"[v0][v1]xfade=transition={trans_list[0]}:duration={T}:offset={offsets[0]},format=yuv420p[outv]")
+    elif N == 3:
+        filter_parts.append(f"[v0][v1]xfade=transition={trans_list[0]}:duration={T}:offset={offsets[0]}[v01]")
+        filter_parts.append(f"[v01][v2]xfade=transition={trans_list[1]}:duration={T}:offset={offsets[1]},format=yuv420p[outv]")
+    elif N == 4:
+        filter_parts.append(f"[v0][v1]xfade=transition={trans_list[0]}:duration={T}:offset={offsets[0]}[v01]")
+        filter_parts.append(f"[v01][v2]xfade=transition={trans_list[1]}:duration={T}:offset={offsets[1]}[v012]")
+        filter_parts.append(f"[v012][v3]xfade=transition={trans_list[2]}:duration={T}:offset={offsets[2]},format=yuv420p[outv]")
 
     cmd.extend([
-        "-t", str(round(dur, 2)),
-        "-r", "30",
-        "-c:v", "libx264",
-        "-preset", "ultrafast",
-        "-crf", "21",
+        "-filter_complex", ";".join(filter_parts),
+        "-map", "[outv]",
+        "-t", str(round(target_dur, 2)),
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "21",
         "-pix_fmt", "yuv420p",
         "-an",
         str(out_path)
     ])
+
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+    return offsets
 
 def compose_cinematic_music_score(total_sec: float, out_wav: Path):
     SR = 44100
@@ -293,7 +314,6 @@ def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path
     boom_samp = load_wav_samples(SFX_DIR / "impact_boom.wav")
     shutter_samp = load_wav_samples(SFX_DIR / "camera_shutter.wav")
 
-    # Attenuated, tasteful volumes (subtle Foley accents, not deafening noise)
     sfx_map = {
         "whoosh": (whoosh_samp, 0.16),
         "paper_rip": (paper_samp, 0.18),
@@ -318,134 +338,139 @@ def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path
         wf.setsampwidth(2)
         wf.setframerate(SR)
         wf.writeframes(pcm.tobytes())
-    log(f"Generated Selective SFX Track: {len(sfx_events)} authentic sound effects synchronized (Zero Spam!)")
+    log(f"Generated Selective SFX Track: {len(sfx_events)} synchronized sound accents (Zero Spam!)")
 
 def main():
-    log("=== COMMENCING BALANCED MASTER ASSEMBLY (GRAPHS + REAL FOOTAGE + STOCK) ===")
+    log("=== COMMENCING MASTER TRANSITION RE-ASSEMBLY (NATIVE XFADE + BALANCED VISUALS) ===")
 
-    # 1. Clear previous subshots to ensure fresh rendering of all new visual assets
-    log("Clearing previous subshots to render updated balanced visual mix...")
+    # 1. Clear previous shots cache
+    log("Clearing subshots cache for clean xfade generation...")
     for old_shot in TEMP_SHOTS_DIR.glob("*.mp4"):
         try:
             old_shot.unlink()
         except Exception:
             pass
 
-    # 2. Asset Library
+    # 2. Asset Pools
     authentic_pool = sorted(list(CLIPS_DIR.glob("*.mp4")))
     broll_pool = sorted(list(BROLL_DIR.glob("*.mp4"))) + sorted(list(ANIM_DIR.glob("cinematic_clip_*.mp4")))
     used_assets = set()
     auth_queue = [p for p in authentic_pool]
     broll_queue = [p for p in broll_pool]
 
-    # 3. Cold Open
-    cold_mp4 = ANIM_DIR / "cold_open.mp4"
+    # 3. Process Cold Open
+    cold_raw_mp4 = ANIM_DIR / "cold_open.mp4"
     cold_wav = AUDIO_DIR / "cold_open.wav"
-    master_video_clips = [str(cold_mp4)]
-    master_audio_clips = [str(cold_wav)]
-    used_assets.add(str(cold_mp4))
-
     cold_dur = get_audio_duration(cold_wav)
+
+    cold_master_mp4 = TEMP_SHOTS_DIR / "beat_00_cold_open.mp4"
+    log(f"Normalizing Cold Open to exact audio duration ({cold_dur:.2f}s)...")
+    cmd_cold = [
+        "ffmpeg", "-y", "-ss", "0.5", "-t", str(round(cold_dur, 2)),
+        "-i", str(cold_raw_mp4),
+        "-vf", "scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080:(in_w-1920)/2:(in_h-1080)/2,settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p",
+        "-c:v", "libx264", "-preset", "ultrafast", "-crf", "21", "-pix_fmt", "yuv420p", "-an",
+        str(cold_master_mp4)
+    ]
+    subprocess.run(cmd_cold, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+    master_video_clips = [str(cold_master_mp4)]
+    master_audio_clips = [str(cold_wav)]
+    used_assets.add(str(cold_raw_mp4))
+
     cumulative_time = cold_dur
     sfx_events = []
-
-    # 4. Assemble Beats with Contextual Transitions & Restrained SFX
     total_subshots = 0
 
+    # 4. Render 64 Beats with Native Xfade Transitions
     for idx in range(1, 65):
         audio_path = AUDIO_DIR / f"beat_{idx}.wav"
         dur = get_audio_duration(audio_path)
         master_audio_clips.append(str(audio_path))
 
-        # Check if an authentic selective SFX is designated for this beat
-        if idx in SELECTIVE_SFX_BEATS:
-            sfx_events.append((cumulative_time, SELECTIVE_SFX_BEATS[idx]))
-
-        if dur <= 5.5:
-            splits = [dur * 0.5, dur * 0.5]
+        # Determine number of subshots based on duration
+        if dur <= 5.2:
+            num_subshots = 2
         elif dur <= 8.5:
-            splits = [2.4, 2.4, max(1.2, dur - 4.8)]
+            num_subshots = 3
         else:
-            splits = [2.2, 2.2, 2.2, max(1.2, dur - 6.6)]
+            num_subshots = 4
 
-        # Contextual candidates for this exact beat
+        # Select assets for this beat
+        beat_assets = []
         ctx_list = CONTEXTUAL_ASSETS.get(idx, [])
         ctx_ptr = 0
 
-        # Transitions defined for this beat
-        beat_trans_list = BEAT_TRANSITIONS.get(idx, ["cut", "cut", "cut"])
-
-        for sub_i, s_dur in enumerate(splits):
-            shot_file = TEMP_SHOTS_DIR / f"zero_dup_{idx:02d}_{sub_i+1}.mp4"
-            overlay_file = None
-            src_asset = None
-
-            # 1. Check if an exact contextual asset (Financial Graphic / Photo / Paper / Archival / Stock) is assigned
+        for s_idx in range(num_subshots):
+            asset = None
             if ctx_ptr < len(ctx_list):
                 cand = ctx_list[ctx_ptr]
                 if cand.exists() and str(cand) not in used_assets:
-                    src_asset = cand
+                    asset = cand
                     used_assets.add(str(cand))
                     ctx_ptr += 1
 
-            # 2. Alternate between Authentic Footage and Cinematic Stock B-Roll for visual balance
-            if src_asset is None:
+            if asset is None:
+                # Alternate between b-roll and authentic footage
                 if (total_subshots % 2 == 0) and broll_queue:
                     for cand in broll_queue:
                         if str(cand) not in used_assets and cand.exists():
-                            src_asset = cand
+                            asset = cand
                             used_assets.add(str(cand))
                             broll_queue.remove(cand)
                             break
                 elif auth_queue:
                     for cand in auth_queue:
                         if str(cand) not in used_assets and cand.exists():
-                            src_asset = cand
+                            asset = cand
                             used_assets.add(str(cand))
                             auth_queue.remove(cand)
                             break
 
-            # 3. Fallback guarantee
-            if src_asset is None:
-                src_asset = authentic_pool[total_subshots % len(authentic_pool)]
+            if asset is None:
+                asset = authentic_pool[total_subshots % len(authentic_pool)]
 
-            # Check punch card overlay
-            if sub_i == 1 and idx in PUNCH_TEXTS:
-                ov = OVERLAY_DIR / f"punch_{idx:02d}.png"
-                if ov.exists():
-                    overlay_file = ov
-
-            # Select transition
-            if sub_i < len(beat_trans_list):
-                trans = beat_trans_list[sub_i]
-            else:
-                trans = "cut"
-
-            # If punch overlay shot and transition was standard cut, elevate to zoom_punch
-            if overlay_file and trans == "cut":
-                trans = "zoom_punch"
-
-            cumulative_time += s_dur
-
-            render_subshot_fullbleed(
-                src_video=src_asset,
-                out_path=shot_file,
-                dur=s_dur,
-                start_sec=0.5 + (sub_i * 0.3),
-                overlay_png=overlay_file,
-                transition=trans
-            )
-
-            master_video_clips.append(str(shot_file))
+            beat_assets.append(asset)
             total_subshots += 1
 
-        if idx % 10 == 0:
-            log(f"Rendered {idx}/64 beats ({total_subshots} subshots completed with multi-transitions)...")
+        # Check for kinetic punch text overlay
+        overlays = [None] * num_subshots
+        if idx in PUNCH_TEXTS:
+            ov = OVERLAY_DIR / f"punch_{idx:02d}.png"
+            if ov.exists():
+                # Apply overlay to the second subshot (or first if 1 subshot)
+                target_sub = min(1, num_subshots - 1)
+                overlays[target_sub] = ov
 
-    log(f"Total Contextual Cuts: {total_subshots}")
-    log(f"Total Unique Assets Used: {len(used_assets)}")
+        # Render beat with native xfade
+        beat_out_mp4 = TEMP_SHOTS_DIR / f"beat_{idx:02d}_master.mp4"
+        trans_offsets = render_beat_with_xfade(
+            beat_idx=idx,
+            assets=beat_assets,
+            overlays=overlays,
+            target_dur=dur,
+            out_path=beat_out_mp4
+        )
+        master_video_clips.append(str(beat_out_mp4))
 
-    # 5. Concatenate Video Timeline
+        # Synchronize selective SFX events
+        if idx in SELECTIVE_SFX_BEATS:
+            sfx_type, trans_pos = SELECTIVE_SFX_BEATS[idx]
+            if trans_pos == 0:
+                sfx_events.append((cumulative_time, sfx_type))
+            elif trans_pos - 1 < len(trans_offsets):
+                sfx_events.append((cumulative_time + trans_offsets[trans_pos - 1], sfx_type))
+            else:
+                sfx_events.append((cumulative_time, sfx_type))
+
+        cumulative_time += dur
+
+        if idx % 10 == 0 or idx == 64:
+            log(f"Rendered Beat {idx}/64 with native xfade transitions ({total_subshots} total subshots)...")
+
+    log(f"All 64 Beats successfully composed with native xfade! Total unique assets used: {len(used_assets)}")
+
+    # 5. Write Video Concat List
     video_concat_txt = EXPORT_DIR / "video_concat.txt"
     with open(video_concat_txt, "w", encoding="utf-8") as f:
         for clip in master_video_clips:
@@ -467,7 +492,7 @@ def main():
     total_timeline_sec = get_audio_duration(master_vo_wav)
     log(f"Total Master Timeline Duration: {total_timeline_sec:.2f} seconds ({total_timeline_sec/60:.2f} minutes)")
 
-    # 7. Restrained Transition SFX Track
+    # 7. Selective Transition SFX Track
     sfx_track_wav = EXPORT_DIR / "transition_sfx_track.wav"
     build_transition_sfx_track(total_timeline_sec, sfx_events, sfx_track_wav)
 
@@ -475,7 +500,7 @@ def main():
     tension_wav = EXPORT_DIR / "tension_score.wav"
     compose_cinematic_music_score(total_timeline_sec, tension_wav)
 
-    # 9. Dynamic Audio Mixing
+    # 9. Dynamic Audio Mixing (-14 LUFS, voiceover clear, score subtle, SFX accented)
     log("Dynamically mixing Voiceover (-14 LUFS) + Tension Score (-20 dB) + Selective SFX...")
     master_mix_wav = EXPORT_DIR / "master_audio_mix.wav"
     audio_mix_cmd = [
@@ -496,9 +521,9 @@ def main():
     ]
     subprocess.run(audio_mix_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
-    # 10. Multiplex Master Video (Optimized for Web Streaming & under 75 MB)
+    # 10. Multiplex Final Master Video
     master_out_mp4 = EXPORT_DIR / "documentary.mp4"
-    log("Multiplexing balanced documentary master with Faststart (target < 75 MB)...")
+    log("Multiplexing balanced documentary master with Faststart (target < 35 MB)...")
     mux_cmd = [
         "ffmpeg", "-y",
         "-f", "concat", "-safe", "0", "-i", str(video_concat_txt),
@@ -534,7 +559,7 @@ def main():
 
     pkg_mb = pkg_zip.stat().st_size / (1024 * 1024)
     log(f"Release package ready: {pkg_zip.name} ({pkg_mb:.2f} MB)")
-    log("=== BALANCED MASTER COMPLETE ===")
+    log("=== BALANCED MASTER COMPLETE WITH TRUE TRANSITIONS ===")
 
 if __name__ == "__main__":
     main()

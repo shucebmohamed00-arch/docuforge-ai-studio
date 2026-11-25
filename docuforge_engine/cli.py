@@ -61,6 +61,11 @@ def main():
     p_rev.add_argument("--video", "-v", required=True, help="Path to documentary video")
     p_rev.add_argument("--interval", "-i", type=float, default=25.0, help="Sampling interval in seconds")
 
+    # Command: autodirect
+    p_ad = subparsers.add_parser("autodirect", help="Autonomous closed-loop review and self-healing with Auto-Director Agent")
+    p_ad.add_argument("--video", "-v", default="data/exports/swiss-air-grounding-prod/documentary.mp4", help="Video path")
+    p_ad.add_argument("--storyboard", "-s", default="storyboard_items.json", help="Storyboard path")
+
     # Command: pipeline
     p_pipe = subparsers.add_parser("pipeline", help="Run end-to-end multi-agent cooperative graphics pipeline")
     p_pipe.add_argument("--query", "-q", default="Swissair MD-11 Zurich", help="Search query for scout")
@@ -130,6 +135,13 @@ def main():
         res = orchestrator.reviewer.execute({
             "video_path": args.video,
             "interval_sec": args.interval
+        })
+        print(json.dumps(res, indent=2))
+
+    elif args.command == "autodirect":
+        res = orchestrator.auto_director.execute({
+            "video_path": args.video,
+            "storyboard_path": args.storyboard
         })
         print(json.dumps(res, indent=2))
 

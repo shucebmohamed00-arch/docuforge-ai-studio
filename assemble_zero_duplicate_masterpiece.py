@@ -6,6 +6,7 @@ import zipfile
 import subprocess
 import numpy as np
 from pathlib import Path
+from docuforge_engine.core.foley_synthesizer import FoleySoundEngine
 
 PROJ_ID = "swiss-air-grounding-prod"
 BASE_DIR = Path("c:/Users/Shueb/Desktop/youtu")
@@ -17,6 +18,8 @@ PAPER_DIR = BASE_DIR / "data" / "media" / "paper_assets"
 PHOTO_DIR = BASE_DIR / "data" / "media" / "documentary_photos"
 ADV_DIR = BASE_DIR / "data" / "media" / "advanced_25d"
 STAGE_DIR = BASE_DIR / "data" / "media" / "magnates_stage"
+REMOTION_DIR = BASE_DIR / "data" / "media" / "remotion_renders"
+FOLEY_DIR = BASE_DIR / "data" / "media" / "master_foley"
 FIN_DIR = BASE_DIR / "data" / "media" / "financial_graphics"
 OVERLAY_DIR = BASE_DIR / "data" / "media" / "magnates_overlays"
 BROLL_DIR = BASE_DIR / "data" / "media" / "broll_cache"
@@ -98,22 +101,24 @@ CONTEXTUAL_ASSETS = {
         CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"
     ],
     17: [CLIPS_DIR / "politics_ubs_02_politician_speech.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
-    # Beat 18: Enter Philippe Bruggisser 2.5D Parallax
-    18: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"],
+    # Beat 18: Enter Philippe Bruggisser Remotion 2.5D Parallax with Lower-Third
+    18: [REMOTION_DIR / "parallax_bruggisser.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"],
     # Beat 19: European skies & Cockpit view
     19: [BROLL_DIR / "COCKPIT_FLIGHT.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"],
     # Beat 20: The Hunter Strategy Web (49% Cap Explainer)
     20: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
     # Beat 22: Philippe Bruggisser 2.5D Parallax Card
     22: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4"],
-    # Beat 25: Acquisition Web & 49% Cap Explainer
-    25: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
+    # Beat 25: Remotion Kinetic Document Inspector (Debt Deficit + Hand-Drawn Red Circle + Bailout Stamp)
+    25: [REMOTION_DIR / "kinetic_document_inspector.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
     # Beat 28: Multi-billion shopping spree
     28: [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", FIN_DIR / "graphic_02_debt_spiral.mp4"],
     # Beat 29: Sabena Belgian Airline Newspaper
     29: [PAPER_DIR / "paper_06_sabena.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
     # Beat 30: 49% ownership cap explainer
     30: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
+    # Beat 33: Mario Corti Takes Over (Remotion 2.5D Multi-Plane Parallax Rig)
+    33: [REMOTION_DIR / "parallax_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
     # Beat 34: Hemorrhaging 3M daily
     34: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
     # Beat 36: 3D Mahogany Desk Stage Mario Corti Confidential Case File
@@ -159,10 +164,12 @@ SELECTIVE_SFX_BEATS = {
     12: ("paper_rip", 0),       # NZZ 17B Debt Newspaper Reveal
     16: ("whoosh", 1),          # British Airways Mega-Carrier Card reveal
     17: ("camera_shutter", 1),  # Parliament voting lights archive
+    18: ("whoosh", 0),          # Philippe Bruggisser Parallax reveal
     20: ("whoosh", 0),          # Hunter network map reveal
     22: ("camera_shutter", 0),  # Philippe Bruggisser Portrait Card
-    25: ("whoosh", 0),          # Hunter network map reveal
+    25: ("paper_rip", 0),       # Remotion Kinetic Document Inspector (Bailout Denied stamp)
     29: ("paper_rip", 0),       # Sabena Belgian Airline Newspaper
+    33: ("impact_boom", 0),     # Mario Corti Takes Over Parallax reveal
     36: ("camera_shutter", 0),  # Mario Corti Portrait Card
     40: ("impact_boom", 0),     # Market collapse
     41: ("camera_shutter", 1),  # Marcel Ospel / UBS HQ Card
@@ -344,16 +351,33 @@ def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path
     total_samples = int(total_sec * SR)
     track = np.zeros(total_samples, dtype=np.float32)
 
-    whoosh_samp = load_wav_samples(SFX_DIR / "whoosh.wav")
-    paper_samp = load_wav_samples(SFX_DIR / "paper_rip.wav")
-    boom_samp = load_wav_samples(SFX_DIR / "impact_boom.wav")
-    shutter_samp = load_wav_samples(SFX_DIR / "camera_shutter.wav")
+    # 1. Subtle Archival Vinyl & Analog Tape Bed (Warm documentary atmosphere)
+    vinyl_f = FOLEY_DIR / "archival_vinyl_bed.wav"
+    if vinyl_f.exists():
+        vinyl_samp = load_wav_samples(vinyl_f)
+        n_repeats = (total_samples // len(vinyl_samp)) + 1
+        full_vinyl = np.tile(vinyl_samp, n_repeats)[:total_samples]
+        track += full_vinyl * 0.035
+
+    # 2. Master Foley Library
+    whoosh_f = FOLEY_DIR / "whoosh_cinematic.wav" if (FOLEY_DIR / "whoosh_cinematic.wav").exists() else SFX_DIR / "whoosh.wav"
+    boom_f = FOLEY_DIR / "sub_boom_heavy.wav" if (FOLEY_DIR / "sub_boom_heavy.wav").exists() else SFX_DIR / "impact_boom.wav"
+    paper_f = FOLEY_DIR / "paper_slide_desk.wav" if (FOLEY_DIR / "paper_slide_desk.wav").exists() else SFX_DIR / "paper_rip.wav"
+    shutter_f = FOLEY_DIR / "camera_shutter_snap.wav" if (FOLEY_DIR / "camera_shutter_snap.wav").exists() else SFX_DIR / "camera_shutter.wav"
+    type_f = FOLEY_DIR / "typewriter_key_01.wav" if (FOLEY_DIR / "typewriter_key_01.wav").exists() else SFX_DIR / "camera_shutter.wav"
+
+    whoosh_samp = load_wav_samples(whoosh_f)
+    paper_samp = load_wav_samples(paper_f)
+    boom_samp = load_wav_samples(boom_f)
+    shutter_samp = load_wav_samples(shutter_f)
+    type_samp = load_wav_samples(type_f)
 
     sfx_map = {
-        "whoosh": (whoosh_samp, 0.16),
-        "paper_rip": (paper_samp, 0.18),
-        "impact_boom": (boom_samp, 0.28),
-        "camera_shutter": (shutter_samp, 0.18)
+        "whoosh": (whoosh_samp, 0.22),
+        "paper_rip": (paper_samp, 0.24),
+        "impact_boom": (boom_samp, 0.35),
+        "camera_shutter": (shutter_samp, 0.22),
+        "typewriter": (type_samp, 0.20)
     }
 
     for t_sec, sfx_type in sfx_events:
@@ -373,14 +397,15 @@ def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path
         wf.setsampwidth(2)
         wf.setframerate(SR)
         wf.writeframes(pcm.tobytes())
-    log(f"Generated Selective SFX Track: {len(sfx_events)} synchronized sound accents (Zero Spam!)")
+    log(f"Generated Selective SFX Track: {len(sfx_events)} synchronized sound accents + Analog Vinyl Bed (Zero Spam!)")
 
 def main():
     log("=== COMMENCING MASTER RE-ASSEMBLY (CLEAN FULL-BLEED + MEGA-AIRLINES + NO WATERMARKS) ===")
 
-    # 1. Manage shots cache
+    # 1. Manage shots cache and ensure Master Foley Suite is built
+    FoleySoundEngine(FOLEY_DIR).build_master_foley_suite()
     log("Checking subshots cache for incremental xfade generation...")
-    force_rebuild = {7, 16, 36}
+    force_rebuild = {7, 16, 18, 25, 33, 36}
     for reb_idx in force_rebuild:
         old_f = TEMP_SHOTS_DIR / f"beat_{reb_idx:02d}_master.mp4"
         if old_f.exists():

@@ -15,6 +15,7 @@ AUDIO_DIR = BASE_DIR / "data" / "media" / "audio" / PROJ_ID
 CLIPS_DIR = BASE_DIR / "data" / "media" / "authentic_clips"
 PAPER_DIR = BASE_DIR / "data" / "media" / "paper_assets"
 PHOTO_DIR = BASE_DIR / "data" / "media" / "documentary_photos"
+ADV_DIR = BASE_DIR / "data" / "media" / "advanced_25d"
 FIN_DIR = BASE_DIR / "data" / "media" / "financial_graphics"
 OVERLAY_DIR = BASE_DIR / "data" / "media" / "magnates_overlays"
 BROLL_DIR = BASE_DIR / "data" / "media" / "broll_cache"
@@ -63,33 +64,35 @@ PUNCH_TEXTS = {
     64: ("NO BRAND IS TOO SACRED ", "TO FALL", (235, 35, 35))
 }
 
-# 100% Curated Visual Mix (Zero watermarks, zero 4:3 pillarbox, zero repetitive 9/11)
+# 100% Curated Visual Mix (Advanced 2.5D Parallax + Rubber Stamp Document Slams + Mega-Airlines)
 CONTEXTUAL_ASSETS = {
-    # Beat 7: "The credit lines were dead" -> Real UBS Headquarters Archival News
-    7:  [CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
+    # Beat 7: "The credit lines were dead" -> Advanced 2.5D UBS Dossier Parallax
+    7:  [ADV_DIR / "parallax_04_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
     # Beat 8: "An aggressive debt spree"
     8:  [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
     # Beat 10: "Catastrophic strategy of debt..."
     10: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
     # Beat 11: Stock Collapse & NZZ Debt Headline
     11: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
-    # Beat 12: NZZ 17.8B Debt Newspaper with Animated Highlighter
-    12: [PAPER_DIR / "paper_highlighter_nzz_debts.mp4", FIN_DIR / "graphic_01_stock_crash.mp4"],
+    # Beat 12: NZZ 17.8B Debt Newspaper with Animated Highlighter + Rubber Stamp Slam
+    12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", FIN_DIR / "graphic_01_stock_crash.mp4"],
     # Beat 16: Mega-Airlines Illustration Suite (British Airways, Lufthansa, Air France rapid 1.1s cards)
     16: [
-        PHOTO_DIR / "photo_05_parliament.mp4",
+        CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4",
         PHOTO_DIR / "photo_07_british_airways.mp4",
         PHOTO_DIR / "photo_08_lufthansa.mp4",
         PHOTO_DIR / "photo_09_air_france.mp4",
         CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"
     ],
     17: [CLIPS_DIR / "politics_ubs_02_politician_speech.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
+    # Beat 18: Enter Philippe Bruggisser 2.5D Parallax
+    18: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"],
     # Beat 19: European skies & Cockpit view
     19: [BROLL_DIR / "COCKPIT_FLIGHT.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"],
     # Beat 20: The Hunter Strategy Web (49% Cap Explainer)
     20: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
-    # Beat 22: Philippe Bruggisser Portrait Card
-    22: [PHOTO_DIR / "photo_06_bruggisser.mp4", CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4"],
+    # Beat 22: Philippe Bruggisser 2.5D Parallax Card
+    22: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4"],
     # Beat 25: Acquisition Web & 49% Cap Explainer
     25: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
     # Beat 28: Multi-billion shopping spree
@@ -100,14 +103,14 @@ CONTEXTUAL_ASSETS = {
     30: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
     # Beat 34: Hemorrhaging 3M daily
     34: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
-    # Beat 36: Mario Corti arrives
-    36: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
+    # Beat 36: Mario Corti 2.5D Parallax Card
+    36: [ADV_DIR / "parallax_01_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
     # Beat 37: Post-9/11 aviation collapse (Deserted Terminal & Grounded Fleets, ZERO explosions)
     37: [BROLL_DIR / "PASSENGER_TERMINAL.mp4", FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4"],
     # Beat 40: Financial plunge
     40: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
-    # Beat 41: UBS HQ & Marcel Ospel Card
-    41: [PHOTO_DIR / "photo_01_ubs_hq.mp4", PHOTO_DIR / "photo_03_marcel_ospel.mp4"],
+    # Beat 41: UBS HQ & Marcel Ospel 2.5D Parallax
+    41: [ADV_DIR / "parallax_03_marcel_ospel.mp4", ADV_DIR / "parallax_04_ubs_dossier.mp4"],
     # Beat 43: Moritz Suter & Crossair MD-82
     43: [CLIPS_DIR / "politics_ubs_12_crossair_moritz_suter.mp4", CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4"],
     # Beat 44: October 2nd Grounding Day begins
@@ -115,11 +118,11 @@ CONTEXTUAL_ASSETS = {
     # Beat 48: Intraday Countdown (08:00 AM to 13:45 PM)
     48: [FIN_DIR / "graphic_04_intraday_countdown.mp4", CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4"],
     # Beat 49: UBS Refusal Newspaper
-    49: [PAPER_DIR / "paper_03_ubs_refusal.mp4", CLIPS_DIR / "politics_ubs_04_marcel_ospel_face.mp4"],
+    49: [PAPER_DIR / "paper_03_ubs_refusal.mp4", ADV_DIR / "parallax_03_marcel_ospel.mp4"],
     # Beat 52: Blick "DAS ENDE" Newspaper & Intraday Liquidity
     52: [PAPER_DIR / "paper_01_blick_grounded.mp4", FIN_DIR / "graphic_04_intraday_countdown.mp4"],
-    # Beat 54: Job loss crisis document with orange highlighter
-    54: [PAPER_DIR / "paper_highlighter_job_loss.mp4", CLIPS_DIR / "politics_ubs_07_protesters_signs.mp4"],
+    # Beat 54: Job loss crisis document with orange highlighter + Rubber Stamp Slam
+    54: [ADV_DIR / "doc_02_job_loss_stamp.mp4", CLIPS_DIR / "politics_ubs_07_protesters_signs.mp4"],
     # Beat 55: Shutdown order
     55: [CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4"],
     # Beat 58: Zurich Protests outside UBS Photo Card
@@ -362,13 +365,13 @@ def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path
 def main():
     log("=== COMMENCING MASTER RE-ASSEMBLY (CLEAN FULL-BLEED + MEGA-AIRLINES + NO WATERMARKS) ===")
 
-    # 1. Clear previous shots cache
-    log("Clearing subshots cache for clean xfade generation...")
-    for old_shot in TEMP_SHOTS_DIR.glob("*.mp4"):
-        try:
-            old_shot.unlink()
-        except Exception:
-            pass
+    # 1. Manage shots cache
+    log("Checking subshots cache for incremental xfade generation...")
+    force_rebuild = {16}
+    for reb_idx in force_rebuild:
+        old_f = TEMP_SHOTS_DIR / f"beat_{reb_idx:02d}_master.mp4"
+        if old_f.exists():
+            old_f.unlink()
 
     # 2. Asset Pools (Pure 1080p Full Bleed, NO watermarks, NO pillarboxing, NO 9/11 repeats)
     authentic_pool = sorted([
@@ -463,15 +466,24 @@ def main():
                 target_sub = min(1, len(beat_assets) - 1)
                 overlays[target_sub] = ov
 
-        # Render beat with native xfade
+        # Render beat with native xfade if not cached
         beat_out_mp4 = TEMP_SHOTS_DIR / f"beat_{idx:02d}_master.mp4"
-        trans_offsets = render_beat_with_xfade(
-            beat_idx=idx,
-            assets=beat_assets,
-            overlays=overlays,
-            target_dur=dur,
-            out_path=beat_out_mp4
-        )
+        if not beat_out_mp4.exists():
+            trans_offsets = render_beat_with_xfade(
+                beat_idx=idx,
+                assets=beat_assets,
+                overlays=overlays,
+                target_dur=dur,
+                out_path=beat_out_mp4
+            )
+        else:
+            total_raw = dur + (len(beat_assets) - 1) * 0.45
+            sub_d = total_raw / len(beat_assets)
+            cum_off = 0.0
+            trans_offsets = []
+            for i in range(len(beat_assets) - 1):
+                cum_off += sub_d
+                trans_offsets.append(round(cum_off - (i + 1) * 0.45, 3))
         master_video_clips.append(str(beat_out_mp4))
 
         # Synchronize selective SFX events
@@ -551,6 +563,7 @@ def main():
         "-i", str(master_mix_wav),
         "-map", "0:v:0",
         "-map", "1:a:0",
+        "-vf", "noise=c1s=6:c0f=u+t,eq=contrast=1.05:brightness=-0.02:saturation=1.06",
         "-c:v", "libx264",
         "-preset", "veryfast",
         "-s", "1280x720",

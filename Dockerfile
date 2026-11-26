@@ -24,6 +24,6 @@ RUN mkdir -p /app/data/media/audio /app/data/media/animations /app/data/previews
 ENV HOST=0.0.0.0
 ENV PORT=7860
 ENV PYTHONPATH="/app"
-EXPOSE 7860
+EXPOSE 7860 10000
 
 CMD ["python", "start.py"]

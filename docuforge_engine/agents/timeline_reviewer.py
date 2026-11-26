@@ -3,12 +3,13 @@ DocuForge Multi-Agent Graphics Engine - Agent 9: Timeline Reviewer & Vision Insp
 Inspects the assembled documentary video across its entire timeline, sampling frames,
 analyzing aesthetics, checking visual coherence, and producing visual contact sheets.
 """
+from __future__ import annotations
 import os
 import cv2
 import subprocess
 import numpy as np
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from PIL import Image, ImageDraw, ImageFont
 from ..core.base_agent import BaseAgent
 from .visual_critic import VisualCriticAgent

@@ -44,24 +44,27 @@ def load_wav_samples(wav_path: Path):
         return np.frombuffer(data, dtype=np.int16).astype(np.float32) / 32768.0
 
 # 31 Strictly Unique Visual Assets for 60 Seconds (Average ~1.95s per visual)
+# Featuring User's Photorealistic AI Cinematic Imagery & Authentic Archival B-Roll
+AI_DIR = BASE_DIR / "data/media/cinematic_ai_assets"
+
 VISUAL_SEQUENCE = [
     # Act 1: The Cold Open Hook & The Crash of the Swiss Icon (0.0s - 20.0s)
     ("ACC_01", BASE_DIR / "data/media/authentic_clips/zurich_uncut_38_foggy_morning_kloten.mp4", 1.95, "whoosh_cinematic", "wiperight"),
-    ("ACC_02", BASE_DIR / "data/media/authentic_clips/zurich_uncut_06_fuel_station.mp4", 1.90, "tape_recorder_click", "smoothleft"),
+    ("ACC_02", AI_DIR / "ai_07_fuel_hose_cutoff.jpg", 1.90, "tape_recorder_click", "smoothleft"),
     ("ACC_03", BASE_DIR / "data/media/authentic_clips/zurich_uncut_09_swissair_cross.mp4", 1.95, "sub_boom_heavy", "fadewhite"),
-    ("ACC_04", BASE_DIR / "data/media/magnates_stage/stage_03_ubs_dossier.mp4", 2.10, "paper_slide_desk", "smoothright"),
-    ("ACC_05", BASE_DIR / "data/media/remotion_renders/parallax_mario_corti.mp4", 1.95, "camera_shutter_snap", "hblur"),
-    ("ACC_06", BASE_DIR / "data/media/paper_assets/paper_02_nzz_debts.mp4", 1.90, "paper_slide_desk", "wiperight"),
+    ("ACC_04", AI_DIR / "ai_04_ubs_boardroom_crisis.jpg", 2.10, "paper_slide_desk", "smoothright"),
+    ("ACC_05", AI_DIR / "ai_06_corti_press_conference.jpg", 1.95, "camera_shutter_snap", "hblur"),
+    ("ACC_06", AI_DIR / "ai_12_confidential_17b_rejected_document.jpg", 1.90, "paper_slide_desk", "wiperight"),
     ("ACC_07", BASE_DIR / "data/media/remotion_renders/kinetic_document_inspector.mp4", 2.20, "sub_boom_heavy", "dissolve"),
     ("ACC_08", BASE_DIR / "data/media/authentic_clips/politics_ubs_23_bank_teller_counter.mp4", 1.90, "typewriter_key_01", "smoothleft"),
     ("ACC_09", BASE_DIR / "data/media/authentic_clips/politics_ubs_24_parliament_voting_lights.mp4", 1.90, "whoosh_cinematic", "fadewhite"),
     ("ACC_10", BASE_DIR / "data/media/authentic_clips/politics_ubs_20_financial_district_zurich.mp4", 1.95, "sub_drop_dark", "smoothright"),
 
     # Act 2: The Mega-Airlines Threat & The Hunter Strategy (20.0s - 40.0s)
-    ("ACC_11", BASE_DIR / "data/media/documentary_photos/photo_07_british_airways.mp4", 1.85, "whoosh_cinematic", "hblur"),
-    ("ACC_12", BASE_DIR / "data/media/documentary_photos/photo_08_lufthansa.mp4", 1.85, "whoosh_cinematic", "wiperight"),
-    ("ACC_13", BASE_DIR / "data/media/documentary_photos/photo_09_air_france.mp4", 1.85, "whoosh_cinematic", "smoothleft"),
-    ("ACC_14", BASE_DIR / "data/media/remotion_renders/parallax_bruggisser.mp4", 2.10, "camera_shutter_snap", "fadewhite"),
+    ("ACC_11", AI_DIR / "ai_03_british_airways_heathrow.jpg", 1.85, "whoosh_cinematic", "hblur"),
+    ("ACC_12", AI_DIR / "ai_01_lufthansa_takeoff.jpg", 1.85, "whoosh_cinematic", "wiperight"),
+    ("ACC_13", AI_DIR / "ai_02_air_france_747.jpg", 1.85, "whoosh_cinematic", "smoothleft"),
+    ("ACC_14", AI_DIR / "ai_05_bruggisser_hunter_office.jpg", 2.10, "camera_shutter_snap", "fadewhite"),
     ("ACC_15", BASE_DIR / "data/media/authentic_clips/zurich_uncut_04_cockpit_view.mp4", 1.95, "whoosh_cinematic", "dissolve"),
     ("ACC_16", BASE_DIR / "data/media/authentic_clips/politics_ubs_13_investor_meeting.mp4", 1.95, "paper_slide_desk", "smoothright"),
     ("ACC_17", BASE_DIR / "data/media/authentic_clips/politics_ubs_01_bern_parliament.mp4", 1.95, "paper_slide_desk", "wiperight"),
@@ -74,13 +77,13 @@ VISUAL_SEQUENCE = [
     ("ACC_22", BASE_DIR / "data/media/documentary_photos/photo_03_marcel_ospel.mp4", 1.90, "camera_shutter_snap", "wiperight"),
     ("ACC_23", BASE_DIR / "data/media/advanced_25d/parallax_04_ubs_dossier.mp4", 2.05, "paper_slide_desk", "smoothleft"),
     ("ACC_24", BASE_DIR / "data/media/authentic_clips/zurich_uncut_11_tower_pan.mp4", 1.90, "whoosh_cinematic", "smoothright"),
-    ("ACC_25", BASE_DIR / "data/media/broll_cache/RAIN_RUNWAY.mp4", 1.95, "whoosh_cinematic", "hblur"),
-    ("ACC_26", BASE_DIR / "data/media/authentic_clips/zurich_uncut_34_departure_lounge.mp4", 1.90, "typewriter_key_01", "fadewhite"),
-    ("ACC_27", BASE_DIR / "data/media/authentic_clips/zurich_uncut_35_ticket_receipts.mp4", 1.90, "paper_slide_desk", "dissolve"),
+    ("ACC_25", AI_DIR / "ai_13_abandoned_first_class_lounge.jpg", 1.95, "whoosh_cinematic", "hblur"),
+    ("ACC_26", AI_DIR / "ai_09_cancelled_departure_board.jpg", 1.90, "typewriter_key_01", "fadewhite"),
+    ("ACC_27", AI_DIR / "ai_10_stranded_passengers_terminal.jpg", 1.90, "paper_slide_desk", "dissolve"),
     ("ACC_28", BASE_DIR / "data/media/paper_assets/paper_01_blick_grounded.mp4", 2.00, "sub_boom_heavy", "wiperight"),
-    ("ACC_29", BASE_DIR / "data/media/authentic_clips/politics_ubs_07_protesters_signs.mp4", 1.95, "whoosh_cinematic", "smoothleft"),
+    ("ACC_29", AI_DIR / "ai_11_protest_paradeplatz_ubs.jpg", 1.95, "whoosh_cinematic", "smoothleft"),
     ("ACC_30", BASE_DIR / "data/media/authentic_clips/zurich_uncut_25_engine_cover_wrap.mp4", 1.90, "tape_recorder_click", "smoothright"),
-    ("ACC_31", BASE_DIR / "data/media/authentic_clips/zurich_uncut_37_grounded_lineup.mp4", 2.25, "sub_drop_dark", "dissolve")
+    ("ACC_31", AI_DIR / "ai_08_grounded_fleet_aerial.jpg", 2.25, "sub_drop_dark", "dissolve")
 ]
 
 def render_cinematic_shot(shot_id: str, asset_path: Path, dur: float, out_path: Path):
@@ -88,15 +91,25 @@ def render_cinematic_shot(shot_id: str, asset_path: Path, dur: float, out_path: 
     Renders an individual shot with:
     1. 12% punch-in crop to push all corner watermarks/station logos out of frame
     2. Nordic Noir documentary color grade (contrast, teal shadows, golden highlights, vignette)
-    3. Active continuous motion (zero freezes)
+    3. Active continuous motion (subtle cinematic drift/push-in, zero freezes)
     """
     is_img = asset_path.suffix.lower() in [".png", ".jpg", ".jpeg"]
     
     if is_img:
+        # Dynamically vary drift direction for authentic camera operator feel
+        idx_hash = sum(ord(c) for c in shot_id)
+        if idx_hash % 4 == 0:
+            drift = f"(in_w-1920)/2+(t/{dur})*45:(in_h-1080)/2+(t/{dur})*20"
+        elif idx_hash % 4 == 1:
+            drift = f"(in_w-1920)/2-(t/{dur})*45:(in_h-1080)/2+(t/{dur})*20"
+        elif idx_hash % 2 == 0:
+            drift = f"(in_w-1920)/2+(t/{dur})*30:(in_h-1080)/2-(t/{dur})*25"
+        else:
+            drift = f"(in_w-1920)/2-(t/{dur})*30:(in_h-1080)/2-(t/{dur})*25"
+
         vf = (
-            "scale=2400:1350:force_original_aspect_ratio=increase,"
-            "crop=2400:1350:(in_w-2400)/2:(in_h-1350)/2,"
-            "zoompan=z='min(zoom+0.0015,1.25)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1920x1080,"
+            "scale=2200:1238:force_original_aspect_ratio=increase,"
+            f"crop=1920:1080:{drift},"
             "colorbalance=rs=0.03:gs=0.01:bs=-0.03:rm=-0.02:gm=0.01:bm=0.02:rh=-0.03:gh=0.01:bh=0.03,"
             "eq=contrast=1.08:brightness=0.02:saturation=1.04,"
             "vignette=PI/6,"

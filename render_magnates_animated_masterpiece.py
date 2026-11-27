@@ -158,16 +158,16 @@ def main():
 
     # 16 Master Shots (Mixing 3D Maps, Hunter Wheel, Forensic Chart, Remotion, and Authentic B-roll)
     SHOT_SPECS = [
-        # Shot 01: Kloten Airport with Animated Date Badge & Synced Typewriter Foley
-        ("SHOT_01", AUTHENTIC_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4", b1_s1, "video",
+        # Shot 01: Foggy Rainy Airport Tarmac with Animated Date Badge & Synced Typewriter Foley
+        ("SHOT_01", AUTHENTIC_DIR / "pixabay_airport_tarmac_morning.mp4", b1_s1, "video",
          OVERLAY_DIR / "anim_01_date_badge.mov", "fadeblack", "typewriter_typing_burst"),
 
         # Shot 02: 3D Animated Flight Route Map (Swiss Airspace Entrapment)
         ("SHOT_02", ANIM_DIR / "anim_01_map.mp4", b1_s2, "video",
          None, "wipeleft", "whoosh_cinematic"),
 
-        # Shot 03: Cockpit Approach with Animated Flight SR 111 HUD
-        ("SHOT_03", AUTHENTIC_DIR / "zurich_uncut_04_cockpit_view.mp4", b2_s1, "video",
+        # Shot 03: Airliner Taxiway Departure with Animated Flight SR 111 HUD
+        ("SHOT_03", AUTHENTIC_DIR / "pixabay_airliner_departure.mp4", b2_s1, "video",
          OVERLAY_DIR / "anim_02_flight_hud.mov", "smoothleft", "freesound_airplane_chime_ding"),
 
         # Shot 04: Kloten Tower Pan
@@ -194,8 +194,8 @@ def main():
         ("SHOT_09", SOUNDBITE_DIR / "soundbite_01_corti_press.mp4", corti_dur, "interview_soundbite",
          OVERLAY_DIR / "corti_translated_overlay.png", "dissolve", "camera_shutter_snap"),
 
-        # Shot 10: Swissair Red Cross with "The Flying Bank" Gold Dossier Card
-        ("SHOT_10", AUTHENTIC_DIR / "zurich_uncut_09_swissair_cross.mp4", b5_s1, "video",
+        # Shot 10: 4K Fine Gold Bullion Vault with "The Flying Bank" Gold Dossier Card
+        ("SHOT_10", AUTHENTIC_DIR / "pixabay_gold_vault_bars.mp4", b5_s1, "video",
          OVERLAY_DIR / "anim_05_flying_bank_badge.mov", "zoomin", "paper_slide_desk"),
 
         # Shot 11: 3D Mario Corti Desk Dossier Pan
@@ -352,13 +352,15 @@ def main():
     write_wav(speech_stem_wav, speech_master)
     write_wav(foley_stem_wav, foley_master)
 
-    # Multiplex Final Master Video
+    # Multiplex Final Master Video with Synchronized Kinetic Text Animations
     music_wav = BASE_DIR / "data" / "media" / "audio" / "cinematic_orchestral_tragedy.wav"
+    subtitles_mov = OVERLAY_DIR / "kinetic_subtitles_master.mov"
     final_mp4 = EXPORT_DIR / "documentary.mp4"
 
-    log(f"Multiplexing final animated broadcast master -> {final_mp4} (Full Bleed 16:9, FastStart)...")
+    log(f"Multiplexing final animated broadcast master with kinetic text -> {final_mp4} (Full Bleed 16:9, FastStart)...")
 
-    audio_filter = (
+    combined_filter = (
+        f"[0:v][4:v]overlay=0:0:eof_action=pass[vout];"
         f"[1:a]volume=1.0[speech];"
         f"[2:a]lowpass=f=4500,volume=0.9[foley];"
         f"[3:a]volume=0.22,afade=t=in:ss=0:d=2.0,afade=t=out:st={target_timeline_dur - 3.5}:d=3.5[music];"
@@ -371,9 +373,10 @@ def main():
         "-i", str(speech_stem_wav),
         "-i", str(foley_stem_wav),
         "-i", str(music_wav),
+        "-i", str(subtitles_mov),
         "-t", str(target_timeline_dur),
-        "-filter_complex", audio_filter,
-        "-map", "0:v",
+        "-filter_complex", combined_filter,
+        "-map", "[vout]",
         "-map", "[aout]",
         "-c:v", "libx264",
         "-preset", "medium",

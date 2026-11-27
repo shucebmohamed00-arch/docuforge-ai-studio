@@ -218,8 +218,8 @@ def main():
         ("SHOT_15", PAPER_DIR / "paper_01_blick_grounded.mp4", b7_s1, "video",
          OVERLAY_DIR / "blick_translated_overlay.png", "fade", "paper_rip"),
 
-        # Shot 16: Grand Aerial Grounded Fleet Dusk Drift (Finale)
-        ("SHOT_16", AI_DIR / "ai_08_grounded_fleet_aerial.jpg", b7_s2, "ai_drift",
+        # Shot 16: Grand Aerial Grounded Fleet Dusk Drone Sweep (Finale)
+        ("SHOT_16", AI_DIR / "ai_08_grounded_fleet_aerial.mp4", b7_s2, "video",
          None, None, "whoosh_cinematic")
     ]
 

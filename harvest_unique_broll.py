@@ -1,8 +1,9 @@
+import os
 import httpx
 import json
 from pathlib import Path
 
-key = "58792744-1212081ab096e987f487b3116"
+key = os.getenv("PIXABAY_API_KEY", "58857461-bb6eb94d46797911a4d5e34c0")
 queries = [
     "airplane", "aircraft flight", "jet engine", "runway tarmac", "airport gate",
     "control tower", "airplane takeoff", "cockpit instruments", "pilot flying",

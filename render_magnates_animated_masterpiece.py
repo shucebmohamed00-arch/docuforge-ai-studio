@@ -80,11 +80,12 @@ def render_animated_shot(shot_id: str, asset_path: Path, dur: float, shot_type: 
         input_args = ["-ss", "0.2", "-i", str(asset_path)]
 
     if overlay_path and overlay_path.exists():
+        overlay_inputs = ["-loop", "1", "-i", str(overlay_path)] if overlay_path.suffix.lower() == ".png" else ["-i", str(overlay_path)]
         filter_complex = f"[0:v]{base_filter}[base];[base][1:v]overlay=0:0:eof_action=pass[v]"
         cmd = [
             "ffmpeg", "-y",
             *input_args,
-            "-i", str(overlay_path),
+            *overlay_inputs,
             "-t", str(round(dur, 2)),
             "-filter_complex", filter_complex,
             "-map", "[v]",
@@ -153,7 +154,7 @@ def main():
     SHOT_SPECS = [
         # Shot 01: Kloten Airport with Animated Date & Time Badge
         ("ANIM_01", AUTHENTIC_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4", b1_s1, "video",
-         OVERLAY_DIR / "anim_01_date_badge.webm", "fadeblack", "whoosh_cinematic"),
+         OVERLAY_DIR / "anim_01_date_badge.mov", "fadeblack", "whoosh_cinematic"),
 
         # Shot 02: Bern Parliament
         ("ANIM_02", AUTHENTIC_DIR / "politics_ubs_01_bern_parliament.mp4", b1_s2, "video",
@@ -161,7 +162,7 @@ def main():
 
         # Shot 03: Cockpit Approach with Animated Flight SR 111 HUD
         ("ANIM_03", AUTHENTIC_DIR / "zurich_uncut_04_cockpit_view.mp4", b2_s1, "video",
-         OVERLAY_DIR / "anim_02_flight_hud.webm", "smoothleft", "freesound_airplane_chime_ding"),
+         OVERLAY_DIR / "anim_02_flight_hud.mov", "smoothleft", "freesound_airplane_chime_ding"),
 
         # Shot 04: Kloten Tower Pan
         ("ANIM_04", AUTHENTIC_DIR / "zurich_uncut_11_tower_pan.mp4", b2_s2, "video",
@@ -173,7 +174,7 @@ def main():
 
         # Shot 06: Bank Vault Security Doors with Rubber Stamp Slam
         ("ANIM_06", AUTHENTIC_DIR / "politics_ubs_06_bank_vault_doors.mp4", b3_dur, "video",
-         OVERLAY_DIR / "anim_03_stamp_credit_dead.webm", "slideleft", "sub_drop_dark"),
+         OVERLAY_DIR / "anim_03_stamp_credit_dead.mov", "slideleft", "sub_drop_dark"),
 
         # Shot 07: Engine Cover Wrapping
         ("ANIM_07", AUTHENTIC_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", b4_s1, "video",
@@ -181,7 +182,7 @@ def main():
 
         # Shot 08: Split-Flap Board with Animated 48h Countdown Timer
         ("ANIM_08", AI_DIR / "ai_09_cancelled_departure_board.jpg", b4_s2, "ai_drift",
-         OVERLAY_DIR / "anim_04_countdown_48h.webm", "fadewhite", "freesound_typewriter_single_key"),
+         OVERLAY_DIR / "anim_04_countdown_48h.mov", "fadewhite", "freesound_typewriter_single_key"),
 
         # Shot 09: Mario Corti Interview with Lower-Third & English Translation Card
         ("ANIM_09", SOUNDBITE_DIR / "soundbite_01_corti_press.mp4", corti_dur, "interview_soundbite",
@@ -189,7 +190,7 @@ def main():
 
         # Shot 10: Swissair Red Cross with "The Flying Bank" Gold Dossier Card
         ("ANIM_10", AUTHENTIC_DIR / "zurich_uncut_09_swissair_cross.mp4", b5_s1, "video",
-         OVERLAY_DIR / "anim_05_flying_bank_badge.webm", "zoomin", "sub_boom_heavy"),
+         OVERLAY_DIR / "anim_05_flying_bank_badge.mov", "zoomin", "sub_boom_heavy"),
 
         # Shot 11: 3D Mario Corti Desk Dossier Pan
         ("ANIM_11", STAGE_DIR / "stage_01_mario_corti.mp4", b5_s2, "stage",

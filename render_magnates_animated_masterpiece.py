@@ -174,8 +174,8 @@ def main():
         ("SHOT_04", AUTHENTIC_DIR / "zurich_uncut_11_tower_pan.mp4", b2_s2, "video",
          None, "fadewhite", "freesound_jet_engine_tarmac"),
 
-        # Shot 05: Kerosene Emergency Cutoff Valve with Money & Cash Register Foley
-        ("SHOT_05", AI_DIR / "ai_07_fuel_hose_cutoff.jpg", b2_s3, "ai_drift",
+        # Shot 05: Kerosene Emergency Cutoff Valve with Money & Cash Register Foley (Runway Kling 3.0 Pro)
+        ("SHOT_05", AI_DIR / "ai_07_fuel_hose_cutoff.mp4", b2_s3, "video",
          None, "rectcrop", "money_banknotes_counting"),
 
         # Shot 06: Bank Vault Security Doors with Rubber Stamp Slam & Heavy Lock Boom
@@ -186,8 +186,8 @@ def main():
         ("SHOT_07", AUTHENTIC_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", b4_s1, "video",
          None, "smoothup", "tape_recorder_click"),
 
-        # Shot 08: Split-Flap Board with Animated 48h Countdown Timer
-        ("SHOT_08", AI_DIR / "ai_09_cancelled_departure_board.jpg", b4_s2, "ai_drift",
+        # Shot 08: Split-Flap Board with Animated 48h Countdown Timer (Runway Kling 4 Flash)
+        ("SHOT_08", AI_DIR / "ai_09_cancelled_departure_board.mp4", b4_s2, "video",
          OVERLAY_DIR / "anim_04_countdown_48h.mov", "fadewhite", "freesound_typewriter_single_key"),
 
         # Shot 09: Mario Corti Interview with Lower-Third & English Translation Card

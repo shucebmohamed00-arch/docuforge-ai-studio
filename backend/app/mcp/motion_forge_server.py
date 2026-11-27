@@ -1,6 +1,6 @@
 """
 Motion Forge MCP Server for Antigravity & DocuForge.
-Exposes Remotion, Lottie vector animations, and Pixverse AI Video Generation.
+Exposes Remotion, Lottie vector animations, Pixverse AI Video Generation, and Runway Gen-4.5 / Kling Video Generation.
 """
 import os
 import sys
@@ -15,6 +15,7 @@ if BASE_DIR not in sys.path:
 
 from backend.app.services.motion_forge import MotionForge
 from backend.app.services.pixverse_client import PixverseClient
+from backend.app.services.runway_service import RunwayService
 
 from mcp.server.mcpserver import MCPServer
 
@@ -24,6 +25,7 @@ logger = logging.getLogger("motion_forge_mcp")
 server = MCPServer("motion-forge")
 motion_engine = MotionForge()
 pixverse_engine = PixverseClient()
+runway_engine = RunwayService()
 
 @server.tool(
     name="render_remotion",
@@ -69,6 +71,32 @@ def render_lottie(
     return json.dumps(result, indent=2)
 
 @server.tool(
+    name="generate_runway_video",
+    description="Generates an ultra-high quality cinematic video clip using the Runway API (Kling 3.0 Pro, Gen-4.5, or Veo 3.1). Conserves credits strictly."
+)
+def generate_runway_video(
+    prompt: str,
+    model: str = "kling3.0_pro",
+    duration: int = 5,
+    ratio: str = "16:9"
+) -> str:
+    result = runway_engine.generate_text_to_video(
+        prompt=prompt,
+        model=model,
+        duration=duration,
+        ratio=ratio
+    )
+    return json.dumps(result, indent=2)
+
+@server.tool(
+    name="query_runway_status",
+    description="Checks the generation status of a Runway AI video task and returns the downloadable URL."
+)
+def query_runway_status(task_id: str) -> str:
+    result = runway_engine.check_task_status(task_id)
+    return json.dumps(result, indent=2)
+
+@server.tool(
     name="generate_pixverse_video",
     description="Dispatches a cinematic AI video generation request to the Pixverse API."
 )
@@ -88,14 +116,6 @@ def generate_pixverse_video(
         quality=quality,
         motion_mode=motion_mode
     )
-    return json.dumps(result, indent=2)
-
-@server.tool(
-    name="query_pixverse_status",
-    description="Checks the generation status of a Pixverse AI video task and returns the downloadable URL."
-)
-def query_pixverse_status(video_id: str) -> str:
-    result = pixverse_engine.query_status(video_id)
     return json.dumps(result, indent=2)
 
 @server.tool(

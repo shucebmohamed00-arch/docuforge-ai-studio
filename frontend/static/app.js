@@ -1838,10 +1838,34 @@ async function renderAssetApprovalDashboard(container) {
             </p>
           </div>
           <div style="display: flex; gap: 10px; align-items: center;">
-            <select id="upload-shot-slot" class="form-select" style="min-width: 300px; background: #0f172a; color: #f8fafc;" onchange="updatePromptDisplay(this.value)">
-              <option value="SHOT_05" selected>Shot 05: Emergency Fuel Cutoff Valve (0:15 - 0:20)</option>
-              <option value="SHOT_08">Shot 08: Split-Flap "CANCELLED" Board (0:26 - 0:31)</option>
-              <option value="SHOT_16">Shot 16: Grounded Fleet at Dusk [COMPLETED] (0:59 - 1:02)</option>
+            <select id="upload-shot-slot" class="form-select" style="min-width: 320px; background: #0f172a; color: #f8fafc;" onchange="updatePromptDisplay(this.value)">
+              <optgroup label="Chapter 1: The Crash (0:00 - 1:40)">
+                <option value="SHOT_05" selected>Shot 05: Emergency Fuel Cutoff Valve</option>
+                <option value="SHOT_08">Shot 08: Split-Flap "CANCELLED" Board</option>
+                <option value="SHOT_16">Shot 16: Grounded Fleet at Dusk [COMPLETED]</option>
+              </optgroup>
+              <optgroup label="Chapter 2: The European Trap (1:40 - 3:20)">
+                <option value="CH2_BALLOT">AIV/AII: 1992 Swiss EEA Ballot Box</option>
+                <option value="CH2_RADAR">AIV/AII: European Airspace Radar Room</option>
+              </optgroup>
+              <optgroup label="Chapter 3: The Hunter Strategy (3:20 - 5:00)">
+                <option value="CH3_OFFICE">AIV/AII: CEO Philippe Bruggisser Office</option>
+                <option value="CH3_CONTRACT">AIV/AII: Secret Guarantee Contract Signing</option>
+                <option value="CH3_PROTEST">AIV/AII: Sabena Brussels Airport Protest</option>
+              </optgroup>
+              <optgroup label="Chapter 4: The 17B Black Hole (5:00 - 6:40)">
+                <option value="CH4_SHRED">AIV/AII: Forensic Auditors & Shredding</option>
+                <option value="CH4_CORTI">AIV/AII: Mario Corti Emergency Press Conference</option>
+              </optgroup>
+              <optgroup label="Chapter 5: Project Phoenix & UBS (6:40 - 8:20)">
+                <option value="CH5_PHOENIX">AIV/AII: UBS Boardroom Project Phoenix Meeting</option>
+                <option value="CH5_TERMINAL">AIV/AII: Bank Wire 100M Liquidity Refusal</option>
+              </optgroup>
+              <optgroup label="Chapter 6: The Fall & Trial (8:20 - 10:00)">
+                <option value="CH6_PARADEPLATZ">AIV/AII: Paradeplatz Protesters Storming Bank</option>
+                <option value="CH6_LOUNGE">AIV/AII: Abandoned First Class Lounge</option>
+                <option value="CH6_COURT">AIV/AII: 2007 Zurich District Court Verdict</option>
+              </optgroup>
               <option value="general_broll">General B-Roll / Archival Clip</option>
             </select>
           </div>
@@ -1927,6 +1951,66 @@ const PROMPTS_DATABASE = {
     title: "TARGET: SHOT 16 (Grounded Fleet at Dusk Finale - 0:59 to 1:02) [COMPLETED]",
     prompt: `Wide aerial drone cinematic sweep over a silent commercial airport runway at blue hour dusk, dozens of parked Swissair airliners lined up nose-to-tail with wheel chocks and engine intake covers installed, foggy cold Alpine mountain peaks in the far background, solitary tarmac security lights casting long amber shadows, melancholic tragedy atmosphere, film grain, photorealistic --ar 16:9`,
     notes: `🎬 Video Motion Tip (Runway / Kling): Smooth high-altitude cinematic drone forward drift slowly moving over the line of grounded planes.`
+  },
+  CH2_BALLOT: {
+    title: "TARGET: CH2 - 1992 SWISS REFERENDUM BALLOT BOX",
+    prompt: `Slow cinematic macro push-in on an antique heavy oak Swiss referendum ballot box with red painted Swiss cross, voters in heavy wool winter coats dropping white paper ballots into the slot, warm tungsten archival lighting, authentic 1990s documentary aesthetic, 35mm film grain --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Slow macro push-in toward the slot as a white ballot paper drops inside.`
+  },
+  CH2_RADAR: {
+    title: "TARGET: CH2 - EUROPEAN AIRSPACE TRAFFIC RADAR ROOM",
+    prompt: `Darkened air traffic control radar room with glowing green vector radar displays, silhouette of air traffic controllers with headsets looking out over foggy night airport runway, blinking digital flight altitude tags, high tech investigative atmosphere --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Slow orbital pan around the controller silhouette toward the illuminated radar scope.`
+  },
+  CH3_OFFICE: {
+    title: "TARGET: CH3 - CEO PHILIPPE BRUGGISSER OFFICE",
+    prompt: `Low-angle dramatic dolly shot of a corporate airline CEO in an immaculate bespoke charcoal suit standing before floor-to-ceiling panoramic glass windows overlooking a rainy Zurich runway, holding architectural scale models of airplanes, cold blue corporate color grading, powerful cinematic silhouette --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Slow lateral tracking shot across the executive desk.`
+  },
+  CH3_CONTRACT: {
+    title: "TARGET: CH3 - SECRET GUARANTEE CONTRACT SIGNING",
+    prompt: `Cinematic macro shot of a fountain pen signing a binding legal contract on heavy parchment paper, gold cufflinks gleaming under dim lamp light, thick dossier labeled "CONFIDENTIAL SHARE PURCHASE AGREEMENT", dust motes drifting in shafts of light, dramatic chiaroscuro lighting --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Macro tracking following the tip of the nib as wet black ink forms the signature.`
+  },
+  CH3_PROTEST: {
+    title: "TARGET: CH3 - SABENA AIRPORT WORKER PROTEST",
+    prompt: `Gritty documentary handheld camera movement through a crowd of striking Belgian airport workers in high-visibility vests holding protest banners outside Brussels terminal, red flare smoke drifting through overcast sky, police barricades in background, authentic 2001 European broadcast news texture --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Documentary handheld camera with organic shoulder motion.`
+  },
+  CH4_SHRED: {
+    title: "TARGET: CH4 - FORENSIC AUDITORS & DOCUMENT SHREDDING",
+    prompt: `Dark basement corporate archive room, industrial paper shredder running at full speed destroying balance sheet ledgers, forensic accountants in white shirts and loosened ties sorting through banker boxes stacked to ceiling, flickering fluorescent tube lighting, tense investigative thriller look --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Low-angle slow tracking shot past stacks of archival banker boxes.`
+  },
+  CH4_CORTI: {
+    title: "TARGET: CH4 - MARIO CORTI EMERGENCY PRESS BRIEFING",
+    prompt: `Sea of press cameras and flashing photographic strobes firing simultaneously in a packed press briefing room, focused on a tired, resolute Swiss executive speaking into a battery of retro microphones, microphone boom poles overhead, authentic 2001 news conference chaos --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Dramatic slow zoom through the crowd of photographers toward the podium.`
+  },
+  CH5_PHOENIX: {
+    title: "TARGET: CH5 - UBS PROJECT PHOENIX SECRET MEETING",
+    prompt: `Vast modern corporate boardroom on top floor of Zurich banking tower at night, polished mahogany table reflecting city lights, silhouettes of three bank directors leaning over financial takeover blueprints labeled "PROJECT PHOENIX", moody dramatic lighting, high corporate tension --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Slow pull-back through frosted glass doors into the darkened boardroom.`
+  },
+  CH5_TERMINAL: {
+    title: "TARGET: CH5 - BANK WIRE 100M LIQUIDITY REFUSAL",
+    prompt: `Macro closeup of vintage CRT computer terminal in a Swiss bank operations room, cursor blinking rapidly, green phosphor text flashing "TRANSACTION REFUSED: 100,000,000 CHF - LIQUIDITY BRIDGE TERMINATED", reflection of stressed bank clerk in screen glass, authentic tech texture --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Static macro shot with phosphor scanlines and blinking red alert text.`
+  },
+  CH6_PARADEPLATZ: {
+    title: "TARGET: CH6 - PARADEPLATZ PROTESTERS STORMING BANK",
+    prompt: `Chaotic street documentary shot outside UBS headquarters at Zurich Paradeplatz, angry crowd of grounded flight attendants in Swissair uniforms and citizens holding protest signs, police officers in riot helmets holding glass perimeter, flashbulbs popping, October rain --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Handheld news camera tracking through the shouting crowd.`
+  },
+  CH6_LOUNGE: {
+    title: "TARGET: CH6 - ABANDONED SWISSAIR FIRST CLASS LOUNGE",
+    prompt: `Melancholic slow glide through an empty luxury airport lounge, pristine leather armchairs, untouched glasses on marble bar, boarding announcement chime ringing into hollow silence, departure screens frozen on October 2nd dates, cinematic blue hour lighting --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Smooth continuous gimbal forward glide down the empty carpeted lounge.`
+  },
+  CH6_COURT: {
+    title: "TARGET: CH6 - 2007 ZURICH DISTRICT COURT VERDICT",
+    prompt: `High ceiling historic Swiss judicial courtroom, polished oak wood paneling, three judges in formal robes seated at elevated bench, battery of defense lawyers in black suits standing, quiet solemn courtroom atmosphere, documentary drama grading --ar 16:9`,
+    notes: `🎬 Video Motion Tip: Slow lateral pan across the defense table to the judges' bench.`
   },
   general_broll: {
     title: "TARGET: GENERAL B-ROLL / ARCHIVAL FOOTAGE",

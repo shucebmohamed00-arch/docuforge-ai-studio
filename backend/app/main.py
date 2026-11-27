@@ -67,7 +67,8 @@ from .api.endpoints.assets import (
     reject_asset_endpoint,
     replace_asset_endpoint,
     bulk_approve_endpoint,
-    finalize_approvals_endpoint
+    finalize_approvals_endpoint,
+    upload_custom_asset_endpoint
 )
 from .api.endpoints.storyboard import (
     compile_storyboard_endpoint,
@@ -191,6 +192,7 @@ routes = [
     Route("/api/assets/{asset_id}/replace", replace_asset_endpoint, methods=["POST"]),
     Route("/api/assets/bulk-approve", bulk_approve_endpoint, methods=["POST"]),
     Route("/api/assets/{project_id}/finalize", finalize_approvals_endpoint, methods=["POST"]),
+    Route("/api/assets/upload", upload_custom_asset_endpoint, methods=["POST"]),
 
     # Storyboard Engine API (Phase 7)
     Route("/api/storyboard/compile", compile_storyboard_endpoint, methods=["POST"]),

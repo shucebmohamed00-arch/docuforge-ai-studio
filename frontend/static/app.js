@@ -1828,6 +1828,27 @@ async function renderAssetApprovalDashboard(container) {
         <strong>Pipeline Stage:</strong> ${getStatusBadge(currentProj.status)}
       </div>
 
+      <!-- Custom AI Media & Footage Uploader Zone -->
+      <div style="background: rgba(30, 41, 59, 0.6); border: 2px dashed #3b82f6; border-radius: 8px; padding: 24px; margin-bottom: 24px; text-align: center;">
+        <h4 style="color: #60a5fa; font-size: 16px; margin-bottom: 8px;">📤 Upload Custom AI Clips & Footage</h4>
+        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">
+          Upload your generated videos or photos here (Runway, Kling, Midjourney, Pexels, etc.). They will be color-graded and locked into the timeline.
+        </p>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap;">
+          <select id="upload-shot-slot" class="form-select" style="max-width: 340px; background: #0f172a; color: #f8fafc;">
+            <option value="SHOT_05">Shot 05: Emergency Fuel Cutoff (0:15 - 0:20)</option>
+            <option value="SHOT_08">Shot 08: Split-Flap Departure Board (0:26 - 0:31)</option>
+            <option value="SHOT_16">Shot 16: Grounded Fleet at Dusk (0:59 - 1:02)</option>
+            <option value="general_broll">General B-Roll / Archival Clip</option>
+          </select>
+          <input type="file" id="custom-clip-file" accept="video/*,image/*" style="display: none;" onchange="handleDirectFileUpload(this)">
+          <button class="btn btn-primary" onclick="document.getElementById('custom-clip-file').click()">
+            📁 Choose Video / Image File
+          </button>
+        </div>
+        <div id="upload-status-msg" style="margin-top: 12px; font-size: 13px; display: none;"></div>
+      </div>
+
       <div id="assets-dashboard-content">
         ${renderAssetsGrid(projectAssets, currentProj)}
       </div>
@@ -1867,6 +1888,43 @@ async function triggerDiscoverAssets(projId) {
   } finally {
     isDiscoveringAssets = false;
     renderAssetApprovalDashboard(document.getElementById("main-content"));
+  }
+}
+
+async function handleDirectFileUpload(inputElement) {
+  const file = inputElement.files[0];
+  if (!file) return;
+
+  const shotSlot = document.getElementById("upload-shot-slot").value;
+  const statusMsg = document.getElementById("upload-status-msg");
+  statusMsg.style.display = "block";
+  statusMsg.style.color = "#38bdf8";
+  statusMsg.innerText = `⏳ Uploading ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)...`;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("shot_slot", shotSlot);
+  formData.append("project_id", selectedProjectId || "swiss-air-grounding-prod");
+
+  try {
+    const res = await fetch("/api/assets/upload", {
+      method: "POST",
+      body: formData
+    });
+    const json = await res.json();
+    if (json.status === "success") {
+      statusMsg.style.color = "#4ade80";
+      statusMsg.innerText = `✓ Successfully uploaded: ${json.filename}! Slot updated.`;
+      setTimeout(() => {
+        renderAssetApprovalDashboard(document.getElementById("main-content"));
+      }, 1500);
+    } else {
+      statusMsg.style.color = "#f87171";
+      statusMsg.innerText = `❌ Error uploading: ${json.message}`;
+    }
+  } catch (err) {
+    statusMsg.style.color = "#f87171";
+    statusMsg.innerText = `❌ Upload failed: ${err.message}`;
   }
 }
 

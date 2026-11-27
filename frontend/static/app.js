@@ -1828,25 +1828,46 @@ async function renderAssetApprovalDashboard(container) {
         <strong>Pipeline Stage:</strong> ${getStatusBadge(currentProj.status)}
       </div>
 
-      <!-- Custom AI Media & Footage Uploader Zone -->
-      <div style="background: rgba(30, 41, 59, 0.6); border: 2px dashed #3b82f6; border-radius: 8px; padding: 24px; margin-bottom: 24px; text-align: center;">
-        <h4 style="color: #60a5fa; font-size: 16px; margin-bottom: 8px;">📤 Upload Custom AI Clips & Footage</h4>
-        <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">
-          Upload your generated videos or photos here (Runway, Kling, Midjourney, Pexels, etc.). They will be color-graded and locked into the timeline.
-        </p>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap;">
-          <select id="upload-shot-slot" class="form-select" style="max-width: 340px; background: #0f172a; color: #f8fafc;">
-            <option value="SHOT_05">Shot 05: Emergency Fuel Cutoff (0:15 - 0:20)</option>
-            <option value="SHOT_08">Shot 08: Split-Flap Departure Board (0:26 - 0:31)</option>
-            <option value="SHOT_16">Shot 16: Grounded Fleet at Dusk (0:59 - 1:02)</option>
-            <option value="general_broll">General B-Roll / Archival Clip</option>
-          </select>
+      <!-- Custom AI Media & Footage Uploader Zone with In-Tool Prompt Hub -->
+      <div style="background: rgba(30, 41, 59, 0.7); border: 2px dashed #3b82f6; border-radius: 8px; padding: 24px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h4 style="color: #60a5fa; font-size: 16px; margin: 0;">📤 AI Video & Photo Generator Hub</h4>
+            <p style="font-size: 12px; color: #94a3b8; margin: 4px 0 0;">
+              Select a scene to see the ready-to-copy AI prompt. Generate on Kling, Runway, or Midjourney, then upload below.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <select id="upload-shot-slot" class="form-select" style="min-width: 300px; background: #0f172a; color: #f8fafc;" onchange="updatePromptDisplay(this.value)">
+              <option value="SHOT_05" selected>Shot 05: Emergency Fuel Cutoff Valve (0:15 - 0:20)</option>
+              <option value="SHOT_08">Shot 08: Split-Flap "CANCELLED" Board (0:26 - 0:31)</option>
+              <option value="SHOT_16">Shot 16: Grounded Fleet at Dusk [COMPLETED] (0:59 - 1:02)</option>
+              <option value="general_broll">General B-Roll / Archival Clip</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic AI Prompt Display Card -->
+        <div id="ai-prompt-card" style="background: #090d16; border: 1px solid #1e293b; border-radius: 6px; padding: 16px; margin: 16px 0; text-align: left;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 12px; font-weight: bold; color: #f59e0b;" id="prompt-target-title">🎯 TARGET: SHOT 05 (Emergency Fuel Cutoff)</span>
+            <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="copyCurrentPrompt()">📋 Copy Prompt</button>
+          </div>
+          <div id="prompt-text-display" style="font-family: monospace; font-size: 13px; color: #e2e8f0; line-height: 1.5; background: #020617; padding: 12px; border-radius: 4px; user-select: all;">
+            Cinematic extreme close-up of a heavy industrial high-pressure aircraft fueling hose being disconnected from the wing of a commercial passenger jet, cold rainy morning, wet concrete tarmac with reflections of flashing amber maintenance beacons, metallic fuel valve slamming shut with warning labels, 35mm anamorphic lens, shallow depth of field, documentary color grade, authentic gritty texture, photorealistic, 8k --ar 16:9
+          </div>
+          <div id="prompt-video-notes" style="font-size: 12px; color: #38bdf8; margin-top: 8px;">
+            🎬 <strong>Video Motion Tip (Runway / Kling)</strong>: Slow push-in focusing on the fuel technician disconnecting the heavy metallic coupler as amber warning lights strobe on the wet tarmac.
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 16px;">
           <input type="file" id="custom-clip-file" accept="video/*,image/*" style="display: none;" onchange="handleDirectFileUpload(this)">
-          <button class="btn btn-primary" onclick="document.getElementById('custom-clip-file').click()">
-            📁 Choose Video / Image File
+          <button class="btn btn-primary" style="padding: 10px 24px; font-size: 14px;" onclick="document.getElementById('custom-clip-file').click()">
+            📁 Choose Video / Image File to Upload
           </button>
         </div>
-        <div id="upload-status-msg" style="margin-top: 12px; font-size: 13px; display: none;"></div>
+        <div id="upload-status-msg" style="margin-top: 12px; font-size: 13px; display: none; text-align: center;"></div>
       </div>
 
       <div id="assets-dashboard-content">
@@ -1889,6 +1910,45 @@ async function triggerDiscoverAssets(projId) {
     isDiscoveringAssets = false;
     renderAssetApprovalDashboard(document.getElementById("main-content"));
   }
+}
+
+const PROMPTS_DATABASE = {
+  SHOT_05: {
+    title: "TARGET: SHOT 05 (Emergency Fuel Cutoff Valve - 0:15 to 0:20)",
+    prompt: `Cinematic extreme close-up of a heavy industrial high-pressure aircraft fueling hose being disconnected from the wing of a commercial passenger jet, cold rainy morning, wet concrete tarmac with reflections of flashing amber maintenance beacons, metallic fuel valve slamming shut with warning labels, 35mm anamorphic lens, shallow depth of field, documentary color grade, authentic gritty texture, photorealistic, 8k --ar 16:9`,
+    notes: `🎬 Video Motion Tip (Runway / Kling): Slow push-in focusing on the fuel technician disconnecting the heavy metallic coupler as amber warning lights strobe on the wet tarmac.`
+  },
+  SHOT_08: {
+    title: "TARGET: SHOT 08 (Split-Flap Departure Board Flipping to CANCELLED - 0:26 to 0:31)",
+    prompt: `Atmospheric eye-level shot of a vintage mechanical split-flap Solari departure board inside a vast European airport terminal, flaps rapidly flipping in motion, displaying rows of Swissair flights changing to stark red "CANCELLED" text, moody overcast daylight through terminal windows, slight cinematic motion blur on the spinning letter tiles, broadcast documentary lighting, photorealistic --ar 16:9`,
+    notes: `🎬 Video Motion Tip (Runway / Kling): Camera static with shallow focus as the mechanical tiles rhythmically flip and settle on "CANCELLED".`
+  },
+  SHOT_16: {
+    title: "TARGET: SHOT 16 (Grounded Fleet at Dusk Finale - 0:59 to 1:02) [COMPLETED]",
+    prompt: `Wide aerial drone cinematic sweep over a silent commercial airport runway at blue hour dusk, dozens of parked Swissair airliners lined up nose-to-tail with wheel chocks and engine intake covers installed, foggy cold Alpine mountain peaks in the far background, solitary tarmac security lights casting long amber shadows, melancholic tragedy atmosphere, film grain, photorealistic --ar 16:9`,
+    notes: `🎬 Video Motion Tip (Runway / Kling): Smooth high-altitude cinematic drone forward drift slowly moving over the line of grounded planes.`
+  },
+  general_broll: {
+    title: "TARGET: GENERAL B-ROLL / ARCHIVAL FOOTAGE",
+    prompt: `Cinematic documentary B-roll, 35mm anamorphic, natural lighting, documentary color grading, high detail, 4k --ar 16:9`,
+    notes: `🎬 Upload any extra supporting clip or visual.`
+  }
+};
+
+function updatePromptDisplay(slotKey) {
+  const data = PROMPTS_DATABASE[slotKey] || PROMPTS_DATABASE.general_broll;
+  document.getElementById("prompt-target-title").innerText = data.title;
+  document.getElementById("prompt-text-display").innerText = data.prompt;
+  document.getElementById("prompt-video-notes").innerHTML = data.notes;
+}
+
+function copyCurrentPrompt() {
+  const text = document.getElementById("prompt-text-display").innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("✓ Prompt copied to clipboard!");
+  }).catch(() => {
+    prompt("Copy this prompt:", text);
+  });
 }
 
 async function handleDirectFileUpload(inputElement) {

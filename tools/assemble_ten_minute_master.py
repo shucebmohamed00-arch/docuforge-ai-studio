@@ -243,7 +243,7 @@ def build_punch_overlay(beat_idx: int, l1: str, l2: str, c_rgb: tuple, out_path:
 
 def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_dur: float, out_path: Path):
     N = len(assets)
-    T = 0.30
+    T = 0.40
 
     if N == 1:
         kb_zoom = (
@@ -251,8 +251,9 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
             if beat_idx % 2 == 0
             else "zoompan=z='if(lte(zoom,1.0),1.10,max(1.001,zoom-0.0012))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
+        crop_wm = "crop=in_w:in_h-150:0:150," if ("uncut" in str(assets[0]) or "broll" in str(assets[0])) else ""
         base_vf = (
-            f"scale=1280:720:force_original_aspect_ratio=increase,"
+            f"{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
             f"tpad=stop_mode=clone:stop_duration=5,"
             f"{kb_zoom},"
@@ -313,8 +314,9 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
             if (beat_idx + i) % 2 == 0
             else "zoompan=z='if(lte(zoom,1.0),1.10,max(1.001,zoom-0.0012))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
+        crop_wm = "crop=in_w:in_h-150:0:150," if ("uncut" in str(assets[i]) or "broll" in str(assets[i])) else ""
         scale_crop = (
-            f"[{i}:v]scale=1280:720:force_original_aspect_ratio=increase,"
+            f"[{i}:v]{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
             f"tpad=stop_mode=clone:stop_duration=5,"
             f"{kb_zoom},"
@@ -330,7 +332,7 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
             vf_filters.append(f"[s{i}]null[v{i}]")
 
     curr = "v0"
-    trans_list = ["smoothleft", "wiperight", "dissolve", "fadewhite", "hblur"]
+    trans_list = ["smoothleft", "smoothright", "slideleft", "slideright", "wipeleft", "wiperight", "fadeblack", "fadewhite"]
     for i in range(N - 1):
         trans = trans_list[(beat_idx + i) % len(trans_list)]
         nxt = f"v{i+1}"
@@ -381,15 +383,20 @@ def load_wav_pcm(path: Path) -> np.ndarray:
 
 def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
     sr = 44100
-    n_samples = int((total_sec + 2.0) * sr)
+    n_samples = int((total_sec + 3.0) * sr)
     audio_buf = np.zeros(n_samples, dtype=np.float32)
 
     foley_samples = {
-        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 0.65,
-        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 0.40,
-        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 0.40,
-        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 0.35,
-        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 0.40
+        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 0.95,
+        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 0.90,
+        "whoop": load_wav_pcm(FOLEY_DIR / "whoosh_reverse_rise.wav") * 0.95,
+        "whip": load_wav_pcm(FOLEY_DIR / "whip_pan_snap.wav") * 0.88,
+        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 0.85,
+        "click": load_wav_pcm(FOLEY_DIR / "mechanical_click_01.wav") * 0.85,
+        "typing": load_wav_pcm(FOLEY_DIR / "typewriter_typing_burst.wav") * 0.92,
+        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 0.80,
+        "paper": load_wav_pcm(FOLEY_DIR / "paper_slide_fast.wav") * 0.80,
+        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 0.85
     }
 
     for time_s, kind in sfx_events:
@@ -519,17 +526,38 @@ def main():
             if ov.exists():
                 overlays[min(1, len(beat_assets) - 1)] = ov
 
-        # Render beat video with Ken Burns motion
+        # Render beat video with Ken Burns motion & watermark cropping
         beat_out_mp4 = TEMP_SHOTS_DIR / f"beat_{idx:02d}_master.mp4"
-        if not beat_out_mp4.exists():
-            render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
-
+        offsets = render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
         master_video_clips.append(str(beat_out_mp4))
 
-        # Check SFX cues
-        if idx in SELECTIVE_SFX_BEATS:
-            kind, sub_i = SELECTIVE_SFX_BEATS[idx]
-            sfx_events.append((cumulative_time + 0.1, kind))
+        # Dynamic Audio SFX Layering:
+        # 1. Beat Transition Whoosh / Whoop Riser (at start of beat)
+        if idx in [1, 7, 17, 28, 43, 53, 64, 76]:
+            sfx_events.append((cumulative_time + 0.05, "whoop"))
+        elif idx in [8, 11, 20, 30, 39, 48, 57, 68]:
+            sfx_events.append((cumulative_time + 0.05, "whip"))
+        else:
+            sfx_events.append((cumulative_time + 0.05, "whoosh"))
+
+        # 2. Subshot cut whoosh / whip inside the beat (at each xfade transition)
+        for off in offsets:
+            sub_trans = "whip" if (idx + int(off)) % 2 == 0 else "whoosh"
+            sfx_events.append((cumulative_time + off, sub_trans))
+
+        # 3. Punch Text Overlay Entrance: Camera Shutter + Mechanical Click
+        if idx in PUNCH_TEXTS:
+            sfx_events.append((cumulative_time + 0.20, "click"))
+            sfx_events.append((cumulative_time + 0.35, "shutter"))
+
+        # 4. Document / Audit / Headline / Contract beats: Typing burst & Paper Rustle
+        if idx in [12, 18, 26, 32, 34, 37, 38, 40, 46, 47, 55, 58, 64, 65, 68, 74] or any("paper" in str(a) or "doc" in str(a) for a in beat_assets):
+            sfx_events.append((cumulative_time + 0.30, "typing"))
+            sfx_events.append((cumulative_time + 0.45, "rustle"))
+
+        # 5. Heavy Sub-Bass Impact Booms on critical shock points
+        if idx in [1, 4, 8, 11, 28, 30, 33, 43, 44, 48, 54, 58, 61, 64, 67, 76]:
+            sfx_events.append((cumulative_time + 0.10, "boom"))
 
         cumulative_time += dur
 
@@ -539,7 +567,8 @@ def main():
             log(f"--- INSERTING 20s AUTHENTIC HISTORICAL SOUNDBITE AT {cumulative_time:.2f}s ---")
             master_video_clips.append(str(corti_sb_mp4))
             master_audio_clips.append(str(corti_sb_wav))
-            sfx_events.append((cumulative_time + 0.05, "shutter"))
+            sfx_events.append((cumulative_time + 0.05, "whoop"))
+            sfx_events.append((cumulative_time + 0.15, "shutter"))
             cumulative_time += soundbite_dur
 
         if idx % 10 == 0 or idx == 76:
@@ -588,9 +617,9 @@ def main():
         "-i", str(sfx_track_wav),
         "-filter_complex",
         "[0:a]volume=1.0[vo];"
-        "[1:a]volume=0.10[music];"
-        "[2:a]volume=0.85[sfx];"
-        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.18 0.85[mixed];"
+        "[1:a]volume=0.08[music];"
+        "[2:a]volume=1.20[sfx];"
+        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.12 1.10[mixed];"
         "[mixed]loudnorm=I=-14:TP=-1.5:LRA=11[outa]",
         "-map", "[outa]",
         "-c:a", "pcm_s16le",

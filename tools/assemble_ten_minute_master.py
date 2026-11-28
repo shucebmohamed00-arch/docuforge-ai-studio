@@ -136,16 +136,16 @@ CONTEXTUAL_ASSETS = {
     11: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_22_newspaper_press_rolling.mp4"],
     12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", PAPER_DIR / "paper_01_blick_grounded.mp4"],
     13: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "airport_camera_crew.mp4"],
-    14: [CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4", CLIPS_DIR / "politics_ubs_26_parliament_debates_hall.mp4"],
-    15: [PHOTO_DIR / "photo_05_parliament.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
+    14: [CLIPS_DIR / "politics_ubs_26_parliament_debates_hall.mp4", CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4"],
+    15: [CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
     16: [CLIPS_DIR / "md11_taxi_thrust.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4"],
 
     # Chapter 2: The European Trap (Beats 17-27) - Deregulation, EEA No Vote & Isolation
     17: [RUNWAY_DIR / "ai_14_referendum_ballot_box.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
     18: [CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
     19: [CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4", CLIPS_DIR / "politics_ubs_27_journalist_interviews_crowd.mp4"],
-    20: [PHOTO_DIR / "photo_07_british_airways.mp4", PHOTO_DIR / "photo_08_lufthansa.mp4"],
-    21: [PHOTO_DIR / "photo_09_air_france.mp4", CLIPS_DIR / "zurich_uncut_07_runway_distant.mp4"],
+    20: [CLIPS_DIR / "md11_taxi_thrust.mp4", CLIPS_DIR / "zurich_uncut_07_runway_distant.mp4"],
+    21: [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4"],
     22: [CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4", CLIPS_DIR / "zurich_uncut_12_jetway_empty.mp4"],
     23: [CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4", CLIPS_DIR / "zurich_uncut_17_radar_screens.mp4"],
     24: [CLIPS_DIR / "airport_terminal_concourse.mp4", CLIPS_DIR / "zurich_uncut_14_terminal_gates.mp4"],
@@ -154,7 +154,7 @@ CONTEXTUAL_ASSETS = {
     27: [CLIPS_DIR / "politics_ubs_28_banker_briefcase_entrance.mp4", PHOTO_DIR / "photo_06_bruggisser.mp4"],
 
     # Chapter 3: The Hunter Strategy (Beats 28-42) - Aggressive Debt Acquisitions & Sabena Bleed
-    28: [REMOTION_DIR / "parallax_bruggisser.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
+    28: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", PHOTO_DIR / "photo_06_bruggisser.mp4"],
     29: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "airport_apron_operations.mp4"],
     30: [RUNWAY_DIR / "ai_15_confidential_contract_signing.mp4", REMOTION_DIR / "kinetic_document_inspector.mp4"],
     31: [CLIPS_DIR / "airport_docking_jetway.mp4", CLIPS_DIR / "zurich_uncut_15_kloten_hangar.mp4"],
@@ -172,7 +172,7 @@ CONTEXTUAL_ASSETS = {
 
     # Chapter 4: The 17 Billion Black Hole & Mario Corti (Beats 43-52) - Arrival & Post-9/11 Shock
     43: [CLIPS_DIR / "politics_ubs_04_marcel_ospel_face.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
-    44: [REMOTION_DIR / "parallax_mario_corti.mp4", RUNWAY_DIR / "ai_16_corti_press_conference.mp4"],
+    44: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
     # (Authentic 20s Corti Interview Soundbite inserted between 44 and 45)
     45: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
     46: [CLIPS_DIR / "politics_ubs_30_swiss_confederation_press_room.mp4", CLIPS_DIR / "rsi_clip_11.mp4"],
@@ -186,7 +186,7 @@ CONTEXTUAL_ASSETS = {
     # Chapter 5: Project Phoenix & The Betrayal (Beats 53-64) - Secret Meetings & Cash Refusal
     53: [CLIPS_DIR / "rsi_clip_12.mp4", PHOTO_DIR / "photo_03_marcel_ospel.mp4"],
     54: [RUNWAY_DIR / "ai_17_ubs_boardroom_night.mp4", ADV_DIR / "parallax_03_marcel_ospel.mp4"],
-    55: [ADV_DIR / "parallax_01_mario_corti.mp4", CLIPS_DIR / "kloten_clip_01.mp4"],
+    55: [ADV_DIR / "parallax_01_mario_corti.mp4", PAPER_DIR / "paper_03_ubs_refusal.mp4"],
     56: [CLIPS_DIR / "politics_ubs_12_crossair_moritz_suter.mp4", CLIPS_DIR / "politics_ubs_29_crossair_aircraft_taxi.mp4"],
     57: [CLIPS_DIR / "kloten_clip_02.mp4", CLIPS_DIR / "kloten_clip_03.mp4"],
     58: [CLIPS_DIR / "rsi_clip_13.mp4", CLIPS_DIR / "kloten_clip_09.mp4"],
@@ -212,35 +212,47 @@ CONTEXTUAL_ASSETS = {
     76: [CLIPS_DIR / "rsi_clip_02.mp4", CLIPS_DIR / "zurich_uncut_60_empty_departure_gate_chairs.mp4"]
 }
 
-# Selective authentic acoustic foley cues
-SELECTIVE_SFX_BEATS = {
-    1:  ("boom", 0),
-    4:  ("boom", 0),
-    7:  ("rustle", 0),
-    8:  ("whoosh", 0),
-    11: ("boom", 0),
-    12: ("rustle", 0),
-    17: ("whoosh", 0),
-    18: ("shutter", 0),
-    20: ("whoosh", 0),
-    28: ("whoosh", 0),
-    30: ("whoosh", 0),
-    34: ("rustle", 0),
-    37: ("rustle", 0),
-    43: ("boom", 0),
-    44: ("shutter", 0),
-    46: ("rustle", 0),
-    48: ("boom", 0),
-    54: ("whoosh", 0),
-    58: ("whoosh", 0),
-    61: ("rustle", 0),
-    64: ("boom", 0),
-    67: ("shutter", 0),
-    68: ("whoosh", 0),
-    69: ("chime", 0),
-    73: ("shutter", 0),
-    75: ("rustle", 0),
-    76: ("boom", 0)
+# Deliberate, subtle cinematic foley cues strictly tied to narrative milestones
+# ZERO random whooshes, ZERO cut spam, perfectly balanced at broadcast levels
+NARRATIVE_SFX_CUES = {
+    # Chapter 1: The Grounding Shock (Beats 1-16)
+    1:  ("whoosh", 0.05),   # Soft opening atmosphere
+    3:  ("boom", 0.20),     # BP/Shell shut off valves (subtle low impact)
+    4:  ("click", 0.25),    # Cards rejected
+    11: ("paper", 0.30),    # NZZ 17 Billion headline
+    12: ("rustle", 0.25),   # Blick headline
+
+    # Chapter 2: The European Trap (Beats 17-27)
+    17: ("whoosh", 0.05),   # Chapter transition: 1992 Referendum
+    18: ("boom", 0.20),     # Referendum defeat shock (50.3% No)
+
+    # Chapter 3: The Hunter Strategy (Beats 28-42)
+    28: ("whoosh", 0.05),   # Chapter transition: Philippe Bruggisser
+    30: ("rustle", 0.25),   # Hunter Strategy blueprint document
+    34: ("paper", 0.30),    # Sabena 40-year loss acquisition
+    37: ("rustle", 0.25),   # Confidential off-balance clauses
+
+    # Chapter 4: The 17 Billion Black Hole (Beats 43-52)
+    43: ("boom", 0.20),     # Bruggisser fired
+    44: ("shutter", 0.25),  # Press cameras flash on Mario Corti
+    46: ("rustle", 0.25),   # Ernst & Young forensic audit
+    48: ("boom", 0.20),     # 17.2 Billion liability revelation
+    49: ("boom", 0.20),     # September 11 shock
+
+    # Chapter 5: Project Phoenix & The Betrayal (Beats 53-64)
+    53: ("whoosh", 0.05),   # Chapter transition: Paradeplatz secret meetings
+    54: ("rustle", 0.25),   # Project Phoenix document
+    61: ("click", 0.25),    # UBS withholds the liquidity transfer
+    64: ("boom", 0.20),     # 12:30 PM: Grounding order issued
+
+    # Chapter 6: The Fall, Rebirth & Trial (Beats 65-76)
+    65: ("whoosh", 0.05),   # Chapter transition: Terminal chaos
+    67: ("shutter", 0.25),  # Paradeplatz protests
+    68: ("paper", 0.30),    # Federal 450M emergency taxpayer loan
+    69: ("chime", 0.20),    # Final Swissair commercial flight touches down
+    73: ("shutter", 0.25),  # Zurich District Court criminal trial opens
+    75: ("click", 0.25),    # Sensational trial full acquittal verdict
+    76: ("boom", 0.20)      # Final closing statement
 }
 
 def build_punch_overlay(beat_idx: int, l1: str, l2: str, c_rgb: tuple, out_path: Path):
@@ -290,11 +302,12 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
 
     if N == 1:
         kb_zoom = (
-            "zoompan=z='min(zoom+0.0016,1.15)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            "zoompan=z='min(1.0+0.0012*on,1.16)':d=500:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
             if beat_idx % 2 == 0
-            else "zoompan=z='if(lte(zoom,1.0),1.15,max(1.001,zoom-0.0016))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            else "zoompan=z='max(1.16-0.0012*on,1.0)':d=500:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
-        crop_wm = "crop=in_w:in_h-(in_h*0.28):0:(in_h*0.28)," if any(k in str(assets[0]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
+        is_archive = any(k in str(assets[0]).lower() for k in ["authentic_clips", "uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"])
+        crop_wm = "crop=in_w:in_h-(in_h*0.30):0:(in_h*0.30)," if is_archive else ""
         base_vf = (
             f"{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
@@ -353,11 +366,12 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
     vf_filters = []
     for i in range(N):
         kb_zoom = (
-            "zoompan=z='min(zoom+0.0016,1.15)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            "zoompan=z='min(1.0+0.0012*on,1.16)':d=500:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
             if (beat_idx + i) % 2 == 0
-            else "zoompan=z='if(lte(zoom,1.0),1.15,max(1.001,zoom-0.0016))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            else "zoompan=z='max(1.16-0.0012*on,1.0)':d=500:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
-        crop_wm = "crop=in_w:in_h-(in_h*0.28):0:(in_h*0.28)," if any(k in str(assets[i]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
+        is_archive = any(k in str(assets[i]).lower() for k in ["authentic_clips", "uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"])
+        crop_wm = "crop=in_w:in_h-(in_h*0.30):0:(in_h*0.30)," if is_archive else ""
         scale_crop = (
             f"[{i}:v]{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
@@ -375,7 +389,7 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
             vf_filters.append(f"[s{i}]null[v{i}]")
 
     curr = "v0"
-    trans_list = ["smoothleft", "smoothright", "slideleft", "slideright", "wipeleft", "wiperight", "fadeblack", "fadewhite"]
+    trans_list = ["fade", "dissolve", "smoothleft", "smoothright", "fadeblack"]
     for i in range(N - 1):
         trans = trans_list[(beat_idx + i) % len(trans_list)]
         nxt = f"v{i+1}"
@@ -429,17 +443,18 @@ def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
     n_samples = int((total_sec + 3.0) * sr)
     audio_buf = np.zeros(n_samples, dtype=np.float32)
 
+    # Subtle, balanced acoustic foley levels (-18dB to -24dB relative to speech)
     foley_samples = {
-        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 1.30,
-        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 1.40,
-        "whoop": load_wav_pcm(FOLEY_DIR / "whoosh_reverse_rise.wav") * 1.45,
-        "whip": load_wav_pcm(FOLEY_DIR / "whip_pan_snap.wav") * 1.35,
-        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 1.25,
-        "click": load_wav_pcm(FOLEY_DIR / "mechanical_click_01.wav") * 1.35,
-        "typing": load_wav_pcm(FOLEY_DIR / "typewriter_typing_burst.wav") * 1.40,
-        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 1.10,
-        "paper": load_wav_pcm(FOLEY_DIR / "paper_slide_fast.wav") * 1.10,
-        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 1.20
+        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 0.35,
+        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 0.25,
+        "whoop": load_wav_pcm(FOLEY_DIR / "whoosh_reverse_rise.wav") * 0.25,
+        "whip": load_wav_pcm(FOLEY_DIR / "whip_pan_snap.wav") * 0.20,
+        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 0.25,
+        "click": load_wav_pcm(FOLEY_DIR / "mechanical_click_01.wav") * 0.25,
+        "typing": load_wav_pcm(FOLEY_DIR / "typewriter_typing_burst.wav") * 0.20,
+        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 0.25,
+        "paper": load_wav_pcm(FOLEY_DIR / "paper_slide_fast.wav") * 0.25,
+        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 0.25
     }
 
     for time_s, kind in sfx_events:
@@ -450,7 +465,7 @@ def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
         end_idx = min(idx + len(clip), n_samples)
         audio_buf[idx:end_idx] += clip[:end_idx - idx]
 
-    audio_buf = np.clip(audio_buf, -0.90, 0.90)
+    audio_buf = np.clip(audio_buf, -0.65, 0.65)
     buf_16 = (audio_buf * 32767).astype(np.int16)
     with wave.open(str(out_wav), "wb") as wf:
         wf.setnchannels(1)
@@ -563,36 +578,13 @@ def main():
 
         # Render beat video with Ken Burns motion & watermark cropping
         beat_out_mp4 = TEMP_SHOTS_DIR / f"beat_{idx:02d}_master.mp4"
-        offsets = render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
+        render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
         master_video_clips.append(str(beat_out_mp4))
 
-        # Dynamic Audio SFX Layering:
-        # 1. Beat Transition Whoosh / Whoop Riser (at start of beat)
-        if idx in [1, 7, 17, 28, 43, 53, 64, 76]:
-            sfx_events.append((cumulative_time + 0.05, "whoop"))
-        elif idx in [8, 11, 20, 30, 39, 48, 57, 68]:
-            sfx_events.append((cumulative_time + 0.05, "whip"))
-        else:
-            sfx_events.append((cumulative_time + 0.05, "whoosh"))
-
-        # 2. Subshot cut whoosh / whip inside the beat (at each xfade transition)
-        for off in offsets:
-            sub_trans = "whip" if (idx + int(off)) % 2 == 0 else "whoosh"
-            sfx_events.append((cumulative_time + off, sub_trans))
-
-        # 3. Punch Text Overlay Entrance: Camera Shutter + Mechanical Click
-        if idx in PUNCH_TEXTS:
-            sfx_events.append((cumulative_time + 0.20, "click"))
-            sfx_events.append((cumulative_time + 0.35, "shutter"))
-
-        # 4. Document / Audit / Headline / Contract beats: Typing burst & Paper Rustle
-        if idx in [12, 18, 26, 32, 34, 37, 38, 40, 46, 47, 55, 58, 64, 65, 68, 74] or any("paper" in str(a) or "doc" in str(a) for a in beat_assets):
-            sfx_events.append((cumulative_time + 0.30, "typing"))
-            sfx_events.append((cumulative_time + 0.45, "rustle"))
-
-        # 5. Heavy Sub-Bass Impact Booms on critical shock points
-        if idx in [1, 4, 8, 11, 28, 30, 33, 43, 44, 48, 54, 58, 61, 64, 67, 76]:
-            sfx_events.append((cumulative_time + 0.10, "boom"))
+        # Tasteful, narrative-driven SFX (strictly tied to on-screen milestones)
+        if idx in NARRATIVE_SFX_CUES:
+            kind, offset_s = NARRATIVE_SFX_CUES[idx]
+            sfx_events.append((cumulative_time + offset_s, kind))
 
         cumulative_time += dur
 
@@ -602,7 +594,7 @@ def main():
             log(f"--- INSERTING 20s AUTHENTIC HISTORICAL SOUNDBITE AT {cumulative_time:.2f}s ---")
             master_video_clips.append(str(corti_sb_mp4))
             master_audio_clips.append(str(corti_sb_wav))
-            sfx_events.append((cumulative_time + 0.05, "whoop"))
+            # Subtle camera shutter click as Mario Corti steps to the microphone
             sfx_events.append((cumulative_time + 0.15, "shutter"))
             cumulative_time += soundbite_dur
 
@@ -652,9 +644,9 @@ def main():
         "-i", str(sfx_track_wav),
         "-filter_complex",
         "[0:a]volume=1.0[vo];"
-        "[1:a]volume=0.06[music];"
-        "[2:a]volume=2.20[sfx];"
-        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.08 1.80[mixed];"
+        "[1:a]volume=0.08[music];"
+        "[2:a]volume=0.35[sfx];"
+        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.12 0.35[mixed];"
         "[mixed]loudnorm=I=-14:TP=-1.5:LRA=11[outa]",
         "-map", "[outa]",
         "-c:a", "pcm_s16le",

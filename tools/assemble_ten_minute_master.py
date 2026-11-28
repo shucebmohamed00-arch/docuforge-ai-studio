@@ -25,9 +25,10 @@ OVERLAY_DIR = BASE_DIR / "data" / "media" / "magnates_overlays"
 BROLL_DIR = BASE_DIR / "data" / "media" / "broll_cache"
 SFX_DIR = BASE_DIR / "data" / "media" / "sfx"
 RUNWAY_DIR = BASE_DIR / "data" / "media" / "cinematic_ai_assets"
+SOUNDBITES_DIR = BASE_DIR / "data" / "media" / "archival_soundbites"
 TEMP_SHOTS_DIR = BASE_DIR / "data" / "media" / "ten_minute_shots"
 
-for d in [EXPORT_DIR, ANIM_DIR, AUDIO_DIR, OVERLAY_DIR, TEMP_SHOTS_DIR, SFX_DIR, PHOTO_DIR, FIN_DIR, RUNWAY_DIR]:
+for d in [EXPORT_DIR, ANIM_DIR, AUDIO_DIR, OVERLAY_DIR, TEMP_SHOTS_DIR, SFX_DIR, PHOTO_DIR, FIN_DIR, RUNWAY_DIR, SOUNDBITES_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 def log(msg):
@@ -76,86 +77,127 @@ PUNCH_TEXTS = {
     76: ("NO BRAND IS TOO SACRED ", "TO FALL", (212, 175, 55))
 }
 
-# Key contextual asset mapping integrating Runway AI videos & custom graphics
+# Exhaustive, bespoke asset mapping for every single beat (1 to 76)
 CONTEXTUAL_ASSETS = {
-    # Chapter 1: Grounding Shock (Runway Kling 3.0 Pro + Flash + MapLibre)
+    # Chapter 1: The Grounding Shock (Beats 1-16)
     1:  [ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4"],
+    2:  [CLIPS_DIR / "zurich_uncut_06_fuel_station.mp4", CLIPS_DIR / "zurich_uncut_45_phone_booths_busy.mp4", CLIPS_DIR / "zurich_uncut_24_maintenance_truck.mp4", CLIPS_DIR / "zurich_uncut_16_pilot_briefing.mp4"],
     3:  [RUNWAY_DIR / "ai_07_fuel_hose_cutoff.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
-    4:  [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4"],
+    4:  [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "zurich_uncut_20_flight_status_red.mp4"],
+    5:  [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", CLIPS_DIR / "zurich_uncut_35_ticket_receipts.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
+    6:  [CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4", CLIPS_DIR / "zurich_uncut_27_wheel_chocks.mp4", CLIPS_DIR / "zurich_uncut_26_ground_power_unit.mp4", CLIPS_DIR / "zurich_uncut_50_static_tailfin.mp4"],
     7:  [STAGE_DIR / "stage_03_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
-    8:  [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
-    11: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
-    12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", FIN_DIR / "graphic_01_stock_crash.mp4"],
-    16: [PHOTO_DIR / "photo_07_british_airways.mp4", PHOTO_DIR / "photo_08_lufthansa.mp4", PHOTO_DIR / "photo_09_air_france.mp4"],
+    8:  [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
+    9:  [ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4"],
+    10: [ANIM_DIR / "anim_07_hunter_wheel.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
+    11: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4", FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
+    12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", PAPER_DIR / "paper_01_blick_grounded.mp4"],
+    13: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
+    14: [CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
+    15: [CLIPS_DIR / "politics_ubs_01_bern_parliament.mp4", PHOTO_DIR / "photo_05_parliament.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
+    16: [PHOTO_DIR / "photo_07_british_airways.mp4", PHOTO_DIR / "photo_08_lufthansa.mp4"],
 
-    # Chapter 2: The European Trap (Runway Kling 4 Flash Ballot Box + MapLibre)
+    # Chapter 2: The European Trap (Beats 17-27)
     17: [RUNWAY_DIR / "ai_14_referendum_ballot_box.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
     18: [PAPER_DIR / "paper_01_blick_grounded.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
-    20: [ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"],
-    22: [PHOTO_DIR / "photo_09_air_france.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
-    28: [REMOTION_DIR / "parallax_bruggisser.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
+    19: [CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4", CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4", CLIPS_DIR / "politics_ubs_15_cabinet_vote.mp4"],
+    20: [ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4"],
+    21: [PHOTO_DIR / "photo_09_air_france.mp4", PHOTO_DIR / "photo_07_british_airways.mp4"],
+    22: [CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4", CLIPS_DIR / "zurich_uncut_12_jetway_empty.mp4"],
+    23: [ANIM_DIR / "anim_06_hud.mp4", CLIPS_DIR / "zurich_uncut_17_radar_screens.mp4"],
+    24: [ANIM_DIR / "anim_08_infographic.mp4", CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4"],
+    25: [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", CLIPS_DIR / "zurich_uncut_33_flight_attendants.mp4", CLIPS_DIR / "zurich_uncut_16_pilot_briefing.mp4"],
+    26: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_22_newspaper_press_rolling.mp4"],
+    27: [CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4", ADV_DIR / "parallax_02_philippe_bruggisser.mp4", PHOTO_DIR / "photo_06_bruggisser.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
 
-    # Chapter 3: The Hunter Strategy (Runway Kling 4 Flash Contract Signing + D3 Wheel)
+    # Chapter 3: The Hunter Strategy (Beats 28-42)
+    28: [REMOTION_DIR / "parallax_bruggisser.mp4", PHOTO_DIR / "photo_06_bruggisser.mp4"],
+    29: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
     30: [ANIM_DIR / "anim_07_hunter_wheel.mp4", FIN_DIR / "graphic_03_hunter_network.mp4"],
+    31: [ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "pixabay_airliner_departure.mp4"],
+    32: [REMOTION_DIR / "kinetic_document_inspector.mp4", PAPER_DIR / "paper_06_sabena.mp4", ADV_DIR / "doc_01_nzz_audit_stamp.mp4"],
+    33: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
     34: [PAPER_DIR / "paper_06_sabena.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
+    35: [ANIM_DIR / "anim_08_infographic.mp4", CLIPS_DIR / "zurich_uncut_14_terminal_gates.mp4"],
+    36: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4"],
     37: [RUNWAY_DIR / "ai_15_confidential_contract_signing.mp4", STAGE_DIR / "stage_03_ubs_dossier.mp4"],
-    39: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4"],
+    38: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", PAPER_DIR / "paper_highlighter_nzz_debts.mp4"],
+    39: [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
+    40: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4", CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4"],
+    41: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
+    42: [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4"],
 
-    # Chapter 4: The 17 Billion Black Hole (Runway Kling 3.0 Pro Corti Centerpiece + D3 Debt Chart)
-    43: [REMOTION_DIR / "parallax_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
-    44: [RUNWAY_DIR / "ai_16_corti_press_conference.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
-    46: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", FIN_DIR / "graphic_02_debt_spiral.mp4"],
-    48: [ANIM_DIR / "anim_02_chart.mp4", FIN_DIR / "graphic_01_stock_crash.mp4"],
+    # Chapter 4: The 17 Billion Black Hole & Mario Corti (Beats 43-52)
+    43: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
+    44: [REMOTION_DIR / "parallax_mario_corti.mp4", RUNWAY_DIR / "ai_16_corti_press_conference.mp4"],
+    # (Authentic 20s Corti Interview Soundbite inserted between 44 and 45)
+    45: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
+    46: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", REMOTION_DIR / "kinetic_document_inspector.mp4"],
+    47: [PAPER_DIR / "paper_highlighter_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4", ADV_DIR / "doc_01_nzz_audit_stamp.mp4"],
+    48: [ANIM_DIR / "anim_02_chart.mp4", FIN_DIR / "graphic_02_debt_spiral.mp4", FIN_DIR / "graphic_01_stock_crash.mp4"],
     49: [BROLL_DIR / "PASSENGER_TERMINAL.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4"],
+    50: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "zurich_uncut_36_empty_tarmac_strip.mp4"],
+    51: [CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4", CLIPS_DIR / "politics_ubs_17_emergency_fund_doc.mp4"],
+    52: [PHOTO_DIR / "photo_01_ubs_hq.mp4", CLIPS_DIR / "politics_ubs_11_credit_suisse_sign.mp4"],
 
-    # Chapter 5: Project Phoenix (Runway Kling 4 Flash Boardroom at Night + Remotion Inspector)
+    # Chapter 5: Project Phoenix & The Betrayal (Beats 53-64)
+    53: [CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4", PHOTO_DIR / "photo_03_marcel_ospel.mp4"],
     54: [RUNWAY_DIR / "ai_17_ubs_boardroom_night.mp4", ADV_DIR / "parallax_03_marcel_ospel.mp4"],
-    56: [CLIPS_DIR / "politics_ubs_12_crossair_moritz_suter.mp4", CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4"],
+    55: [STAGE_DIR / "stage_03_ubs_dossier.mp4", ADV_DIR / "parallax_04_ubs_dossier.mp4", PHOTO_DIR / "photo_03_marcel_ospel.mp4"],
+    56: [CLIPS_DIR / "politics_ubs_12_crossair_moritz_suter.mp4", CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4", CLIPS_DIR / "zurich_uncut_30_swisssun_logo.mp4"],
+    57: [ANIM_DIR / "anim_01_map.mp4", FIN_DIR / "graphic_03_hunter_network.mp4"],
     58: [FIN_DIR / "graphic_04_intraday_countdown.mp4", PAPER_DIR / "paper_03_ubs_refusal.mp4"],
-    61: [ADV_DIR / "parallax_04_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
-    64: [PAPER_DIR / "paper_01_blick_grounded.mp4", CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4"],
+    59: [RUNWAY_DIR / "ai_07_fuel_hose_cutoff.mp4", CLIPS_DIR / "zurich_uncut_06_fuel_station.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
+    60: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_21_television_broadcast_room.mp4"],
+    61: [ADV_DIR / "parallax_04_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
+    62: [CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
+    63: [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "zurich_uncut_46_checkin_closed_sign.mp4", CLIPS_DIR / "zurich_uncut_34_departure_lounge.mp4"],
+    64: [PAPER_DIR / "paper_01_blick_grounded.mp4", CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4", CLIPS_DIR / "zurich_uncut_46_checkin_closed_sign.mp4"],
 
-    # Chapter 6: The Fall & Rebirth (Runway Kling 4 Flash Paradeplatz Protests + Courtroom)
+    # Chapter 6: The Fall, Rebirth & Trial (Beats 65-76)
     65: [BROLL_DIR / "PASSENGER_TERMINAL.mp4", PAPER_DIR / "paper_04_passengers.mp4"],
-    67: [RUNWAY_DIR / "ai_18_paradeplatz_protest.mp4", PHOTO_DIR / "photo_04_protest.mp4"],
-    68: [FIN_DIR / "graphic_05_bailout_rescue.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
-    69: [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4"],
-    70: [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", PHOTO_DIR / "photo_07_british_airways.mp4"],
-    72: [PHOTO_DIR / "photo_08_lufthansa.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
+    66: [CLIPS_DIR / "zurich_uncut_19_passenger_cluster.mp4", CLIPS_DIR / "zurich_uncut_43_stranded_family.mp4"],
+    67: [RUNWAY_DIR / "ai_18_paradeplatz_protest.mp4", PHOTO_DIR / "photo_04_protest.mp4", CLIPS_DIR / "politics_ubs_19_protest_banner_ubs.mp4"],
+    68: [FIN_DIR / "graphic_05_bailout_rescue.mp4", PAPER_DIR / "paper_05_bailout.mp4", CLIPS_DIR / "politics_ubs_15_cabinet_vote.mp4"],
+    69: [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", CLIPS_DIR / "zurich_uncut_50_static_tailfin.mp4"],
+    70: [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", CLIPS_DIR / "zurich_uncut_30_swisssun_logo.mp4"],
+    71: [CLIPS_DIR / "zurich_uncut_47_silent_runway.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
+    72: [PHOTO_DIR / "photo_08_lufthansa.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4", CLIPS_DIR / "zurich_uncut_02_md11_tail.mp4"],
     73: [CLIPS_DIR / "politics_ubs_05_press_cameras.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
+    74: [ADV_DIR / "doc_02_job_loss_stamp.mp4", PAPER_DIR / "paper_highlighter_job_loss.mp4"],
     75: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
     76: [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4"]
 }
 
+# Selective authentic acoustic foley cues
 SELECTIVE_SFX_BEATS = {
-    1:  ("impact_boom", 0),
-    3:  ("hydraulic_hiss", 0),
-    4:  ("impact_boom", 0),
-    7:  ("impact_boom", 1),
+    1:  ("boom", 0),
+    4:  ("boom", 0),
+    7:  ("rustle", 0),
     8:  ("whoosh", 0),
-    11: ("impact_boom", 0),
-    12: ("paper_rip", 0),
-    17: ("camera_shutter", 0),
-    18: ("paper_rip", 0),
+    11: ("boom", 0),
+    12: ("rustle", 0),
+    17: ("whoosh", 0),
+    18: ("shutter", 0),
     20: ("whoosh", 0),
     28: ("whoosh", 0),
     30: ("whoosh", 0),
-    34: ("paper_rip", 0),
-    37: ("paper_rip", 0),
-    43: ("impact_boom", 0),
-    44: ("camera_shutter", 0),
-    46: ("paper_rip", 0),
-    48: ("impact_boom", 0),
-    54: ("impact_boom", 0),
+    34: ("rustle", 0),
+    37: ("rustle", 0),
+    43: ("boom", 0),
+    44: ("shutter", 0),
+    46: ("rustle", 0),
+    48: ("boom", 0),
+    54: ("whoosh", 0),
     58: ("whoosh", 0),
-    61: ("paper_rip", 0),
-    64: ("impact_boom", 0),
-    67: ("camera_shutter", 0),
+    61: ("rustle", 0),
+    64: ("boom", 0),
+    67: ("shutter", 0),
     68: ("whoosh", 0),
-    69: ("hydraulic_hiss", 0),
-    73: ("camera_shutter", 0),
-    75: ("paper_rip", 0),
-    76: ("impact_boom", 0)
+    69: ("chime", 0),
+    73: ("shutter", 0),
+    75: ("rustle", 0),
+    76: ("boom", 0)
 }
 
 def build_punch_overlay(beat_idx: int, l1: str, l2: str, c_rgb: tuple, out_path: Path):
@@ -204,17 +246,24 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
     T = 0.30
 
     if N == 1:
+        kb_zoom = (
+            "zoompan=z='min(zoom+0.0012,1.10)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            if beat_idx % 2 == 0
+            else "zoompan=z='if(lte(zoom,1.0),1.10,max(1.001,zoom-0.0012))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+        )
+        base_vf = (
+            f"scale=1280:720:force_original_aspect_ratio=increase,"
+            f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
+            f"tpad=stop_mode=clone:stop_duration=5,"
+            f"{kb_zoom},"
+            f"settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p"
+        )
         cmd = [
             "ffmpeg", "-y",
+            "-stream_loop", "-1",
             "-ss", "0.0", "-t", str(round(target_dur, 2)),
             "-i", str(assets[0])
         ]
-        base_vf = (
-            "scale=1280:720:force_original_aspect_ratio=increase,"
-            "crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
-            "tpad=stop_mode=clone:stop_duration=3,"
-            "settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p"
-        )
         if overlays[0] and overlays[0].exists():
             cmd.extend(["-i", str(overlays[0])])
             cmd.extend([
@@ -243,8 +292,9 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
     for i, a in enumerate(assets):
         start_sec = 0.2 if ("uncut" in str(a) or "broll" in str(a)) else 0.0
         cmd.extend([
+            "-stream_loop", "-1",
             "-ss", str(start_sec),
-            "-t", str(round(durations[i] + 0.35, 2)),
+            "-t", str(round(durations[i] + 1.0, 2)),
             "-i", str(a)
         ])
 
@@ -258,10 +308,16 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
 
     vf_filters = []
     for i in range(N):
+        kb_zoom = (
+            "zoompan=z='min(zoom+0.0012,1.10)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            if (beat_idx + i) % 2 == 0
+            else "zoompan=z='if(lte(zoom,1.0),1.10,max(1.001,zoom-0.0012))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+        )
         scale_crop = (
             f"[{i}:v]scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
-            f"tpad=stop_mode=clone:stop_duration=3,"
+            f"tpad=stop_mode=clone:stop_duration=5,"
+            f"{kb_zoom},"
             f"settb=AVTB,setpts=PTS-STARTPTS,fps=30,format=yuv420p[s{i}]"
         )
         vf_filters.append(scale_crop)
@@ -314,43 +370,33 @@ def compose_cinematic_music_score(total_sec: float, out_wav: Path):
         wf.setframerate(sr)
         wf.writeframes(score_16.tobytes())
 
-def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
+def load_wav_pcm(path: Path) -> np.ndarray:
+    with wave.open(str(path), "rb") as wf:
+        n_frames = wf.getnframes()
+        data = wf.readframes(n_frames)
+        arr = np.frombuffer(data, dtype=np.int16).astype(np.float32) / 32768.0
+        if wf.getnchannels() == 2:
+            arr = (arr[0::2] + arr[1::2]) * 0.5
+        return arr
+
+def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
     sr = 44100
     n_samples = int((total_sec + 2.0) * sr)
     audio_buf = np.zeros(n_samples, dtype=np.float32)
 
-    def gen_sfx(kind: str, dur_s: float = 1.0) -> np.ndarray:
-        s_n = int(dur_s * sr)
-        st = np.linspace(0, dur_s, s_n, endpoint=False)
-        if kind == "impact_boom":
-            f = np.linspace(95, 28, s_n)
-            env = np.exp(-4.5 * st)
-            return 0.70 * np.sin(2 * np.pi * f * st) * env
-        elif kind == "whoosh":
-            noise = np.random.uniform(-0.35, 0.35, s_n)
-            env = np.sin(np.pi * st / dur_s) ** 2
-            return noise * env
-        elif kind == "paper_rip":
-            clicks = np.random.choice([0, 1], size=s_n, p=[0.985, 0.015]).astype(np.float32)
-            env = np.exp(-3.0 * st)
-            return clicks * env * 0.50
-        elif kind == "camera_shutter":
-            t_sh = np.linspace(0, 0.15, int(0.15 * sr), endpoint=False)
-            click = 0.6 * np.sin(2 * np.pi * 1200 * t_sh) * np.exp(-35 * t_sh)
-            res = np.zeros(s_n, dtype=np.float32)
-            res[:len(click)] = click
-            return res
-        elif kind == "hydraulic_hiss":
-            noise = np.random.uniform(-0.25, 0.25, s_n)
-            env = np.exp(-2.0 * st)
-            return noise * env
-        return np.zeros(s_n, dtype=np.float32)
+    foley_samples = {
+        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 0.65,
+        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 0.40,
+        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 0.40,
+        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 0.35,
+        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 0.40
+    }
 
     for time_s, kind in sfx_events:
         idx = int(time_s * sr)
-        if idx >= n_samples:
+        if idx >= n_samples or kind not in foley_samples:
             continue
-        clip = gen_sfx(kind, 1.2)
+        clip = foley_samples[kind]
         end_idx = min(idx + len(clip), n_samples)
         audio_buf[idx:end_idx] += clip[:end_idx - idx]
 
@@ -362,10 +408,68 @@ def build_transition_sfx_track(total_sec: float, sfx_events: list, out_wav: Path
         wf.setframerate(sr)
         wf.writeframes(buf_16.tobytes())
 
+def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float):
+    srt_path = EXPORT_DIR / "subtitles.srt"
+    if not srt_path.exists():
+        return
+    with open(srt_path, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    def sec_to_srt(s):
+        h = int(s // 3600)
+        m = int((s % 3600) // 60)
+        sec = int(s % 60)
+        ms = int(round((s - int(s)) * 1000))
+        if ms >= 1000:
+            sec += 1
+            ms -= 1000
+        return f"{h:02d}:{m:02d}:{sec:02d},{ms:03d}"
+
+    def srt_to_sec(t_str):
+        parts = t_str.strip().split(":")
+        h = int(parts[0])
+        m = int(parts[1])
+        sec_parts = parts[2].split(",")
+        sec = int(sec_parts[0])
+        ms = int(sec_parts[1])
+        return h * 3600 + m * 60 + sec + ms / 1000.0
+
+    entries = text.strip().split("\n\n")
+    new_cues = []
+    cue_num = 1
+
+    for e in entries:
+        lines = e.strip().split("\n")
+        idx = int(lines[0])
+        timing = lines[1]
+        t_start_s, t_end_s = timing.split(" --> ")
+        start_sec = srt_to_sec(t_start_s)
+        end_sec = srt_to_sec(t_end_s)
+        speech = "\n".join(lines[2:])
+
+        if idx <= 44:
+            new_cues.append(f"{cue_num}\n{sec_to_srt(start_sec)} --> {sec_to_srt(end_sec)}\n{speech}")
+            cue_num += 1
+            if idx == 44:
+                sb_start = end_sec
+                sb_end = end_sec + soundbite_dur
+                sb_text = "[ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.\n(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)"
+                new_cues.append(f"{cue_num}\n{sec_to_srt(sb_start)} --> {sec_to_srt(sb_end)}\n{sb_text}")
+                cue_num += 1
+        else:
+            new_start = start_sec + soundbite_dur
+            new_end = end_sec + soundbite_dur
+            new_cues.append(f"{cue_num}\n{sec_to_srt(new_start)} --> {sec_to_srt(new_end)}\n{speech}")
+            cue_num += 1
+
+    with open(srt_path, "w", encoding="utf-8") as f:
+        f.write("\n\n".join(new_cues) + "\n")
+    log(f"Subtitles synchronized with 20s soundbite: {len(new_cues)} cues written.")
+
 def main():
     log("=====================================================================")
-    log("  STARTING DOCUFORGE 10-MINUTE COMPLETE MASTER ASSEMBLY (76 BEATS)  ")
-    log("  Full Bleed 16:9, Zero Black Frames, Hybrid Runway AI, Dynamic SFX  ")
+    log("  DOCUFORGE 10-MINUTE CINEMATIC MASTER: HIGH DENSITY EDITORIAL CUT  ")
+    log("  Zero Generic Stock, 20s Primary Soundbite, Ken Burns, Master Foley ")
     log("=====================================================================")
 
     # 1. Render all Punch Overlays
@@ -375,17 +479,24 @@ def main():
         if not ov_path.exists():
             build_punch_overlay(beat_idx, l1, l2, col, ov_path)
 
-    # 2. Gather authentic pools
-    authentic_pool = sorted(list(CLIPS_DIR.glob("*.mp4")))
-    broll_pool = sorted(list(BROLL_DIR.glob("*.mp4")))
-    log(f"Asset Library loaded: {len(authentic_pool)} authentic archival clips, {len(broll_pool)} stock B-roll clips.")
+    # 2. Setup 20s Mario Corti Soundbite
+    corti_sb_mp4 = TEMP_SHOTS_DIR / "beat_44b_corti_soundbite.mp4"
+    corti_sb_wav = SOUNDBITES_DIR / "soundbite_mario_corti_20s.wav"
+    if not corti_sb_wav.exists():
+        subprocess.run([
+            "ffmpeg", "-y", "-i", str(SOUNDBITES_DIR / "soundbite_mario_corti_20s.mp4"),
+            "-vn", "-c:a", "pcm_s16le", "-ar", "44100", "-ac", "1", str(corti_sb_wav)
+        ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+    soundbite_dur = get_audio_duration(corti_sb_wav)
+    log(f"Verified 20s Primary Interview Soundbite: {corti_sb_mp4.name} ({soundbite_dur:.2f}s)")
 
-    # 3. Assemble all 76 Beats
+    # 3. Assemble all 76 Beats with Ken Burns and Bespoke Context
     master_video_clips = []
     master_audio_clips = []
     sfx_events = []
     cumulative_time = 0.0
     total_subshots = 0
+    end_sec_beat44 = 0.0
 
     log("Composing 76 Beats across Chapters 1-6...")
     for idx in range(1, 77):
@@ -397,23 +508,8 @@ def main():
         dur = get_audio_duration(audio_path)
         master_audio_clips.append(str(audio_path))
 
-        # Determine visual assets for beat
-        if idx in CONTEXTUAL_ASSETS:
-            beat_assets = [a for a in CONTEXTUAL_ASSETS[idx] if a.exists()]
-            if not beat_assets:
-                beat_assets = [authentic_pool[total_subshots % len(authentic_pool)]]
-        else:
-            if dur <= 5.0:
-                k = 2
-            elif dur <= 8.5:
-                k = 3
-            else:
-                k = 4
-            beat_assets = []
-            for s in range(k):
-                cand = authentic_pool[(total_subshots + s) % len(authentic_pool)]
-                beat_assets.append(cand)
-
+        # Bespoke asset mapping
+        beat_assets = CONTEXTUAL_ASSETS.get(idx, [CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4"])
         total_subshots += len(beat_assets)
 
         # Overlays
@@ -423,7 +519,7 @@ def main():
             if ov.exists():
                 overlays[min(1, len(beat_assets) - 1)] = ov
 
-        # Render beat video
+        # Render beat video with Ken Burns motion
         beat_out_mp4 = TEMP_SHOTS_DIR / f"beat_{idx:02d}_master.mp4"
         if not beat_out_mp4.exists():
             render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
@@ -437,10 +533,19 @@ def main():
 
         cumulative_time += dur
 
+        # INSERT AUTHENTIC 20s CORTI INTERVIEW SOUNDBITE RIGHT AFTER BEAT 44
+        if idx == 44:
+            end_sec_beat44 = cumulative_time
+            log(f"--- INSERTING 20s AUTHENTIC HISTORICAL SOUNDBITE AT {cumulative_time:.2f}s ---")
+            master_video_clips.append(str(corti_sb_mp4))
+            master_audio_clips.append(str(corti_sb_wav))
+            sfx_events.append((cumulative_time + 0.05, "shutter"))
+            cumulative_time += soundbite_dur
+
         if idx % 10 == 0 or idx == 76:
             log(f"Rendered Beat {idx}/76 (Timeline: {cumulative_time:.1f}s / {cumulative_time/60:.2f} mins)...")
 
-    log(f"All 76 Beats successfully composed! Total video cuts: {total_subshots}")
+    log(f"All 76 Beats + Soundbite composed! Total video cuts: {total_subshots + 1}")
 
     # 4. Write Video Concat List
     video_concat_txt = EXPORT_DIR / "video_concat.txt"
@@ -466,15 +571,15 @@ def main():
 
     # 6. Generate Transition SFX Track & Tension Music Score
     sfx_track_wav = EXPORT_DIR / "transition_sfx_track.wav"
-    log("Synthesizing dynamic transition SFX track...")
-    build_transition_sfx_track(total_timeline_sec, sfx_events, sfx_track_wav)
+    log("Synthesizing authentic acoustic master foley SFX track...")
+    build_acoustic_sfx_track(total_timeline_sec, sfx_events, sfx_track_wav)
 
     tension_wav = EXPORT_DIR / "tension_score.wav"
     log("Synthesizing orchestral tension score...")
     compose_cinematic_music_score(total_timeline_sec, tension_wav)
 
     # 7. Dynamic Audio Mixing (-14 LUFS broadcast standard)
-    log("Mixing Voiceover (-14 LUFS) + Background Score (-20 dB) + SFX accents...")
+    log("Mixing Voiceover & Archival Soundbite (-14 LUFS) + Background Score (-20 dB) + Master Foley...")
     master_mix_wav = EXPORT_DIR / "master_audio_mix.wav"
     audio_mix_cmd = [
         "ffmpeg", "-y",
@@ -483,9 +588,9 @@ def main():
         "-i", str(sfx_track_wav),
         "-filter_complex",
         "[0:a]volume=1.0[vo];"
-        "[1:a]volume=0.12[music];"
-        "[2:a]volume=0.90[sfx];"
-        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.20 0.85[mixed];"
+        "[1:a]volume=0.10[music];"
+        "[2:a]volume=0.85[sfx];"
+        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.18 0.85[mixed];"
         "[mixed]loudnorm=I=-14:TP=-1.5:LRA=11[outa]",
         "-map", "[outa]",
         "-c:a", "pcm_s16le",
@@ -503,13 +608,13 @@ def main():
         "-i", str(master_mix_wav),
         "-map", "0:v:0",
         "-map", "1:a:0",
-        "-vf", "noise=c1s=5:c0f=u+t,eq=contrast=1.05:brightness=-0.02:saturation=1.05",
+        "-vf", "noise=c1s=4:c0f=u+t,eq=contrast=1.04:brightness=-0.02:saturation=1.04",
         "-c:v", "libx264",
         "-preset", "veryfast",
         "-s", "1280x720",
-        "-b:v", "420k",
-        "-maxrate", "600k",
-        "-bufsize", "900k",
+        "-b:v", "850k",
+        "-maxrate", "1400k",
+        "-bufsize", "2000k",
         "-pix_fmt", "yuv420p",
         "-c:a", "aac",
         "-b:a", "96k",
@@ -521,7 +626,10 @@ def main():
     size_mb = master_out_mp4.stat().st_size / (1024 * 1024)
     log(f"10-Minute Master Documentary rendered successfully! ({size_mb:.2f} MB)")
 
-    # 9. Package Release ZIP
+    # 9. Update Subtitles with Soundbite Timestamps
+    update_synchronized_subtitles(end_sec_beat44, soundbite_dur)
+
+    # 10. Package Release ZIP
     pkg_zip = EXPORT_DIR / "docuforge_package.zip"
     with zipfile.ZipFile(pkg_zip, "w", zipfile.ZIP_DEFLATED) as zf:
         zf.write(master_out_mp4, arcname="documentary.mp4")

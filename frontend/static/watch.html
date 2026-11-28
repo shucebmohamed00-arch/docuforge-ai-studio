@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Grounding of Swissair - 10-Minute Master Documentary</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+    }
+    .header {
+      padding: 22px 28px;
+      border-bottom: 1px solid #1f2937;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0f172a;
+    }
+    .header h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+    }
+    .badge-group {
+      display: flex;
+      gap: 8px;
+    }
+    .badge {
+      background: #dc2626;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-secondary {
+      background: #2563eb;
+    }
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      background: #000;
+      aspect-ratio: 16 / 9;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .meta-bar {
+      padding: 16px 28px;
+      background: #0f172a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      border-top: 1px solid #1f2937;
+    }
+    .meta-item strong { color: #f1f5f9; }
+    .chapters {
+      padding: 22px 28px;
+      background: #111827;
+      border-top: 1px solid #1f2937;
+    }
+    .chapters h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chapter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+    }
+    .chapter-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .chapter-btn:hover {
+      background: #2563eb;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+    .chapter-time {
+      font-weight: 700;
+      color: #38bdf8;
+      margin-right: 8px;
+    }
+    .chapter-btn:hover .chapter-time { color: #fff; }
+    .highlight-btn {
+      border-color: #d97706;
+      background: rgba(217, 119, 6, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>The Swissair Grounding: The 17 Billion Franc Corporate Murder</h1>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 5px;">
+          Full 10-Minute Master Cut • Zero Generic Stock • Ken Burns Push/Pull • Acoustic Master Foley
+        </p>
+      </div>
+      <div class="badge-group">
+        <span class="badge">Master 10-Min</span>
+        <span class="badge badge-secondary">EBU -14 LUFS</span>
+      </div>
+    </div>
+
+    <div class="video-wrapper">
+      <video id="player" controls autoplay playsinline preload="auto">
+        <source src="/exports/swiss-air-grounding-prod/documentary.mp4" type="video/mp4">
+        <track label="English" kind="subtitles" srclang="en" src="/exports/swiss-air-grounding-prod/subtitles.srt" default>
+        Your browser does not support HTML5 video.
+      </video>
+    </div>
+
+    <div class="meta-bar">
+      <div class="meta-item">Duration: <strong>10:02 min (601.9s)</strong></div>
+      <div class="meta-item">Archival Speech: <strong>20s Mario Corti Press Conference</strong></div>
+      <div class="meta-item">Camera Motion: <strong>Dynamic Ken Burns (Push-In / Pull-Out)</strong></div>
+      <div class="meta-item">Sound Design: <strong>Studio Master Foley (Zero Synth)</strong></div>
+    </div>
+
+    <div class="chapters">
+      <h3>Jump to Chapter & Signature Moments:</h3>
+      <div class="chapter-grid">
+        <button class="chapter-btn" onclick="seek(0)">
+          <span class="chapter-time">00:00</span> Ch 1: The Black Tuesday Grounding
+        </button>
+        <button class="chapter-btn" onclick="seek(100)">
+          <span class="chapter-time">01:40</span> Ch 2: The European Airspace Trap
+        </button>
+        <button class="chapter-btn" onclick="seek(200)">
+          <span class="chapter-time">03:20</span> Ch 3: The Hunter Strategy & Toxic Debt
+        </button>
+        <button class="chapter-btn highlight-btn" onclick="seek(334)">
+          <span class="chapter-time" style="color: #f59e0b;">05:34</span> ★ Primary Soundbite: Mario Corti Speech
+        </button>
+        <button class="chapter-btn" onclick="seek(420)">
+          <span class="chapter-time">07:00</span> Ch 5: Project Phoenix & Bank Betrayal
+        </button>
+        <button class="chapter-btn" onclick="seek(520)">
+          <span class="chapter-time">08:40</span> Ch 6: The Fall, Court Trial & Rebirth
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const player = document.getElementById('player');
+    function seek(seconds) {
+      player.currentTime = seconds;
+      player.play();
+    }
+  </script>
+</body>
+</html>

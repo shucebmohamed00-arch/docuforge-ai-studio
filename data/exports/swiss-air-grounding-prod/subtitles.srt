@@ -175,130 +175,144 @@ In an emergency midnight board session, Philippe Bruggisser was abruptly fired a
 The board turned to Mario Corti, the widely respected Chief Financial Officer of Nestlé, appointing him Chairman and CEO.
 
 45
-00:05:34,848 --> 00:05:44,086
-Corti was promised absolute transparency and total autonomy to restructure the battered aviation conglomerate.
+00:05:34,798 --> 00:05:54,798
+[ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.
+(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)
 
 46
-00:05:44,136 --> 00:05:46,006
-He immediately commissioned an exhaustive forensic audit from Ernst & Young to uncover the true financial exposure.
+00:05:54,798 --> 00:06:14,798
+[ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.
+(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)
 
 47
-00:05:46,056 --> 00:05:57,142
-What the auditors discovered shocked the Swiss business establishment to its core.
+00:06:14,798 --> 00:06:34,798
+[ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.
+(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)
 
 48
-00:05:57,192 --> 00:06:07,846
-The true off-balance-sheet commitments and contingent liabilities totaled a catastrophic 17.2 billion Swiss francs.
+00:06:34,848 --> 00:06:44,086
+Corti was promised absolute transparency and total autonomy to restructure the battered aviation conglomerate.
 
 49
-00:06:07,896 --> 00:06:13,942
-Then, on September 11th, 2001, commercial aviation suffered the most devastating external shock in modern history.
+00:06:44,136 --> 00:06:46,006
+He immediately commissioned an exhaustive forensic audit from Ernst & Young to uncover the true financial exposure.
 
 50
-00:06:13,992 --> 00:06:15,814
-Transatlantic travel plummeted by over forty percent overnight. Swissair's cash reserves evaporated within days.
+00:06:46,056 --> 00:06:57,142
+What the auditors discovered shocked the Swiss business establishment to its core.
 
 51
-00:06:15,864 --> 00:06:18,238
-Corti knew the parent group was insolvent. He needed an emergency cash bridge of 100 million francs just to survive the week.
+00:06:57,192 --> 00:07:07,846
+The true off-balance-sheet commitments and contingent liabilities totaled a catastrophic 17.2 billion Swiss francs.
 
 52
-00:06:18,288 --> 00:06:22,774
-He reached out to Switzerland's most powerful banking titans: UBS and Credit Suisse.
+00:07:07,896 --> 00:07:13,942
+Then, on September 11th, 2001, commercial aviation suffered the most devastating external shock in modern history.
 
 53
-00:06:22,824 --> 00:06:28,510
-Across Zurich's Paradeplatz, behind the closed mahogany doors of UBS, a very different calculus was taking shape.
+00:07:13,992 --> 00:07:15,814
+Transatlantic travel plummeted by over forty percent overnight. Swissair's cash reserves evaporated within days.
 
 54
-00:06:28,560 --> 00:06:35,158
-UBS Chairman Marcel Ospel and Credit Suisse leadership had drawn up a confidential rescue blueprint codenamed 'Project Phoenix'.
+00:07:15,864 --> 00:07:18,238
+Corti knew the parent group was insolvent. He needed an emergency cash bridge of 100 million francs just to survive the week.
 
 55
-00:06:35,208 --> 00:06:46,318
-Project Phoenix was not designed to save Swissair. It was designed to carve out its valuable assets and let the mother company die.
+00:07:18,288 --> 00:07:22,774
+He reached out to Switzerland's most powerful banking titans: UBS and Credit Suisse.
 
 56
-00:06:46,368 --> 00:06:56,446
-Swissair owned a profitable, debt-free regional subsidiary: Crossair, founded by entrepreneur Moritz Suter.
+00:07:22,824 --> 00:07:28,510
+Across Zurich's Paradeplatz, behind the closed mahogany doors of UBS, a very different calculus was taking shape.
 
 57
-00:06:56,496 --> 00:06:58,679
-The banks planned to purchase Crossair's shares, transfer Swissair's modern fleet and profitable routes to it, and ditch the 17 billion in debt.
+00:07:28,560 --> 00:07:35,158
+UBS Chairman Marcel Ospel and Credit Suisse leadership had drawn up a confidential rescue blueprint codenamed 'Project Phoenix'.
 
 58
-00:06:58,729 --> 00:07:05,759
-Under the agreement, the banks pledged to provide a liquidity bridge of 250 million francs on Monday, October 1st.
+00:07:35,208 --> 00:07:46,318
+Project Phoenix was not designed to save Swissair. It was designed to carve out its valuable assets and let the mother company die.
 
 59
-00:07:05,809 --> 00:07:17,159
-That money was earmarked specifically to keep Swissair planes fueled and operational until the formal handover.
+00:07:46,368 --> 00:07:56,446
+Swissair owned a profitable, debt-free regional subsidiary: Crossair, founded by entrepreneur Moritz Suter.
 
 60
-00:07:17,209 --> 00:07:24,719
-On Monday afternoon, Mario Corti waited for the funds to arrive in Swissair's operational treasury accounts.
+00:07:56,496 --> 00:07:58,679
+The banks planned to purchase Crossair's shares, transfer Swissair's modern fleet and profitable routes to it, and ditch the 17 billion in debt.
 
 61
-00:07:24,769 --> 00:07:34,391
-The hours ticked by. The funds were deliberately withheld by UBS due to last-minute administrative disputes.
+00:07:58,729 --> 00:08:05,759
+Under the agreement, the banks pledged to provide a liquidity bridge of 250 million francs on Monday, October 1st.
 
 62
-00:07:34,441 --> 00:07:42,119
-By dawn on Tuesday, October 2nd, the bank transfer had still not arrived.
+00:08:05,809 --> 00:08:17,159
+That money was earmarked specifically to keep Swissair planes fueled and operational until the formal handover.
 
 63
-00:07:42,169 --> 00:07:51,215
-Fuel suppliers in Zurich, London, and New York issued immediate cash-on-delivery ultimatums.
+00:08:17,209 --> 00:08:24,719
+On Monday afternoon, Mario Corti waited for the funds to arrive in Swissair's operational treasury accounts.
 
 64
-00:07:51,265 --> 00:08:06,623
-At 12:30 PM, Swissair Flight Operations received the order: cancel all departures worldwide. The Flying Bank was dead.
+00:08:24,769 --> 00:08:34,391
+The hours ticked by. The funds were deliberately withheld by UBS due to last-minute administrative disputes.
 
 65
-00:08:06,673 --> 00:08:15,071
-The announcement triggered scenes of total pandemonium across international terminals from Tokyo to Los Angeles.
+00:08:34,441 --> 00:08:42,119
+By dawn on Tuesday, October 2nd, the bank transfer had still not arrived.
 
 66
-00:08:15,121 --> 00:08:23,135
-More than 38,000 Swissair passengers and 1,000 flight crew members were stranded on tarmacs without tickets or hotel rooms.
+00:08:42,169 --> 00:08:51,215
+Fuel suppliers in Zurich, London, and New York issued immediate cash-on-delivery ultimatums.
 
 67
-00:08:23,185 --> 00:08:31,751
-In Zurich, furious Swiss citizens marched on Paradeplatz, hurling eggs at UBS headquarters and denouncing bankers as national traitors.
+00:08:51,265 --> 00:09:06,623
+At 12:30 PM, Swissair Flight Operations received the order: cancel all departures worldwide. The Flying Bank was dead.
 
 68
-00:08:31,801 --> 00:08:40,943
-The Swiss Federal Council was forced to intervene with an emergency taxpayer loan of 450 million francs to resume temporary repatriation flights.
+00:09:06,673 --> 00:09:15,071
+The announcement triggered scenes of total pandemonium across international terminals from Tokyo to Los Angeles.
 
 69
-00:08:40,993 --> 00:08:49,655
-On March 31st, 2002, the final Swissair commercial flight touched down in Zurich, closing 71 years of aviation history.
+00:09:15,121 --> 00:09:23,135
+More than 38,000 Swissair passengers and 1,000 flight crew members were stranded on tarmacs without tickets or hotel rooms.
 
 70
-00:08:49,705 --> 00:08:56,447
-The profitable remnants of the fleet were rolled into Crossair to form the newly branded Swiss International Air Lines.
+00:09:23,185 --> 00:09:31,751
+In Zurich, furious Swiss citizens marched on Paradeplatz, hurling eggs at UBS headquarters and denouncing bankers as national traitors.
 
 71
-00:08:56,497 --> 00:09:00,119
-Yet the ultimate humiliation was still to come.
+00:09:31,801 --> 00:09:40,943
+The Swiss Federal Council was forced to intervene with an emergency taxpayer loan of 450 million francs to resume temporary repatriation flights.
 
 72
-00:09:00,169 --> 00:09:09,359
-Just three years later, in 2005, the newly minted SWISS was acquired by its arch-rival, Germany's Lufthansa, for a fraction of its former value.
+00:09:40,993 --> 00:09:49,655
+On March 31st, 2002, the final Swissair commercial flight touched down in Zurich, closing 71 years of aviation history.
 
 73
-00:09:09,409 --> 00:09:17,831
-In 2007, nineteen former directors and executives, including Bruggisser and Corti, stood trial in Zurich district court.
+00:09:49,705 --> 00:09:56,447
+The profitable remnants of the fleet were rolled into Crossair to form the newly branded Swiss International Air Lines.
 
 74
-00:09:17,881 --> 00:09:24,191
-They faced severe criminal charges of fraudulent bankruptcy, false accounting, and mismanagement.
+00:09:56,497 --> 00:10:00,119
+Yet the ultimate humiliation was still to come.
 
 75
-00:09:24,241 --> 00:09:33,167
-After months of sensational testimony, the court acquitted every single defendant of criminal wrongdoing, ruling it corporate failure rather than crime.
+00:10:00,169 --> 00:10:09,359
+Just three years later, in 2005, the newly minted SWISS was acquired by its arch-rival, Germany's Lufthansa, for a fraction of its former value.
 
 76
-00:09:33,217 --> 00:09:41,807
-Seventeen billion francs vanished forever into the Alps—a timeless warning of what happens when executive arrogance meets unbridled financial greed.
+00:10:09,409 --> 00:10:17,831
+In 2007, nineteen former directors and executives, including Bruggisser and Corti, stood trial in Zurich district court.
 
+77
+00:10:17,881 --> 00:10:24,191
+They faced severe criminal charges of fraudulent bankruptcy, false accounting, and mismanagement.
+
+78
+00:10:24,241 --> 00:10:33,167
+After months of sensational testimony, the court acquitted every single defendant of criminal wrongdoing, ruling it corporate failure rather than crime.
+
+79
+00:10:33,217 --> 00:10:41,807
+Seventeen billion francs vanished forever into the Alps—a timeless warning of what happens when executive arrogance meets unbridled financial greed.

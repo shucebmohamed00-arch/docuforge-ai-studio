@@ -78,51 +78,52 @@ PUNCH_TEXTS = {
 }
 
 # Exhaustive, bespoke asset mapping for every single beat (1 to 76) - 100% STRICT ZERO REPETITION
+# ZERO BLACK BACKGROUNDS, ZERO ANALOG SWITCHBOARDS, ZERO GERMAN TITLES, 100% MEANINGFUL ARCHIVAL ASSETS
 CONTEXTUAL_ASSETS = {
     # Chapter 1: The Grounding Shock (Beats 1-16) - Zurich Airport & Tarmac Freeze
-    1:  [ANIM_DIR / "anim_01_map.mp4", CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4"],
+    1:  [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4"],
     2:  [CLIPS_DIR / "zurich_uncut_06_fuel_station.mp4", CLIPS_DIR / "zurich_uncut_45_phone_booths_busy.mp4"],
     3:  [RUNWAY_DIR / "ai_07_fuel_hose_cutoff.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
     4:  [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "zurich_uncut_20_flight_status_red.mp4"],
     5:  [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", CLIPS_DIR / "zurich_uncut_35_ticket_receipts.mp4"],
     6:  [CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4", CLIPS_DIR / "zurich_uncut_27_wheel_chocks.mp4"],
     7:  [STAGE_DIR / "stage_03_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
-    8:  [FIN_DIR / "graphic_02_debt_spiral.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
-    9:  [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", CLIPS_DIR / "zurich_uncut_01_tarmac_wide.mp4"],
-    10: [ANIM_DIR / "anim_07_hunter_wheel.mp4", CLIPS_DIR / "politics_ubs_13_investor_meeting.mp4"],
-    11: [FIN_DIR / "graphic_01_stock_crash.mp4", CLIPS_DIR / "politics_ubs_10_stock_chart_screen.mp4"],
+    8:  [CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4", CLIPS_DIR / "rsi_clip_03.mp4"],
+    9:  [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", CLIPS_DIR / "md11_touchdown_runway.mp4"],
+    10: [CLIPS_DIR / "rsi_clip_04.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
+    11: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_22_newspaper_press_rolling.mp4"],
     12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", PAPER_DIR / "paper_01_blick_grounded.mp4"],
-    13: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
-    14: [CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
-    15: [CLIPS_DIR / "politics_ubs_01_bern_parliament.mp4", PHOTO_DIR / "photo_05_parliament.mp4"],
-    16: [PHOTO_DIR / "photo_07_british_airways.mp4", PHOTO_DIR / "photo_08_lufthansa.mp4"],
+    13: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "airport_camera_crew.mp4"],
+    14: [CLIPS_DIR / "politics_ubs_26_parliament_debates_hall.mp4", CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4"],
+    15: [CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
+    16: [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4"],
 
     # Chapter 2: The European Trap (Beats 17-27) - Deregulation, EEA No Vote & Isolation
     17: [RUNWAY_DIR / "ai_14_referendum_ballot_box.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
-    18: [CLIPS_DIR / "politics_ubs_26_parliament_debates_hall.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
-    19: [CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4", CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4"],
-    20: [CLIPS_DIR / "pixabay_runway_takeoff.mp4", CLIPS_DIR / "zurich_uncut_07_runway_distant.mp4"],
-    21: [PHOTO_DIR / "photo_09_air_france.mp4", CLIPS_DIR / "politics_ubs_15_cabinet_vote.mp4"],
+    18: [CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
+    19: [CLIPS_DIR / "politics_ubs_15_cabinet_vote.mp4", CLIPS_DIR / "politics_ubs_27_journalist_interviews_crowd.mp4"],
+    20: [CLIPS_DIR / "md11_taxi_thrust.mp4", CLIPS_DIR / "zurich_uncut_07_runway_distant.mp4"],
+    21: [CLIPS_DIR / "zurich_uncut_16_pilot_briefing.mp4", CLIPS_DIR / "rsi_clip_05.mp4"],
     22: [CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4", CLIPS_DIR / "zurich_uncut_12_jetway_empty.mp4"],
-    23: [ANIM_DIR / "anim_06_hud.mp4", CLIPS_DIR / "zurich_uncut_17_radar_screens.mp4"],
-    24: [ANIM_DIR / "anim_08_infographic.mp4", CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4"],
-    25: [CLIPS_DIR / "zurich_uncut_33_flight_attendants.mp4", CLIPS_DIR / "zurich_uncut_16_pilot_briefing.mp4"],
-    26: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_22_newspaper_press_rolling.mp4"],
+    23: [CLIPS_DIR / "zurich_uncut_17_radar_screens.mp4", CLIPS_DIR / "rsi_clip_07.mp4"],
+    24: [CLIPS_DIR / "airport_terminal_concourse.mp4", CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4"],
+    25: [CLIPS_DIR / "zurich_uncut_33_flight_attendants.mp4", CLIPS_DIR / "rsi_clip_06.mp4"],
+    26: [PAPER_DIR / "paper_highlighter_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_17_emergency_fund_doc.mp4"],
     27: [CLIPS_DIR / "politics_ubs_28_banker_briefcase_entrance.mp4", PHOTO_DIR / "photo_06_bruggisser.mp4"],
 
     # Chapter 3: The Hunter Strategy (Beats 28-42) - Aggressive Debt Acquisitions & Sabena Bleed
-    28: [REMOTION_DIR / "parallax_bruggisser.mp4", CLIPS_DIR / "politics_ubs_18_banker_handshake.mp4"],
-    29: [CLIPS_DIR / "politics_ubs_27_journalist_interviews_crowd.mp4", CLIPS_DIR / "zurich_uncut_15_kloten_hangar.mp4"],
-    30: [FIN_DIR / "graphic_03_hunter_network.mp4", CLIPS_DIR / "zurich_uncut_08_baggage_carts.mp4"],
-    31: [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "zurich_uncut_13_cargo_doors.mp4"],
-    32: [REMOTION_DIR / "kinetic_document_inspector.mp4", PAPER_DIR / "paper_06_sabena.mp4"],
+    28: [REMOTION_DIR / "parallax_bruggisser.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
+    29: [CLIPS_DIR / "airport_apron_operations.mp4", CLIPS_DIR / "zurich_uncut_15_kloten_hangar.mp4"],
+    30: [PAPER_DIR / "paper_06_sabena.mp4", CLIPS_DIR / "zurich_uncut_08_baggage_carts.mp4"],
+    31: [CLIPS_DIR / "airport_docking_jetway.mp4", CLIPS_DIR / "zurich_uncut_13_cargo_doors.mp4"],
+    32: [REMOTION_DIR / "kinetic_document_inspector.mp4", CLIPS_DIR / "rsi_clip_08.mp4"],
     33: [CLIPS_DIR / "politics_ubs_33_ubs_trading_floor.mp4", CLIPS_DIR / "zurich_uncut_24_maintenance_truck.mp4"],
     34: [CLIPS_DIR / "zurich_uncut_02_md11_tail.mp4", CLIPS_DIR / "zurich_uncut_03_engine_close.mp4"],
     35: [CLIPS_DIR / "zurich_uncut_14_terminal_gates.mp4", CLIPS_DIR / "zurich_uncut_23_apron_buses.mp4"],
     36: [CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4", CLIPS_DIR / "zurich_uncut_05_ground_crew.mp4"],
     37: [RUNWAY_DIR / "ai_15_confidential_contract_signing.mp4", CLIPS_DIR / "rsi_clip_01.mp4"],
-    38: [PAPER_DIR / "paper_highlighter_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_17_emergency_fund_doc.mp4"],
-    39: [CLIPS_DIR / "politics_ubs_34_paradeplatz_aerial_view.mp4", CLIPS_DIR / "politics_ubs_35_financial_times_headline.mp4"],
+    38: [PAPER_DIR / "paper_03_ubs_refusal.mp4", CLIPS_DIR / "rsi_clip_09.mp4"],
+    39: [CLIPS_DIR / "politics_ubs_35_financial_times_headline.mp4", CLIPS_DIR / "rsi_clip_10.mp4"],
     40: [CLIPS_DIR / "zurich_uncut_18_luggage_conveyor.mp4", CLIPS_DIR / "zurich_uncut_21_swissair_counter.mp4"],
     41: [CLIPS_DIR / "zurich_uncut_22_security_gate.mp4", CLIPS_DIR / "zurich_uncut_26_ground_power_unit.mp4"],
     42: [CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", CLIPS_DIR / "zurich_uncut_31_terminal_stairs.mp4"],
@@ -132,21 +133,21 @@ CONTEXTUAL_ASSETS = {
     44: [REMOTION_DIR / "parallax_mario_corti.mp4", RUNWAY_DIR / "ai_16_corti_press_conference.mp4"],
     # (Authentic 20s Corti Interview Soundbite inserted between 44 and 45)
     45: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
-    46: [CLIPS_DIR / "politics_ubs_30_swiss_confederation_press_room.mp4", CLIPS_DIR / "politics_ubs_31_credit_suisse_teller_line.mp4"],
+    46: [CLIPS_DIR / "politics_ubs_30_swiss_confederation_press_room.mp4", CLIPS_DIR / "rsi_clip_11.mp4"],
     47: [CLIPS_DIR / "politics_ubs_32_moritz_leuenberger_speech.mp4", CLIPS_DIR / "zurich_uncut_36_empty_tarmac_strip.mp4"],
-    48: [ANIM_DIR / "anim_02_chart.mp4", CLIPS_DIR / "pixabay_gold_vault_bars.mp4"],
+    48: [ADV_DIR / "parallax_04_ubs_dossier.mp4", CLIPS_DIR / "pixabay_gold_vault_bars.mp4"],
     49: [BROLL_DIR / "PASSENGER_TERMINAL.mp4", CLIPS_DIR / "zurich_uncut_39_stairway_pulled_back.mp4"],
     50: [CLIPS_DIR / "zurich_uncut_40_catering_truck_idle.mp4", CLIPS_DIR / "zurich_uncut_41_swissair_livery.mp4"],
     51: [CLIPS_DIR / "politics_ubs_21_television_broadcast_room.mp4", CLIPS_DIR / "zurich_uncut_42_police_patrol_airport.mp4"],
     52: [PHOTO_DIR / "photo_01_ubs_hq.mp4", CLIPS_DIR / "politics_ubs_11_credit_suisse_sign.mp4"],
 
     # Chapter 5: Project Phoenix & The Betrayal (Beats 53-64) - Secret Meetings & Cash Refusal
-    53: [CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4", PHOTO_DIR / "photo_03_marcel_ospel.mp4"],
+    53: [CLIPS_DIR / "rsi_clip_12.mp4", PHOTO_DIR / "photo_03_marcel_ospel.mp4"],
     54: [RUNWAY_DIR / "ai_17_ubs_boardroom_night.mp4", ADV_DIR / "parallax_03_marcel_ospel.mp4"],
-    55: [ADV_DIR / "parallax_04_ubs_dossier.mp4", CLIPS_DIR / "kloten_clip_01.mp4"],
+    55: [ADV_DIR / "parallax_01_mario_corti.mp4", CLIPS_DIR / "kloten_clip_01.mp4"],
     56: [CLIPS_DIR / "politics_ubs_12_crossair_moritz_suter.mp4", CLIPS_DIR / "politics_ubs_29_crossair_aircraft_taxi.mp4"],
     57: [CLIPS_DIR / "kloten_clip_02.mp4", CLIPS_DIR / "kloten_clip_03.mp4"],
-    58: [FIN_DIR / "graphic_04_intraday_countdown.mp4", PAPER_DIR / "paper_03_ubs_refusal.mp4"],
+    58: [CLIPS_DIR / "rsi_clip_13.mp4", CLIPS_DIR / "kloten_clip_09.mp4"],
     59: [CLIPS_DIR / "zurich_uncut_51_fuel_tanker_arrival.mp4", CLIPS_DIR / "zurich_uncut_52_ground_marshall_signalling.mp4"],
     60: [CLIPS_DIR / "kloten_clip_04.mp4", CLIPS_DIR / "kloten_clip_05.mp4"],
     61: [CLIPS_DIR / "zurich_uncut_53_swisssun_catering_idle.mp4", CLIPS_DIR / "zurich_uncut_54_baggage_handler_waiting.mp4"],
@@ -158,12 +159,12 @@ CONTEXTUAL_ASSETS = {
     65: [PAPER_DIR / "paper_04_passengers.mp4", CLIPS_DIR / "zurich_uncut_43_stranded_family.mp4"],
     66: [CLIPS_DIR / "zurich_uncut_19_passenger_cluster.mp4", CLIPS_DIR / "zurich_uncut_44_newspaper_stand_airport.mp4"],
     67: [RUNWAY_DIR / "ai_18_paradeplatz_protest.mp4", PHOTO_DIR / "photo_04_protest.mp4"],
-    68: [FIN_DIR / "graphic_05_bailout_rescue.mp4", PAPER_DIR / "paper_05_bailout.mp4"],
-    69: [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", CLIPS_DIR / "zurich_uncut_50_static_tailfin.mp4"],
+    68: [PAPER_DIR / "paper_05_bailout.mp4", CLIPS_DIR / "rsi_clip_14.mp4"],
+    69: [CLIPS_DIR / "rsi_clip_15.mp4", CLIPS_DIR / "zurich_uncut_50_static_tailfin.mp4"],
     70: [CLIPS_DIR / "zurich_uncut_30_swisssun_logo.mp4", CLIPS_DIR / "kloten_clip_06.mp4"],
     71: [CLIPS_DIR / "zurich_uncut_47_silent_runway.mp4", CLIPS_DIR / "zurich_uncut_57_swissair_hangar_doors_shut.mp4"],
     72: [CLIPS_DIR / "zurich_uncut_58_static_airbus_a330_tarmac.mp4", CLIPS_DIR / "kloten_clip_07.mp4"],
-    73: [CLIPS_DIR / "politics_ubs_07_protesters_signs.mp4", CLIPS_DIR / "politics_ubs_19_protest_banner_ubs.mp4"],
+    73: [CLIPS_DIR / "politics_ubs_07_protesters_signs.mp4", CLIPS_DIR / "rsi_clip_16.mp4"],
     74: [ADV_DIR / "doc_02_job_loss_stamp.mp4", PAPER_DIR / "paper_highlighter_job_loss.mp4"],
     75: [CLIPS_DIR / "zurich_uncut_59_night_tarmac_reflections.mp4", CLIPS_DIR / "kloten_clip_08.mp4"],
     76: [CLIPS_DIR / "rsi_clip_02.mp4", CLIPS_DIR / "zurich_uncut_60_empty_departure_gate_chairs.mp4"]
@@ -247,11 +248,11 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
 
     if N == 1:
         kb_zoom = (
-            "zoompan=z='min(zoom+0.0012,1.10)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            "zoompan=z='min(zoom+0.0016,1.15)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
             if beat_idx % 2 == 0
-            else "zoompan=z='if(lte(zoom,1.0),1.10,max(1.001,zoom-0.0012))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            else "zoompan=z='if(lte(zoom,1.0),1.15,max(1.001,zoom-0.0016))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
-        crop_wm = "crop=in_w:in_h-150:0:150," if ("uncut" in str(assets[0]) or "broll" in str(assets[0])) else ""
+        crop_wm = "crop=in_w:in_h-150:0:150," if any(k in str(assets[0]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
         base_vf = (
             f"{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
@@ -310,11 +311,11 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
     vf_filters = []
     for i in range(N):
         kb_zoom = (
-            "zoompan=z='min(zoom+0.0012,1.10)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            "zoompan=z='min(zoom+0.0016,1.15)':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
             if (beat_idx + i) % 2 == 0
-            else "zoompan=z='if(lte(zoom,1.0),1.10,max(1.001,zoom-0.0012))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
+            else "zoompan=z='if(lte(zoom,1.0),1.15,max(1.001,zoom-0.0016))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
-        crop_wm = "crop=in_w:in_h-150:0:150," if ("uncut" in str(assets[i]) or "broll" in str(assets[i])) else ""
+        crop_wm = "crop=in_w:in_h-150:0:150," if any(k in str(assets[i]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
         scale_crop = (
             f"[{i}:v]{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
@@ -387,16 +388,16 @@ def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
     audio_buf = np.zeros(n_samples, dtype=np.float32)
 
     foley_samples = {
-        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 0.95,
-        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 0.90,
-        "whoop": load_wav_pcm(FOLEY_DIR / "whoosh_reverse_rise.wav") * 0.95,
-        "whip": load_wav_pcm(FOLEY_DIR / "whip_pan_snap.wav") * 0.88,
-        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 0.85,
-        "click": load_wav_pcm(FOLEY_DIR / "mechanical_click_01.wav") * 0.85,
-        "typing": load_wav_pcm(FOLEY_DIR / "typewriter_typing_burst.wav") * 0.92,
-        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 0.80,
-        "paper": load_wav_pcm(FOLEY_DIR / "paper_slide_fast.wav") * 0.80,
-        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 0.85
+        "boom": load_wav_pcm(FOLEY_DIR / "sub_boom_heavy.wav") * 1.30,
+        "whoosh": load_wav_pcm(FOLEY_DIR / "whoosh_cinematic.wav") * 1.40,
+        "whoop": load_wav_pcm(FOLEY_DIR / "whoosh_reverse_rise.wav") * 1.45,
+        "whip": load_wav_pcm(FOLEY_DIR / "whip_pan_snap.wav") * 1.35,
+        "shutter": load_wav_pcm(FOLEY_DIR / "camera_shutter_snap.wav") * 1.25,
+        "click": load_wav_pcm(FOLEY_DIR / "mechanical_click_01.wav") * 1.35,
+        "typing": load_wav_pcm(FOLEY_DIR / "typewriter_typing_burst.wav") * 1.40,
+        "rustle": load_wav_pcm(FOLEY_DIR / "dossier_open_rustle.wav") * 1.10,
+        "paper": load_wav_pcm(FOLEY_DIR / "paper_slide_fast.wav") * 1.10,
+        "chime": load_wav_pcm(FOLEY_DIR / "freesound_airplane_chime_ding.wav") * 1.20
     }
 
     for time_s, kind in sfx_events:
@@ -617,9 +618,9 @@ def main():
         "-i", str(sfx_track_wav),
         "-filter_complex",
         "[0:a]volume=1.0[vo];"
-        "[1:a]volume=0.08[music];"
-        "[2:a]volume=1.20[sfx];"
-        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.12 1.10[mixed];"
+        "[1:a]volume=0.06[music];"
+        "[2:a]volume=2.20[sfx];"
+        "[vo][music][sfx]amix=inputs=3:duration=first:weights=1.0 0.08 1.80[mixed];"
         "[mixed]loudnorm=I=-14:TP=-1.5:LRA=11[outa]",
         "-map", "[outa]",
         "-c:a", "pcm_s16le",

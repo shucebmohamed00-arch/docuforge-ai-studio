@@ -1,308 +1,330 @@
 1
-00:00:00,000 --> 00:00:07,918
-On the morning of October 2nd, 2001, Zurich Kloten airport woke up to a scene that seemed mathematically impossible.
+00:00:00,000 --> 00:00:04,000
+[OCTOBER 2, 2001 // ZURICH AIRPORT] The day Switzerland's pride stood frozen on the tarmac.
 
 2
-00:00:07,968 --> 00:00:19,966
-A single emergency phone call from the fueling depot froze European aviation in its tracks.
+00:00:04,000 --> 00:00:08,200
+[HISTORIC SRF BROADCAST] News Anchor: "Swissair stellt den Flugbetrieb ein..."
+(Swissair has suspended all global flight operations. 260 aircraft grounded.)
 
 3
-00:00:20,016 --> 00:00:21,838
-BP and Shell maintenance technicians slammed shut the high-pressure fueling valves on Swissair Flight 111.
+00:00:08,200 --> 00:00:14,700
+[PRIMARY INTERVIEW] Mario Corti: "Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt..."
+(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)
 
 4
-00:00:21,888 --> 00:00:30,670
-For the first time in 70 years, the Swiss national carrier's corporate credit cards were flatly rejected.
+00:00:14,700 --> 00:00:19,200
+[PARADEPLATZ ZURICH // FINANCIAL DISTRICT] A 17 billion franc bankruptcy. Seven decades of national heritage destroyed in 48 hours.
 
 5
-00:00:30,720 --> 00:00:40,102
-Suppliers demanded cold hard cash before pumping a single liter of kerosene. And Swissair had none.
+00:00:19,200 --> 00:00:24,000
+THE SWISSAIR GROUNDING: THE 17 BILLION FRANC CORPORATE MURDER.
 
 6
-00:00:40,152 --> 00:00:50,542
-Every single airliner across the international fleet was ordered grounded on the tarmac immediately.
+00:00:24,000 --> 00:00:31,918
+On the morning of October 2nd, 2001, Zurich Kloten airport woke up to a scene that seemed mathematically impossible.
 
 7
-00:00:50,592 --> 00:00:58,174
-For seven decades, Swissair wasn't just an airline. It was the physical manifestation of Swiss precision.
+00:00:31,968 --> 00:00:43,966
+A single emergency phone call from the fueling depot froze European aviation in its tracks.
 
 8
-00:00:58,224 --> 00:01:08,206
-They called it 'The Flying Bank'—a financial titan backed by banking secrecy and an unblemished triple-A rating.
+00:00:44,016 --> 00:00:45,838
+BP and Shell maintenance technicians slammed shut the high-pressure fueling valves on Swissair Flight 111.
 
 9
-00:01:08,256 --> 00:01:13,030
-Its planes were flying embassies of national prestige, serving champagne over the snow-capped Alps.
+00:00:45,888 --> 00:00:54,670
+For the first time in 70 years, the Swiss national carrier's corporate credit cards were flatly rejected.
 
 10
-00:01:13,080 --> 00:01:20,734
-Yet beneath the polished veneer, an aggressive acquisition strategy had metastasized out of control.
+00:00:54,720 --> 00:01:04,102
+Suppliers demanded cold hard cash before pumping a single liter of kerosene. And Swissair had none.
 
 11
-00:01:20,784 --> 00:01:38,110
-Over 17 billion Swiss francs of toxic, hidden off-balance-sheet debt was about to detonate.
+00:01:04,152 --> 00:01:14,542
+Every single airliner across the international fleet was ordered grounded on the tarmac immediately.
 
 12
-00:01:38,160 --> 00:01:43,270
-How did Switzerland's greatest corporate symbol collapse from global titan to bankruptcy in 48 hours?
+00:01:14,592 --> 00:01:22,174
+For seven decades, Swissair wasn't just an airline. It was the physical manifestation of Swiss precision.
 
 13
-00:01:43,320 --> 00:01:52,006
-To find the truth, we must peel back the layers of executive hubris, political isolation, and betrayal.
+00:01:22,224 --> 00:01:32,206
+They called it 'The Flying Bank'—a financial titan backed by banking secrecy and an unblemished triple-A rating.
 
 14
-00:01:52,056 --> 00:01:59,134
-The disaster did not begin with the fuel shutoff in Zurich.
+00:01:32,256 --> 00:01:37,030
+Its planes were flying embassies of national prestige, serving champagne over the snow-capped Alps.
 
 15
-00:01:59,184 --> 00:02:08,830
-It began nine years earlier, with a fateful decision that cut Switzerland off from Europe.
+00:01:37,080 --> 00:01:44,734
+Yet beneath the polished veneer, an aggressive acquisition strategy had metastasized out of control.
 
 16
-00:02:08,880 --> 00:02:17,326
-A decision that turned the world's most admired airline into a desperate, hunted animal.
+00:01:44,784 --> 00:02:02,110
+Over 17 billion Swiss francs of toxic, hidden off-balance-sheet debt was about to detonate.
 
 17
-00:02:17,376 --> 00:02:23,974
-On December 6th, 1992, Swiss citizens cast their ballots in a historic national referendum on joining the European Economic Area.
+00:02:02,160 --> 00:02:07,270
+How did Switzerland's greatest corporate symbol collapse from global titan to bankruptcy in 48 hours?
 
 18
-00:02:24,024 --> 00:02:25,870
-By a razor-thin margin of just 50.3 percent, the Swiss voters said no.
+00:02:07,320 --> 00:02:16,006
+To find the truth, we must peel back the layers of executive hubris, political isolation, and betrayal.
 
 19
-00:02:25,920 --> 00:02:38,758
-In Bern, political traditionalists celebrated the defense of neutrality. But inside Swissair, executives saw a death sentence.
+00:02:16,056 --> 00:02:23,134
+The disaster did not begin with the fuel shutoff in Zurich.
 
 20
-00:02:38,808 --> 00:02:47,326
-The European Union was deregulating its airspace under the Open Skies directives, allowing member airlines to fly without borders.
+00:02:23,184 --> 00:02:32,830
+It began nine years earlier, with a fateful decision that cut Switzerland off from Europe.
 
 21
-00:02:47,376 --> 00:02:54,910
-British Airways, Lufthansa, and Air France began consolidating, while aggressive budget airlines like Ryanair tore through the market.
+00:02:32,880 --> 00:02:41,326
+A decision that turned the world's most admired airline into a desperate, hunted animal.
 
 22
-00:02:54,960 --> 00:03:01,342
-Swissair was trapped. Because Switzerland was outside the EU, Swissair was legally prohibited from picking up passengers between European cities.
+00:02:41,376 --> 00:02:47,974
+On December 6th, 1992, Swiss citizens cast their ballots in a historic national referendum on joining the European Economic Area.
 
 23
-00:03:01,392 --> 00:03:07,462
-They could not fly Paris to Rome. They could not base aircraft in Frankfurt or Amsterdam.
+00:02:48,024 --> 00:02:49,870
+By a razor-thin margin of just 50.3 percent, the Swiss voters said no.
 
 24
-00:03:07,512 --> 00:03:14,422
-Every competitor was rapidly expanding their network, while Swissair was confined to a tiny, landlocked domestic island.
+00:02:49,920 --> 00:03:02,758
+In Bern, political traditionalists celebrated the defense of neutrality. But inside Swissair, executives saw a death sentence.
 
 25
-00:03:14,472 --> 00:03:27,142
-Worse, Swiss operating costs were among the highest on earth, paying pilots and staff in strong, expensive Swiss francs.
+00:03:02,808 --> 00:03:11,326
+The European Union was deregulating its airspace under the Open Skies directives, allowing member airlines to fly without borders.
 
 26
-00:03:27,192 --> 00:03:35,830
-The board recognized that standing still meant slow, agonizing death by irrelevance.
+00:03:11,376 --> 00:03:18,910
+British Airways, Lufthansa, and Air France began consolidating, while aggressive budget airlines like Ryanair tore through the market.
 
 27
-00:03:35,880 --> 00:03:51,286
-They needed a radical strategy to bypass European protectionist laws.
+00:03:18,960 --> 00:03:25,342
+Swissair was trapped. Because Switzerland was outside the EU, Swissair was legally prohibited from picking up passengers between European cities.
 
 28
-00:03:51,336 --> 00:03:56,566
-And in 1997, they found the man who promised to deliver it: Philippe Bruggisser.
+00:03:25,392 --> 00:03:31,462
+They could not fly Paris to Rome. They could not base aircraft in Frankfurt or Amsterdam.
 
 29
-00:03:56,616 --> 00:04:02,662
-Philippe Bruggisser was charismatic, hyper-ambitious, and utterly convinced of his own financial genius.
+00:03:31,512 --> 00:03:38,422
+Every competitor was rapidly expanding their network, while Swissair was confined to a tiny, landlocked domestic island.
 
 30
-00:04:02,712 --> 00:04:08,398
-He presented the board with an audacious expansion blueprint christened 'The Hunter Strategy'.
+00:03:38,472 --> 00:03:51,142
+Worse, Swiss operating costs were among the highest on earth, paying pilots and staff in strong, expensive Swiss francs.
 
 31
-00:04:08,448 --> 00:04:11,494
-If European regulators wouldn't let Swissair expand organically, Swissair would buy its way into the European skies.
+00:03:51,192 --> 00:03:59,830
+The board recognized that standing still meant slow, agonizing death by irrelevance.
 
 32
-00:04:11,544 --> 00:04:22,702
-Because EU law prohibited non-European companies from owning majority stakes, Bruggisser acquired minority 49.5 percent holdings.
+00:03:59,880 --> 00:04:15,286
+They needed a radical strategy to bypass European protectionist laws.
 
 33
-00:04:22,752 --> 00:04:26,062
-Between 1998 and 2000, Swissair went on an uncontrolled multi-billion-franc acquisition spree.
+00:04:15,336 --> 00:04:20,566
+And in 1997, they found the man who promised to deliver it: Philippe Bruggisser.
 
 34
-00:04:26,112 --> 00:04:29,998
-They bought into Belgium's chronically unprofitable national carrier, Sabena, which had lost money for forty consecutive years.
+00:04:20,616 --> 00:04:26,662
+Philippe Bruggisser was charismatic, hyper-ambitious, and utterly convinced of his own financial genius.
 
 35
-00:04:30,048 --> 00:04:37,774
-They bought stakes in Germany's troubled charter airline LTU, France's Air Littoral and AOM, Portugal's TAP, and Poland's LOT.
+00:04:26,712 --> 00:04:32,398
+He presented the board with an audacious expansion blueprint christened 'The Hunter Strategy'.
 
 36
-00:04:37,824 --> 00:04:43,294
-Bruggisser assembled a cobbled-together alliance of sick airlines under the banner of the Qualiflyer Group.
+00:04:32,448 --> 00:04:35,494
+If European regulators wouldn't let Swissair expand organically, Swissair would buy its way into the European skies.
 
 37
-00:04:43,344 --> 00:04:51,550
-To close these deals, Swissair signed confidential, off-balance-sheet shareholder agreements.
+00:04:35,544 --> 00:04:46,702
+Because EU law prohibited non-European companies from owning majority stakes, Bruggisser acquired minority 49.5 percent holdings.
 
 38
-00:04:51,600 --> 00:05:00,118
-These toxic clauses legally bound Swissair to finance the recapitalization and ongoing operating losses of its troubled partners.
+00:04:46,752 --> 00:04:50,062
+Between 1998 and 2000, Swissair went on an uncontrolled multi-billion-franc acquisition spree.
 
 39
-00:05:00,168 --> 00:05:08,086
-Sabena alone was hemorrhaging over one million Swiss francs every single working day.
+00:04:50,112 --> 00:04:53,998
+They bought into Belgium's chronically unprofitable national carrier, Sabena, which had lost money for forty consecutive years.
 
 40
-00:05:08,136 --> 00:05:17,158
-Swissair had taken on all the financial liabilities of failing foreign carriers, with zero executive authority to fix them.
+00:04:54,048 --> 00:05:01,774
+They bought stakes in Germany's troubled charter airline LTU, France's Air Littoral and AOM, Portugal's TAP, and Poland's LOT.
 
 41
-00:05:17,208 --> 00:05:25,150
-By January 2001, the bleeding could no longer be disguised behind accounting gymnastics.
+00:05:01,824 --> 00:05:07,294
+Bruggisser assembled a cobbled-together alliance of sick airlines under the banner of the Qualiflyer Group.
 
 42
-00:05:25,200 --> 00:05:27,022
-Swissair was burning through tens of millions of francs in cash each week just to keep its acquired airlines airborne.
+00:05:07,344 --> 00:05:15,550
+To close these deals, Swissair signed confidential, off-balance-sheet shareholder agreements.
 
 43
-00:05:27,072 --> 00:05:31,054
-In an emergency midnight board session, Philippe Bruggisser was abruptly fired as Chief Executive.
+00:05:15,600 --> 00:05:24,118
+These toxic clauses legally bound Swissair to finance the recapitalization and ongoing operating losses of its troubled partners.
 
 44
-00:05:31,104 --> 00:05:34,798
-The board turned to Mario Corti, the widely respected Chief Financial Officer of Nestlé, appointing him Chairman and CEO.
+00:05:24,168 --> 00:05:32,086
+Sabena alone was hemorrhaging over one million Swiss francs every single working day.
 
 45
-00:05:34,848 --> 00:05:54,798
+00:05:32,136 --> 00:05:41,158
+Swissair had taken on all the financial liabilities of failing foreign carriers, with zero executive authority to fix them.
+
+46
+00:05:41,208 --> 00:05:49,150
+By January 2001, the bleeding could no longer be disguised behind accounting gymnastics.
+
+47
+00:05:49,200 --> 00:05:51,022
+Swissair was burning through tens of millions of francs in cash each week just to keep its acquired airlines airborne.
+
+48
+00:05:51,072 --> 00:05:55,054
+In an emergency midnight board session, Philippe Bruggisser was abruptly fired as Chief Executive.
+
+49
+00:05:55,104 --> 00:05:58,798
+The board turned to Mario Corti, the widely respected Chief Financial Officer of Nestlé, appointing him Chairman and CEO.
+
+50
+00:05:58,848 --> 00:06:18,798
 [ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.
 (We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)
 
-46
-00:05:54,848 --> 00:06:04,086
+51
+00:06:18,848 --> 00:06:28,086
 Corti was promised absolute transparency and total autonomy to restructure the battered aviation conglomerate.
 
-47
-00:06:04,136 --> 00:06:06,006
+52
+00:06:28,136 --> 00:06:30,006
 He immediately commissioned an exhaustive forensic audit from Ernst & Young to uncover the true financial exposure.
 
-48
-00:06:06,056 --> 00:06:17,142
+53
+00:06:30,056 --> 00:06:41,142
 What the auditors discovered shocked the Swiss business establishment to its core.
 
-49
-00:06:17,192 --> 00:06:27,846
+54
+00:06:41,192 --> 00:06:51,846
 The true off-balance-sheet commitments and contingent liabilities totaled a catastrophic 17.2 billion Swiss francs.
 
-50
-00:06:27,896 --> 00:06:33,942
+55
+00:06:51,896 --> 00:06:57,942
 Then, on September 11th, 2001, commercial aviation suffered the most devastating external shock in modern history.
 
-51
-00:06:33,992 --> 00:06:35,814
+56
+00:06:57,992 --> 00:06:59,814
 Transatlantic travel plummeted by over forty percent overnight. Swissair's cash reserves evaporated within days.
 
-52
-00:06:35,864 --> 00:06:38,238
+57
+00:06:59,864 --> 00:07:02,238
 Corti knew the parent group was insolvent. He needed an emergency cash bridge of 100 million francs just to survive the week.
 
-53
-00:06:38,288 --> 00:06:42,774
+58
+00:07:02,288 --> 00:07:06,774
 He reached out to Switzerland's most powerful banking titans: UBS and Credit Suisse.
 
-54
-00:06:42,824 --> 00:06:48,510
+59
+00:07:06,824 --> 00:07:12,510
 Across Zurich's Paradeplatz, behind the closed mahogany doors of UBS, a very different calculus was taking shape.
 
-55
-00:06:48,560 --> 00:06:55,158
+60
+00:07:12,560 --> 00:07:19,158
 UBS Chairman Marcel Ospel and Credit Suisse leadership had drawn up a confidential rescue blueprint codenamed 'Project Phoenix'.
 
-56
-00:06:55,208 --> 00:07:06,318
+61
+00:07:19,208 --> 00:07:30,318
 Project Phoenix was not designed to save Swissair. It was designed to carve out its valuable assets and let the mother company die.
 
-57
-00:07:06,368 --> 00:07:16,446
+62
+00:07:30,368 --> 00:07:40,446
 Swissair owned a profitable, debt-free regional subsidiary: Crossair, founded by entrepreneur Moritz Suter.
 
-58
-00:07:16,496 --> 00:07:18,679
+63
+00:07:40,496 --> 00:07:42,679
 The banks planned to purchase Crossair's shares, transfer Swissair's modern fleet and profitable routes to it, and ditch the 17 billion in debt.
 
-59
-00:07:18,729 --> 00:07:25,759
+64
+00:07:42,729 --> 00:07:49,759
 Under the agreement, the banks pledged to provide a liquidity bridge of 250 million francs on Monday, October 1st.
 
-60
-00:07:25,809 --> 00:07:37,159
+65
+00:07:49,809 --> 00:08:01,159
 That money was earmarked specifically to keep Swissair planes fueled and operational until the formal handover.
 
-61
-00:07:37,209 --> 00:07:44,719
+66
+00:08:01,209 --> 00:08:08,719
 On Monday afternoon, Mario Corti waited for the funds to arrive in Swissair's operational treasury accounts.
 
-62
-00:07:44,769 --> 00:07:54,391
+67
+00:08:08,769 --> 00:08:18,391
 The hours ticked by. The funds were deliberately withheld by UBS due to last-minute administrative disputes.
 
-63
-00:07:54,441 --> 00:08:02,119
+68
+00:08:18,441 --> 00:08:26,119
 By dawn on Tuesday, October 2nd, the bank transfer had still not arrived.
 
-64
-00:08:02,169 --> 00:08:11,215
+69
+00:08:26,169 --> 00:08:35,215
 Fuel suppliers in Zurich, London, and New York issued immediate cash-on-delivery ultimatums.
 
-65
-00:08:11,265 --> 00:08:26,623
+70
+00:08:35,265 --> 00:08:50,623
 At 12:30 PM, Swissair Flight Operations received the order: cancel all departures worldwide. The Flying Bank was dead.
 
-66
-00:08:26,673 --> 00:08:35,071
+71
+00:08:50,673 --> 00:08:59,071
 The announcement triggered scenes of total pandemonium across international terminals from Tokyo to Los Angeles.
 
-67
-00:08:35,121 --> 00:08:43,135
+72
+00:08:59,121 --> 00:09:07,135
 More than 38,000 Swissair passengers and 1,000 flight crew members were stranded on tarmacs without tickets or hotel rooms.
 
-68
-00:08:43,185 --> 00:08:51,751
+73
+00:09:07,185 --> 00:09:15,751
 In Zurich, furious Swiss citizens marched on Paradeplatz, hurling eggs at UBS headquarters and denouncing bankers as national traitors.
 
-69
-00:08:51,801 --> 00:09:00,943
+74
+00:09:15,801 --> 00:09:24,943
 The Swiss Federal Council was forced to intervene with an emergency taxpayer loan of 450 million francs to resume temporary repatriation flights.
 
-70
-00:09:00,993 --> 00:09:09,655
+75
+00:09:24,993 --> 00:09:33,655
 On March 31st, 2002, the final Swissair commercial flight touched down in Zurich, closing 71 years of aviation history.
 
-71
-00:09:09,705 --> 00:09:16,447
+76
+00:09:33,705 --> 00:09:40,447
 The profitable remnants of the fleet were rolled into Crossair to form the newly branded Swiss International Air Lines.
 
-72
-00:09:16,497 --> 00:09:20,119
+77
+00:09:40,497 --> 00:09:44,119
 Yet the ultimate humiliation was still to come.
 
-73
-00:09:20,169 --> 00:09:29,359
+78
+00:09:44,169 --> 00:09:53,359
 Just three years later, in 2005, the newly minted SWISS was acquired by its arch-rival, Germany's Lufthansa, for a fraction of its former value.
 
-74
-00:09:29,409 --> 00:09:37,831
+79
+00:09:53,409 --> 00:10:01,831
 In 2007, nineteen former directors and executives, including Bruggisser and Corti, stood trial in Zurich district court.
 
-75
-00:09:37,881 --> 00:09:44,191
+80
+00:10:01,881 --> 00:10:08,191
 They faced severe criminal charges of fraudulent bankruptcy, false accounting, and mismanagement.
 
-76
-00:09:44,241 --> 00:09:53,167
+81
+00:10:08,241 --> 00:10:17,167
 After months of sensational testimony, the court acquitted every single defendant of criminal wrongdoing, ruling it corporate failure rather than crime.
 
-77
-00:09:53,217 --> 00:10:01,807
+82
+00:10:17,217 --> 00:10:25,807
 Seventeen billion francs vanished forever into the Alps—a timeless warning of what happens when executive arrogance meets unbridled financial greed.

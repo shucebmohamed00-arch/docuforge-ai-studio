@@ -126,12 +126,12 @@ CONTEXTUAL_ASSETS = {
     1:  [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4"],
     2:  [CLIPS_DIR / "zurich_uncut_45_phone_booths_busy.mp4", CLIPS_DIR / "zurich_uncut_51_fuel_tanker_arrival.mp4"],
     3:  [RUNWAY_DIR / "ai_07_fuel_hose_cutoff.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
-    4:  [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", STAGE_DIR / "stage_03_ubs_dossier.mp4"],
-    5:  [CLIPS_DIR / "zurich_uncut_35_ticket_receipts.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
+    4:  [CLIPS_DIR / "zurich_uncut_21_swissair_counter.mp4", STAGE_DIR / "stage_03_ubs_dossier.mp4"],
+    5:  [CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4", PHOTO_DIR / "photo_01_ubs_hq.mp4"],
     6:  [CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4", CLIPS_DIR / "zurich_uncut_27_wheel_chocks.mp4"],
     7:  [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", CLIPS_DIR / "md11_touchdown_runway.mp4"],
     8:  [CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4", CLIPS_DIR / "rsi_clip_03.mp4"],
-    9:  [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "zurich_uncut_33_flight_attendants.mp4"],
+    9:  [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4"],
     10: [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
     11: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_22_newspaper_press_rolling.mp4"],
     12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", PAPER_DIR / "paper_01_blick_grounded.mp4"],
@@ -473,7 +473,129 @@ def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
         wf.setframerate(sr)
         wf.writeframes(buf_16.tobytes())
 
-def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float):
+def build_cinematic_cold_open_hook(out_mp4: Path, out_wav: Path) -> float:
+    log("Assembling 24-second Cinematic Cold Open Hook (Breaking News + Mario Corti Interview + Paradeplatz + Title Drop)...")
+
+    def make_intro_card(tag, l1, l2, c_rgb, out_p):
+        W, H = 1280, 720
+        img = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+        draw = ImageDraw.Draw(img)
+        try:
+            font = ImageFont.truetype('C:/Windows/Fonts/impact.ttf', 44)
+            tag_font = ImageFont.truetype('C:/Windows/Fonts/arialbd.ttf', 18)
+        except Exception:
+            font = ImageFont.load_default()
+            tag_font = font
+
+        bbox_tag = draw.textbbox((0, 0), tag, font=tag_font)
+        tw, th = bbox_tag[2] - bbox_tag[0], bbox_tag[3] - bbox_tag[1]
+
+        bar_w = 900
+        bar_h = 130
+        rx = (W - bar_w) // 2
+        ry = H - bar_h - 50
+
+        draw.rounded_rectangle([rx, ry, rx + bar_w, ry + bar_h], radius=12, fill=(10, 14, 22, 235))
+        draw.rounded_rectangle([rx, ry, rx + bar_w, ry + bar_h], radius=12, outline=c_rgb, width=2)
+        draw.line([rx + 4, ry + 4, rx + bar_w - 4, ry + 4], fill=c_rgb, width=3)
+
+        draw.rectangle([rx + 25, ry - 12, rx + 25 + tw + 16, ry + 12], fill=(12, 16, 24, 255), outline=c_rgb, width=2)
+        draw.text((rx + 33, ry - 10), tag, fill=(240, 240, 240, 255), font=tag_font)
+
+        b1 = draw.textbbox((0, 0), l1, font=font)
+        w1 = b1[2] - b1[0]
+        b2 = draw.textbbox((0, 0), l2, font=font)
+        w2 = b2[2] - b2[0]
+
+        draw.text((rx + (bar_w - w1) // 2, ry + 20), l1, fill=(255, 255, 255, 255), font=font)
+        draw.text((rx + (bar_w - w2) // 2, ry + 72), l2, fill=c_rgb + (255,), font=font)
+        img.save(out_p)
+
+    make_intro_card('OCTOBER 2, 2001 // ZURICH AIRPORT', 'THE UNTHINKABLE HAPPENED', '260 AIRCRAFT FROZEN ON TARMAC', (235, 35, 35), OVERLAY_DIR / 'intro_ov_01.png')
+    make_intro_card('HISTORIC SRF BROADCAST // BREAKING NEWS', 'SWISSAIR SUSPENDS FLIGHT OPERATIONS', '39,000 PASSENGERS STRANDED WORLDWIDE', (235, 35, 35), OVERLAY_DIR / 'intro_ov_02.png')
+    make_intro_card('PRIMARY INTERVIEW // MARIO CORTI, CEO', '"LIQUIDITY EVAPORATING HOUR BY HOUR"', '"WITHOUT CASH, SWISSAIR CANNOT FLY"', (212, 175, 55), OVERLAY_DIR / 'intro_ov_03.png')
+    make_intro_card('OCTOBER 2001 // PARADEPLATZ REVOLT', 'HOW DOES AN EMPIRE DIE IN 48 HOURS?', '17 BILLION FRANCS OF TOXIC DEBT', (235, 35, 35), OVERLAY_DIR / 'intro_ov_04.png')
+    make_intro_card('DOCUFORGE CINEMATIC INVESTIGATION', 'THE SWISSAIR GROUNDING', 'THE 17 BILLION FRANC CORPORATE MURDER', (212, 175, 55), OVERLAY_DIR / 'intro_ov_05.png')
+
+    shots_spec = [
+        (RUNWAY_DIR / 'ai_08_grounded_fleet_aerial.mp4', OVERLAY_DIR / 'intro_ov_01.png', 4.0, False),
+        (SOUNDBITES_DIR / 'soundbite_02_grounding_breaking.mp4', OVERLAY_DIR / 'intro_ov_02.png', 4.2, True),
+        (SOUNDBITES_DIR / 'soundbite_mario_corti_20s.mp4', OVERLAY_DIR / 'intro_ov_03.png', 6.5, False),
+        (RUNWAY_DIR / 'ai_18_paradeplatz_protest.mp4', OVERLAY_DIR / 'intro_ov_04.png', 4.5, False),
+        (CLIPS_DIR / 'md11_touchdown_runway.mp4', OVERLAY_DIR / 'intro_ov_05.png', 4.8, True),
+    ]
+
+    shot_files = []
+    for idx, (vid, ov, dur, is_arch) in enumerate(shots_spec):
+        crop_str = 'crop=in_w:in_h-(in_h*0.30):0:(in_h*0.30),' if is_arch else ''
+        out_s = TEMP_SHOTS_DIR / f'intro_s{idx+1}.mp4'
+        cmd = [
+            'ffmpeg', '-y',
+            '-ss', '0.0', '-t', str(dur),
+            '-i', str(vid),
+            '-i', str(ov),
+            '-filter_complex', f'[0:v]{crop_str}scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720:(in_w-1280)/2:(in_h-720)/2,fps=30,format=yuv420p[v];[1:v]scale=1280:720[o];[v][o]overlay=0:0[outv]',
+            '-map', '[outv]',
+            '-t', str(dur),
+            '-c:v', 'libx264', '-preset', 'ultrafast', '-pix_fmt', 'yuv420p', '-an',
+            str(out_s)
+        ]
+        subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        shot_files.append(out_s)
+
+    concat_txt = TEMP_SHOTS_DIR / 'intro_concat.txt'
+    with open(concat_txt, 'w', encoding='utf-8') as f:
+        for sf in shot_files:
+            f.write(f"file '{sf.resolve().as_posix()}'\n")
+
+    subprocess.run([
+        'ffmpeg', '-y', '-f', 'concat', '-safe', '0', '-i', str(concat_txt),
+        '-c', 'copy', str(out_mp4)
+    ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+
+    sr = 44100
+    total_samples = int(24.0 * sr)
+    audio_buf = np.zeros(total_samples, dtype=np.float32)
+
+    sb2_wav = TEMP_SHOTS_DIR / 'sb2_audio.wav'
+    subprocess.run(['ffmpeg', '-y', '-i', str(SOUNDBITES_DIR / 'soundbite_02_grounding_breaking.mp4'), '-vn', '-ac', '1', '-ar', '44100', str(sb2_wav)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+    sb2_pcm = load_wav_pcm(sb2_wav) * 0.95
+
+    sb1_wav = TEMP_SHOTS_DIR / 'sb1_audio.wav'
+    subprocess.run(['ffmpeg', '-y', '-i', str(SOUNDBITES_DIR / 'soundbite_01_corti_press.mp4'), '-vn', '-ac', '1', '-ar', '44100', str(sb1_wav)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+    sb1_pcm = load_wav_pcm(sb1_wav) * 0.95
+
+    boom_pcm = load_wav_pcm(FOLEY_DIR / 'sub_boom_heavy.wav') * 0.85
+    shutter_pcm = load_wav_pcm(FOLEY_DIR / 'camera_shutter_snap.wav') * 0.40
+
+    idx2 = int(4.0 * sr)
+    audio_buf[idx2:idx2+len(sb2_pcm)] += sb2_pcm[:min(len(sb2_pcm), total_samples-idx2)]
+
+    idx_sh = int(8.1 * sr)
+    audio_buf[idx_sh:idx_sh+len(shutter_pcm)] += shutter_pcm[:min(len(shutter_pcm), total_samples-idx_sh)]
+
+    idx3 = int(8.2 * sr)
+    audio_buf[idx3:idx3+len(sb1_pcm)] += sb1_pcm[:min(len(sb1_pcm), total_samples-idx3)]
+
+    idx5 = int(19.2 * sr)
+    audio_buf[idx5:idx5+len(boom_pcm)] += boom_pcm[:min(len(boom_pcm), total_samples-idx5)]
+
+    t = np.linspace(0, 24.0, total_samples, endpoint=False)
+    drone = 0.06 * np.sin(2 * np.pi * 55 * t) + 0.04 * np.sin(2 * np.pi * 110 * t)
+    audio_buf += drone
+    audio_buf = np.clip(audio_buf, -0.9, 0.9)
+    pcm_16 = (audio_buf * 32767).astype(np.int16)
+
+    with wave.open(str(out_wav), 'wb') as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)
+        wf.setframerate(sr)
+        wf.writeframes(pcm_16.tobytes())
+
+    log("Cinematic Cold Open Hook (24.0s) fully synthesized!")
+    return 24.0
+
+def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float, intro_dur: float = 24.0):
     if str(BASE_DIR) not in sys.path:
         sys.path.insert(0, str(BASE_DIR))
     from tools.build_10min_audio_track import BEATS_COMMENTARY
@@ -489,9 +611,15 @@ def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float):
             ms -= 1000
         return f"{h:02d}:{m:02d}:{sec:02d},{ms:03d}"
 
-    cum_time = 0.0
-    cues = []
-    cue_idx = 1
+    cues = [
+        "1\n00:00:00,000 --> 00:00:04,000\n[OCTOBER 2, 2001 // ZURICH AIRPORT] The day Switzerland's pride stood frozen on the tarmac.",
+        "2\n00:00:04,000 --> 00:00:08,200\n[HISTORIC SRF BROADCAST] News Anchor: \"Swissair stellt den Flugbetrieb ein...\"\n(Swissair has suspended all global flight operations. 260 aircraft grounded.)",
+        "3\n00:00:08,200 --> 00:00:14,700\n[PRIMARY INTERVIEW] Mario Corti: \"Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt...\"\n(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)",
+        "4\n00:00:14,700 --> 00:00:19,200\n[PARADEPLATZ ZURICH // FINANCIAL DISTRICT] A 17 billion franc bankruptcy. Seven decades of national heritage destroyed in 48 hours.",
+        "5\n00:00:19,200 --> 00:00:24,000\nTHE SWISSAIR GROUNDING: THE 17 BILLION FRANC CORPORATE MURDER."
+    ]
+    cue_idx = 6
+    cum_time = intro_dur
 
     for order in sorted(BEATS_COMMENTARY.keys()):
         wav_p = AUDIO_DIR / f"beat_{order}.wav"
@@ -515,7 +643,7 @@ def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float):
 
     with open(srt_path, "w", encoding="utf-8") as f:
         f.write("\n\n".join(cues) + "\n")
-    log(f"Subtitles freshly regenerated with 20s soundbite: {len(cues)} cues written.")
+    log(f"Subtitles freshly regenerated with Cold Open Hook & 20s soundbite: {len(cues)} cues written.")
 
 def main():
     log("=====================================================================")
@@ -547,13 +675,20 @@ def main():
     soundbite_dur = get_audio_duration(corti_sb_wav)
     log(f"Verified 20s Primary Interview Soundbite: {corti_sb_mp4.name} ({soundbite_dur:.2f}s)")
 
-    # 3. Assemble all 76 Beats with Ken Burns and Bespoke Context
+    # 3. Assemble Cold Open Intro Hook (24.0s) + all 76 Beats with Ken Burns and Bespoke Context
     master_video_clips = []
     master_audio_clips = []
     sfx_events = []
     cumulative_time = 0.0
     total_subshots = 0
     end_sec_beat44 = 0.0
+
+    intro_hook_mp4 = TEMP_SHOTS_DIR / "beat_00_intro_hook.mp4"
+    intro_hook_wav = TEMP_SHOTS_DIR / "beat_00_intro_hook.wav"
+    intro_dur = build_cinematic_cold_open_hook(intro_hook_mp4, intro_hook_wav)
+    master_video_clips.append(str(intro_hook_mp4))
+    master_audio_clips.append(str(intro_hook_wav))
+    cumulative_time = intro_dur
 
     log("Composing 76 Beats across Chapters 1-6...")
     for idx in range(1, 77):
@@ -578,7 +713,8 @@ def main():
 
         # Render beat video with Ken Burns motion & watermark cropping
         beat_out_mp4 = TEMP_SHOTS_DIR / f"beat_{idx:02d}_master.mp4"
-        render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
+        if not beat_out_mp4.exists():
+            render_beat_with_xfade(idx, beat_assets, overlays, dur, beat_out_mp4)
         master_video_clips.append(str(beat_out_mp4))
 
         # Tasteful, narrative-driven SFX (strictly tied to on-screen milestones)

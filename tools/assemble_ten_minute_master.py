@@ -39,42 +39,84 @@ def get_audio_duration(wav_path: Path) -> float:
     with wave.open(str(wav_path), "rb") as wf:
         return wf.getnframes() / float(wf.getframerate())
 
-# Punch text overlays across all 6 Chapters
+# Punch text overlays across all 6 Chapters - 100% Strictly Synchronized with Voiceover Dialogue
 PUNCH_TEXTS = {
-    1:  ("A SINGLE PHONE CALL ", "FROZE EUROPE", (235, 35, 35)),
-    2:  ("SUPPLIERS CUT OFF ", "THE KEROSENE", (235, 35, 35)),
-    3:  ("THE CREDIT LINES ", "WERE DEAD", (235, 35, 35)),
-    4:  ("EVERY PLANE GROUNDED ", "ON TARMAC", (212, 175, 55)),
-    5:  ("NICKNAMED: ", "'THE FLYING BANK'", (212, 175, 55)),
-    7:  ("HOW DOES A CARTEL COLLAPSE ", "IN 48 HOURS?", (235, 35, 35)),
-    8:  ("AN AGGRESSIVE ", "DEBT SPREE", (235, 35, 35)),
-    12: ("ORIGIN: POLITICAL ", "ISOLATION", (235, 35, 35)),
-    17: ("THE 1992 HISTORIC ", "EEA REFERENDUM", (212, 175, 55)),
-    18: ("VOTED NO: ", "SWITZERLAND ISOLATED", (235, 35, 35)),
-    20: ("EUROPE OPEN SKIES: ", "COMPETITORS EXPAND", (212, 175, 55)),
-    22: ("SWISSAIR TRAPPED: ", "NO PICKUP IN PARIS", (235, 35, 35)),
+    1:  ("OCTOBER 2, 2001: ", "ZURICH KLOTEN AIRPORT", (235, 35, 35)),
+    2:  ("EMERGENCY PHONE CALL: ", "FROZE EUROPEAN SKIES", (235, 35, 35)),
+    3:  ("BP & SHELL SHUT OFF ", "THE KEROSENE VALVES", (235, 35, 35)),
+    4:  ("CORPORATE CREDIT CARDS: ", "FLATLY REJECTED", (212, 175, 55)),
+    5:  ("SUPPLIERS DEMAND CASH: ", "SWISSAIR HAS NONE", (235, 35, 35)),
+    6:  ("EMERGENCY ORDER: ", "EVERY PLANE GROUNDED", (235, 35, 35)),
+    7:  ("SEVEN DECADES: ", "SWISS NATIONAL PRIDE", (212, 175, 55)),
+    8:  ("NICKNAMED: ", "'THE FLYING BANK'", (212, 175, 55)),
+    9:  ("SWISS LUXURY: ", "CHAMPAGNE OVER ALPS", (212, 175, 55)),
+    10: ("ACQUISITION STRATEGY: ", "OUT OF CONTROL", (235, 35, 35)),
+    11: ("17 BILLION FRANCS: ", "TOXIC HIDDEN DEBT", (235, 35, 35)),
+    12: ("COLLAPSE IN 48 HOURS: ", "HOW DID IT HAPPEN?", (235, 35, 35)),
+    13: ("EXECUTIVE HUBRIS: ", "POLITICAL BETRAYAL", (235, 35, 35)),
+    14: ("THE REAL ORIGIN: ", "YEARS IN THE MAKING", (212, 175, 55)),
+    15: ("A FATEFUL CHOICE: ", "CUT OFF FROM EUROPE", (235, 35, 35)),
+    16: ("CORNERED TITAN: ", "A DESPERATE ANIMAL", (235, 35, 35)),
+    17: ("DECEMBER 6, 1992: ", "HISTORIC EEA REFERENDUM", (212, 175, 55)),
+    18: ("VOTED 50.3% NO: ", "SWITZERLAND ISOLATED", (235, 35, 35)),
+    19: ("DEFENSE OF NEUTRALITY: ", "A DEATH SENTENCE", (235, 35, 35)),
+    20: ("EUROPE OPEN SKIES: ", "BORDERLESS FLIGHT", (212, 175, 55)),
+    21: ("MEGA-CARRIER BLOCS: ", "BUDGET AIRLINES RISE", (212, 175, 55)),
+    22: ("SWISSAIR TRAPPED: ", "BARRED FROM EUROPE", (235, 35, 35)),
+    23: ("PROHIBITED ROUTES: ", "NO PARIS TO ROME", (235, 35, 35)),
+    24: ("CONFINED NETWORK: ", "A LANDLOCKED ISLAND", (235, 35, 35)),
+    25: ("SKY-HIGH EXPENSES: ", "EXPENSIVE SWISS FRANCS", (235, 35, 35)),
+    26: ("THE DILEMMA: ", "SLOW AGONIZING DEATH", (235, 35, 35)),
+    27: ("DESPERATE PIVOT: ", "BYPASS EUROPEAN LAWS", (212, 175, 55)),
     28: ("ENTER: ", "PHILIPPE BRUGGISSER", (212, 175, 55)),
-    30: ("THE NOTORIOUS ", "'HUNTER STRATEGY'", (235, 35, 35)),
-    33: ("A MULTI-BILLION ", "SHOPPING SPREE", (235, 35, 35)),
+    29: ("THE ARCHITECT: ", "HYPER-AMBITIOUS VISION", (212, 175, 55)),
+    30: ("THE BLUEPRINT: ", "'THE HUNTER STRATEGY'", (235, 35, 35)),
+    31: ("AGGRESSIVE EXPANSION: ", "BUYING EUROPEAN SKIES", (235, 35, 35)),
+    32: ("REGULATORY LOOPHOLE: ", "49.5% MINORITY STAKES", (212, 175, 55)),
+    33: ("1998 - 2000: ", "MULTI-BILLION SPREE", (235, 35, 35)),
     34: ("SABENA BELGIUM: ", "40 YEARS OF LOSSES", (235, 35, 35)),
-    37: ("CONFIDENTIAL CLAUSES: ", "OFF-BALANCE DEBT", (235, 35, 35)),
-    39: ("BLEEDING 1 MILLION ", "EVERY 24 HOURS", (235, 35, 35)),
-    43: ("BRUGGISSER FIRED ", "MARIO CORTI ARRIVES", (212, 175, 55)),
+    35: ("TOXIC PORTFOLIO: ", "LTU, AOM, TAP & LOT", (235, 35, 35)),
+    36: ("QUALIFLYER GROUP: ", "AN ALLIANCE OF DEBT", (235, 35, 35)),
+    37: ("CONFIDENTIAL CLAUSES: ", "OFF-BALANCE DEBTS", (235, 35, 35)),
+    38: ("LETHAL GUARANTEES: ", "FINANCING FOREIGN LOSSES", (235, 35, 35)),
+    39: ("BLEEDING CASH: ", "1 MILLION EVERY DAY", (235, 35, 35)),
+    40: ("ALL LIABILITIES: ", "ZERO EXECUTIVE CONTROL", (235, 35, 35)),
+    41: ("JANUARY 2001: ", "THE MASKS FALL OFF", (235, 35, 35)),
+    42: ("CASH DRAIN: ", "TENS OF MILLIONS WEEKLY", (235, 35, 35)),
+    43: ("BOARDROOM COUP: ", "BRUGGISSER FIRED", (235, 35, 35)),
+    44: ("NEW CHAIRMAN: ", "MARIO CORTI ARRIVES", (212, 175, 55)),
+    45: ("PROMISED AUTONOMY: ", "THE RESTRUCTURING MISSION", (212, 175, 55)),
     46: ("FORENSIC AUDIT: ", "ERNST & YOUNG", (212, 175, 55)),
-    48: ("OFF-BALANCE DEBT: ", "17.2 BILLION CHF", (235, 35, 35)),
-    49: ("SEPTEMBER 11TH: ", "GLOBAL COLLAPSE", (235, 35, 35)),
-    54: ("SECRET BANK RESCUE: ", "'PROJECT PHOENIX'", (212, 175, 55)),
-    57: ("CARVE OUT CROSSAIR ", "LET MOTHER COMPANY DIE", (235, 35, 35)),
-    61: ("OCTOBER 1: ", "UBS WITHHOLDS CASH", (235, 35, 35)),
-    64: ("CANCELLATION ORDER: ", "GROUNDED WORLDWIDE", (235, 35, 35)),
-    65: ("38,000 PASSENGERS ", "STRANDED GLOBALLY", (235, 35, 35)),
-    67: ("PROTESTORS CHANT: ", "'BANKERS: GRAVEDIGGERS'", (235, 35, 35)),
-    68: ("FEDERAL BAILOUT: ", "450 MILLION CHF", (212, 175, 55)),
-    70: ("CROSSAIR REBRANDS ", "AS 'SWISS'", (212, 175, 55)),
-    72: ("LUFTHANSA BUYS ", "THE REMNANTS", (235, 35, 35)),
-    73: ("CRIMINAL TRIAL: ", "19 EXECUTIVES CHARGED", (212, 175, 55)),
-    75: ("THE VERDICT: ", "FULL ACQUITTAL", (235, 35, 35)),
-    76: ("NO BRAND IS TOO SACRED ", "TO FALL", (212, 175, 55))
+    47: ("AUDIT REVELATION: ", "ESTABLISHMENT SHOCKED", (235, 35, 35)),
+    48: ("TOTAL LIABILITIES: ", "17.2 BILLION CHF", (235, 35, 35)),
+    49: ("SEPTEMBER 11, 2001: ", "DEVASTATING GLOBAL SHOCK", (235, 35, 35)),
+    50: ("TRAVEL PLUMMETS 40%: ", "RESERVES EVAPORATE", (235, 35, 35)),
+    51: ("INSOLVENT GROUP: ", "100 MILLION BRIDGE NEEDED", (235, 35, 35)),
+    52: ("BANKING TITANS: ", "UBS & CREDIT SUISSE", (212, 175, 55)),
+    53: ("PARADEPLATZ ZURICH: ", "THE UBS CALCULUS", (212, 175, 55)),
+    54: ("MARCEL OSPEL: ", "'PROJECT PHOENIX'", (212, 175, 55)),
+    55: ("CARVE OUT ASSETS: ", "LET MOTHER COMPANY DIE", (235, 35, 35)),
+    56: ("CROSSAIR SUBSIDIARY: ", "MORITZ SUTER'S FLEET", (212, 175, 55)),
+    57: ("THE CARVEOUT: ", "DITCH 17 BILLION DEBT", (235, 35, 35)),
+    58: ("THE PLEDGE: ", "250 MILLION LIQUIDITY", (212, 175, 55)),
+    59: ("CRITICAL FUNDS: ", "KEEPING FLEET FUELED", (212, 175, 55)),
+    60: ("MONDAY AFTERNOON: ", "WAITING FOR FUNDS", (212, 175, 55)),
+    61: ("OCTOBER 1, 2001: ", "UBS WITHHOLDS CASH", (235, 35, 35)),
+    62: ("DAWN OCTOBER 2: ", "NO MONEY ARRIVES", (235, 35, 35)),
+    63: ("FUEL ULTIMATUM: ", "CASH ON DELIVERY ONLY", (235, 35, 35)),
+    64: ("12:30 PM ORDER: ", "CANCEL ALL FLIGHTS", (235, 35, 35)),
+    65: ("CHAOS AT TERMINALS: ", "38,000 STRANDED", (235, 35, 35)),
+    66: ("WORLDWIDE STRANDED: ", "CREWS & PASSENGERS", (235, 35, 35)),
+    67: ("CITIZENS PROTEST: ", "'BANKERS: GRAVEDIGGERS'", (235, 35, 35)),
+    68: ("FEDERAL EMERGENCY LOAN: ", "450 MILLION FRANCS", (212, 175, 55)),
+    69: ("MARCH 31, 2002: ", "FINAL SWISSAIR FLIGHT", (212, 175, 55)),
+    70: ("FLEET REBRAND: ", "SWISS INTERNATIONAL", (212, 175, 55)),
+    71: ("THE HUMILIATION: ", "A PROUD ICON FALLS", (235, 35, 35)),
+    72: ("2005 TAKEOVER: ", "LUFTHANSA ACQUIRES SWISS", (235, 35, 35)),
+    73: ("ZURICH DISTRICT COURT: ", "19 EXECUTIVES CHARGED", (212, 175, 55)),
+    74: ("CRIMINAL INDICTMENT: ", "FRAUDULENT BANKRUPTCY", (235, 35, 35)),
+    75: ("THE FINAL VERDICT: ", "FULL ACQUITTAL", (235, 35, 35)),
+    76: ("17 BILLION VANISHED: ", "THE COST OF GREED", (212, 175, 55))
 }
 
 # Exhaustive, bespoke asset mapping for every single beat (1 to 76) - 100% STRICT ZERO REPETITION
@@ -82,54 +124,54 @@ PUNCH_TEXTS = {
 CONTEXTUAL_ASSETS = {
     # Chapter 1: The Grounding Shock (Beats 1-16) - Zurich Airport & Tarmac Freeze
     1:  [RUNWAY_DIR / "ai_08_grounded_fleet_aerial.mp4", CLIPS_DIR / "zurich_uncut_38_foggy_morning_kloten.mp4"],
-    2:  [CLIPS_DIR / "zurich_uncut_06_fuel_station.mp4", CLIPS_DIR / "zurich_uncut_45_phone_booths_busy.mp4"],
+    2:  [CLIPS_DIR / "zurich_uncut_45_phone_booths_busy.mp4", CLIPS_DIR / "zurich_uncut_51_fuel_tanker_arrival.mp4"],
     3:  [RUNWAY_DIR / "ai_07_fuel_hose_cutoff.mp4", CLIPS_DIR / "zurich_uncut_28_md11_wingtip.mp4"],
-    4:  [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "zurich_uncut_20_flight_status_red.mp4"],
-    5:  [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", CLIPS_DIR / "zurich_uncut_35_ticket_receipts.mp4"],
+    4:  [CLIPS_DIR / "politics_ubs_23_bank_teller_counter.mp4", STAGE_DIR / "stage_03_ubs_dossier.mp4"],
+    5:  [CLIPS_DIR / "zurich_uncut_35_ticket_receipts.mp4", CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4"],
     6:  [CLIPS_DIR / "zurich_uncut_37_grounded_lineup.mp4", CLIPS_DIR / "zurich_uncut_27_wheel_chocks.mp4"],
-    7:  [STAGE_DIR / "stage_03_ubs_dossier.mp4", CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4"],
-    8:  [CLIPS_DIR / "politics_ubs_20_financial_district_zurich.mp4", CLIPS_DIR / "rsi_clip_03.mp4"],
-    9:  [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", CLIPS_DIR / "md11_touchdown_runway.mp4"],
-    10: [CLIPS_DIR / "rsi_clip_04.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
+    7:  [CLIPS_DIR / "zurich_uncut_09_swissair_cross.mp4", CLIPS_DIR / "md11_touchdown_runway.mp4"],
+    8:  [CLIPS_DIR / "politics_ubs_06_bank_vault_doors.mp4", CLIPS_DIR / "rsi_clip_03.mp4"],
+    9:  [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "zurich_uncut_33_flight_attendants.mp4"],
+    10: [RUNWAY_DIR / "ai_09_cancelled_departure_board.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
     11: [PAPER_DIR / "paper_02_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_22_newspaper_press_rolling.mp4"],
     12: [ADV_DIR / "doc_01_nzz_audit_stamp.mp4", PAPER_DIR / "paper_01_blick_grounded.mp4"],
     13: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "airport_camera_crew.mp4"],
-    14: [CLIPS_DIR / "politics_ubs_26_parliament_debates_hall.mp4", CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4"],
-    15: [CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
-    16: [CLIPS_DIR / "pixabay_airliner_departure.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4"],
+    14: [CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4", CLIPS_DIR / "politics_ubs_26_parliament_debates_hall.mp4"],
+    15: [PHOTO_DIR / "photo_05_parliament.mp4", CLIPS_DIR / "politics_ubs_02_politician_speech.mp4"],
+    16: [CLIPS_DIR / "md11_taxi_thrust.mp4", CLIPS_DIR / "pixabay_runway_takeoff.mp4"],
 
     # Chapter 2: The European Trap (Beats 17-27) - Deregulation, EEA No Vote & Isolation
     17: [RUNWAY_DIR / "ai_14_referendum_ballot_box.mp4", CLIPS_DIR / "politics_ubs_24_parliament_voting_lights.mp4"],
-    18: [CLIPS_DIR / "zurich_uncut_11_tower_pan.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
-    19: [CLIPS_DIR / "politics_ubs_15_cabinet_vote.mp4", CLIPS_DIR / "politics_ubs_27_journalist_interviews_crowd.mp4"],
-    20: [CLIPS_DIR / "md11_taxi_thrust.mp4", CLIPS_DIR / "zurich_uncut_07_runway_distant.mp4"],
-    21: [CLIPS_DIR / "zurich_uncut_16_pilot_briefing.mp4", CLIPS_DIR / "rsi_clip_05.mp4"],
-    22: [CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4", CLIPS_DIR / "zurich_uncut_12_jetway_empty.mp4"],
-    23: [CLIPS_DIR / "zurich_uncut_17_radar_screens.mp4", CLIPS_DIR / "rsi_clip_07.mp4"],
-    24: [CLIPS_DIR / "airport_terminal_concourse.mp4", CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4"],
-    25: [CLIPS_DIR / "zurich_uncut_33_flight_attendants.mp4", CLIPS_DIR / "rsi_clip_06.mp4"],
+    18: [CLIPS_DIR / "politics_ubs_08_bundesrat_session.mp4", CLIPS_DIR / "politics_ubs_16_swiss_flag_waving.mp4"],
+    19: [CLIPS_DIR / "politics_ubs_25_swiss_crest_podium.mp4", CLIPS_DIR / "politics_ubs_27_journalist_interviews_crowd.mp4"],
+    20: [PHOTO_DIR / "photo_07_british_airways.mp4", PHOTO_DIR / "photo_08_lufthansa.mp4"],
+    21: [PHOTO_DIR / "photo_09_air_france.mp4", CLIPS_DIR / "zurich_uncut_07_runway_distant.mp4"],
+    22: [CLIPS_DIR / "zurich_uncut_10_docked_planes.mp4", CLIPS_DIR / "zurich_uncut_12_jetway_empty.mp4"],
+    23: [CLIPS_DIR / "zurich_uncut_04_cockpit_view.mp4", CLIPS_DIR / "zurich_uncut_17_radar_screens.mp4"],
+    24: [CLIPS_DIR / "airport_terminal_concourse.mp4", CLIPS_DIR / "zurich_uncut_14_terminal_gates.mp4"],
+    25: [CLIPS_DIR / "zurich_uncut_16_pilot_briefing.mp4", CLIPS_DIR / "zurich_uncut_05_ground_crew.mp4"],
     26: [PAPER_DIR / "paper_highlighter_nzz_debts.mp4", CLIPS_DIR / "politics_ubs_17_emergency_fund_doc.mp4"],
     27: [CLIPS_DIR / "politics_ubs_28_banker_briefcase_entrance.mp4", PHOTO_DIR / "photo_06_bruggisser.mp4"],
 
     # Chapter 3: The Hunter Strategy (Beats 28-42) - Aggressive Debt Acquisitions & Sabena Bleed
     28: [REMOTION_DIR / "parallax_bruggisser.mp4", CLIPS_DIR / "politics_ubs_03_ubs_headquarters.mp4"],
-    29: [CLIPS_DIR / "airport_apron_operations.mp4", CLIPS_DIR / "zurich_uncut_15_kloten_hangar.mp4"],
-    30: [PAPER_DIR / "paper_06_sabena.mp4", CLIPS_DIR / "zurich_uncut_08_baggage_carts.mp4"],
-    31: [CLIPS_DIR / "airport_docking_jetway.mp4", CLIPS_DIR / "zurich_uncut_13_cargo_doors.mp4"],
-    32: [REMOTION_DIR / "kinetic_document_inspector.mp4", CLIPS_DIR / "rsi_clip_08.mp4"],
-    33: [CLIPS_DIR / "politics_ubs_33_ubs_trading_floor.mp4", CLIPS_DIR / "zurich_uncut_24_maintenance_truck.mp4"],
-    34: [CLIPS_DIR / "zurich_uncut_02_md11_tail.mp4", CLIPS_DIR / "zurich_uncut_03_engine_close.mp4"],
-    35: [CLIPS_DIR / "zurich_uncut_14_terminal_gates.mp4", CLIPS_DIR / "zurich_uncut_23_apron_buses.mp4"],
-    36: [CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4", CLIPS_DIR / "zurich_uncut_05_ground_crew.mp4"],
-    37: [RUNWAY_DIR / "ai_15_confidential_contract_signing.mp4", CLIPS_DIR / "rsi_clip_01.mp4"],
+    29: [ADV_DIR / "parallax_02_philippe_bruggisser.mp4", CLIPS_DIR / "airport_apron_operations.mp4"],
+    30: [RUNWAY_DIR / "ai_15_confidential_contract_signing.mp4", REMOTION_DIR / "kinetic_document_inspector.mp4"],
+    31: [CLIPS_DIR / "airport_docking_jetway.mp4", CLIPS_DIR / "zurich_uncut_15_kloten_hangar.mp4"],
+    32: [CLIPS_DIR / "politics_ubs_33_ubs_trading_floor.mp4", CLIPS_DIR / "zurich_uncut_13_cargo_doors.mp4"],
+    33: [CLIPS_DIR / "zurich_uncut_02_md11_tail.mp4", CLIPS_DIR / "zurich_uncut_24_maintenance_truck.mp4"],
+    34: [PAPER_DIR / "paper_06_sabena.mp4", CLIPS_DIR / "zurich_uncut_03_engine_close.mp4"],
+    35: [CLIPS_DIR / "zurich_uncut_29_a320_nose.mp4", CLIPS_DIR / "zurich_uncut_23_apron_buses.mp4"],
+    36: [CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", CLIPS_DIR / "rsi_clip_01.mp4"],
+    37: [STAGE_DIR / "stage_03_ubs_dossier.mp4", CLIPS_DIR / "rsi_clip_08.mp4"],
     38: [PAPER_DIR / "paper_03_ubs_refusal.mp4", CLIPS_DIR / "rsi_clip_09.mp4"],
     39: [CLIPS_DIR / "politics_ubs_35_financial_times_headline.mp4", CLIPS_DIR / "rsi_clip_10.mp4"],
-    40: [CLIPS_DIR / "zurich_uncut_18_luggage_conveyor.mp4", CLIPS_DIR / "zurich_uncut_21_swissair_counter.mp4"],
-    41: [CLIPS_DIR / "zurich_uncut_22_security_gate.mp4", CLIPS_DIR / "zurich_uncut_26_ground_power_unit.mp4"],
-    42: [CLIPS_DIR / "zurich_uncut_25_engine_cover_wrap.mp4", CLIPS_DIR / "zurich_uncut_31_terminal_stairs.mp4"],
+    40: [CLIPS_DIR / "zurich_uncut_21_swissair_counter.mp4", CLIPS_DIR / "zurich_uncut_26_ground_power_unit.mp4"],
+    41: [CLIPS_DIR / "zurich_uncut_22_security_gate.mp4", CLIPS_DIR / "zurich_uncut_31_terminal_stairs.mp4"],
+    42: [CLIPS_DIR / "zurich_uncut_32_information_desk.mp4", CLIPS_DIR / "zurich_uncut_18_luggage_conveyor.mp4"],
 
     # Chapter 4: The 17 Billion Black Hole & Mario Corti (Beats 43-52) - Arrival & Post-9/11 Shock
-    43: [CLIPS_DIR / "politics_ubs_04_marcel_ospel_face.mp4", CLIPS_DIR / "zurich_uncut_32_information_desk.mp4"],
+    43: [CLIPS_DIR / "politics_ubs_04_marcel_ospel_face.mp4", CLIPS_DIR / "politics_ubs_05_press_cameras.mp4"],
     44: [REMOTION_DIR / "parallax_mario_corti.mp4", RUNWAY_DIR / "ai_16_corti_press_conference.mp4"],
     # (Authentic 20s Corti Interview Soundbite inserted between 44 and 45)
     45: [PHOTO_DIR / "photo_02_mario_corti.mp4", CLIPS_DIR / "politics_ubs_09_mario_corti_mic.mp4"],
@@ -252,7 +294,7 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
             if beat_idx % 2 == 0
             else "zoompan=z='if(lte(zoom,1.0),1.15,max(1.001,zoom-0.0016))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
-        crop_wm = "crop=in_w:in_h-150:0:150," if any(k in str(assets[0]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
+        crop_wm = "crop=in_w:in_h-(in_h*0.28):0:(in_h*0.28)," if any(k in str(assets[0]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
         base_vf = (
             f"{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
@@ -315,7 +357,7 @@ def render_beat_with_xfade(beat_idx: int, assets: list, overlays: list, target_d
             if (beat_idx + i) % 2 == 0
             else "zoompan=z='if(lte(zoom,1.0),1.15,max(1.001,zoom-0.0016))':d=1:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=1280x720:fps=30"
         )
-        crop_wm = "crop=in_w:in_h-150:0:150," if any(k in str(assets[i]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
+        crop_wm = "crop=in_w:in_h-(in_h*0.28):0:(in_h*0.28)," if any(k in str(assets[i]).lower() for k in ["uncut", "broll", "politics", "kloten", "rsi", "md11", "airport"]) else ""
         scale_crop = (
             f"[{i}:v]{crop_wm}scale=1280:720:force_original_aspect_ratio=increase,"
             f"crop=1280:720:(in_w-1280)/2:(in_h-720)/2,"
@@ -417,11 +459,10 @@ def build_acoustic_sfx_track(total_sec: float, sfx_events: list, out_wav: Path):
         wf.writeframes(buf_16.tobytes())
 
 def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float):
+    if str(BASE_DIR) not in sys.path:
+        sys.path.insert(0, str(BASE_DIR))
+    from tools.build_10min_audio_track import BEATS_COMMENTARY
     srt_path = EXPORT_DIR / "subtitles.srt"
-    if not srt_path.exists():
-        return
-    with open(srt_path, "r", encoding="utf-8") as f:
-        text = f.read()
 
     def sec_to_srt(s):
         h = int(s // 3600)
@@ -433,46 +474,33 @@ def update_synchronized_subtitles(end_sec_beat44: float, soundbite_dur: float):
             ms -= 1000
         return f"{h:02d}:{m:02d}:{sec:02d},{ms:03d}"
 
-    def srt_to_sec(t_str):
-        parts = t_str.strip().split(":")
-        h = int(parts[0])
-        m = int(parts[1])
-        sec_parts = parts[2].split(",")
-        sec = int(sec_parts[0])
-        ms = int(sec_parts[1])
-        return h * 3600 + m * 60 + sec + ms / 1000.0
+    cum_time = 0.0
+    cues = []
+    cue_idx = 1
 
-    entries = text.strip().split("\n\n")
-    new_cues = []
-    cue_num = 1
+    for order in sorted(BEATS_COMMENTARY.keys()):
+        wav_p = AUDIO_DIR / f"beat_{order}.wav"
+        if not wav_p.exists():
+            continue
+        dur = get_audio_duration(wav_p)
+        start_ts = sec_to_srt(cum_time)
+        end_ts = sec_to_srt(cum_time + dur - 0.05)
+        text = BEATS_COMMENTARY[order]
+        cues.append(f"{cue_idx}\n{start_ts} --> {end_ts}\n{text}")
+        cue_idx += 1
+        cum_time += dur
 
-    for e in entries:
-        lines = e.strip().split("\n")
-        idx = int(lines[0])
-        timing = lines[1]
-        t_start_s, t_end_s = timing.split(" --> ")
-        start_sec = srt_to_sec(t_start_s)
-        end_sec = srt_to_sec(t_end_s)
-        speech = "\n".join(lines[2:])
-
-        if idx <= 44:
-            new_cues.append(f"{cue_num}\n{sec_to_srt(start_sec)} --> {sec_to_srt(end_sec)}\n{speech}")
-            cue_num += 1
-            if idx == 44:
-                sb_start = end_sec
-                sb_end = end_sec + soundbite_dur
-                sb_text = "[ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.\n(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)"
-                new_cues.append(f"{cue_num}\n{sec_to_srt(sb_start)} --> {sec_to_srt(sb_end)}\n{sb_text}")
-                cue_num += 1
-        else:
-            new_start = start_sec + soundbite_dur
-            new_end = end_sec + soundbite_dur
-            new_cues.append(f"{cue_num}\n{sec_to_srt(new_start)} --> {sec_to_srt(new_end)}\n{speech}")
-            cue_num += 1
+        if order == 44:
+            sb_start = sec_to_srt(cum_time)
+            sb_end = sec_to_srt(cum_time + soundbite_dur - 0.05)
+            sb_text = "[ARCHIVAL RECORDING // OCT 2001] Mario Corti: Wir sind in einer Situation, in der die Liquiditaet buchstaeblich von Stunde zu Stunde abnimmt... Ohne Ueberbrueckungskredit kann Swissair nicht fliegen.\n(We are in a situation where liquidity is evaporating hour by hour... Without a bridge loan, Swissair cannot fly.)"
+            cues.append(f"{cue_idx}\n{sb_start} --> {sb_end}\n{sb_text}")
+            cue_idx += 1
+            cum_time += soundbite_dur
 
     with open(srt_path, "w", encoding="utf-8") as f:
-        f.write("\n\n".join(new_cues) + "\n")
-    log(f"Subtitles synchronized with 20s soundbite: {len(new_cues)} cues written.")
+        f.write("\n\n".join(cues) + "\n")
+    log(f"Subtitles freshly regenerated with 20s soundbite: {len(cues)} cues written.")
 
 def main():
     log("=====================================================================")
@@ -489,6 +517,12 @@ def main():
 
     # 2. Setup 20s Mario Corti Soundbite
     corti_sb_mp4 = TEMP_SHOTS_DIR / "beat_44b_corti_soundbite.mp4"
+    if not corti_sb_mp4.exists():
+        subprocess.run([
+            "ffmpeg", "-y", "-i", str(SOUNDBITES_DIR / "soundbite_mario_corti_20s.mp4"),
+            "-vf", "fps=30,format=yuv420p", "-an", "-c:v", "libx264", "-preset", "ultrafast", "-crf", "22",
+            str(corti_sb_mp4)
+        ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     corti_sb_wav = SOUNDBITES_DIR / "soundbite_mario_corti_20s.wav"
     if not corti_sb_wav.exists():
         subprocess.run([
